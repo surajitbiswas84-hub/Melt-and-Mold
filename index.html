@@ -9,6 +9,7 @@
     <style>
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
         
+        /* COLOR PALETTE */
         body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
         
@@ -34,7 +35,7 @@
         .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; }
         .header-icons { display: flex; gap: 15px; font-size: 14px; font-weight: bold; cursor: pointer; }
         
-        /* NEW SUB-NAVIGATION BAR */
+        /* NAVIGATION BAR */
         .main-nav {
             display: flex; justify-content: center; align-items: center; gap: 35px;
             padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B;
@@ -65,12 +66,10 @@
         .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* PRODUCT INFO COLORS */
         .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; color: #85966B; }
         .product-info h4 { margin: 0 0 8px 0; color: #013A2D; }
         .sale-price { font-weight: bold; font-size: 1.1em; color: #85966B; }
         
-        /* ADD TO CART BUTTON */
         .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
         .btn-add:hover { background-color: #85966B; color: #E5DBC7; }
 
@@ -80,14 +79,46 @@
         .cart-sidebar.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
         .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
-        
-        /* CHECKOUT BUTTON inside Cart */
         .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
         .btn-checkout:hover { background: #85966B; color: #E5DBC7; }
 
         .policy-box { background-color: #E5DBC7; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #85966B; border-radius: 8px; color: #85966B; }
         .policy-box h2 { color: #013A2D; }
         .policy-box strong { color: #013A2D; }
+
+        /* NEW 4-COLUMN FOOTER */
+        .mega-footer {
+            background-color: #85966B; color: #E5DBC7; padding: 60px 40px;
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px;
+        }
+        @media(max-width: 900px) { .mega-footer { grid-template-columns: 1fr; gap: 30px; padding: 40px 20px; } }
+        
+        .mega-footer h3 { color: #013A2D; font-size: 18px; margin-top: 0; margin-bottom: 20px; }
+        .mega-footer p { font-size: 14px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
+        .mega-footer ul { list-style: none; padding: 0; margin: 0; }
+        .mega-footer ul li { margin-bottom: 12px; }
+        .mega-footer ul li a { font-size: 14px; opacity: 0.9; transition: 0.3s; }
+        .mega-footer ul li a:hover { opacity: 1; text-decoration: underline; color: #013A2D; }
+        
+        .social-icon { 
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; border: 1px solid #E5DBC7; border-radius: 50%;
+            cursor: pointer; transition: 0.3s; color: #E5DBC7;
+        }
+        .social-icon:hover { background-color: #013A2D; border-color: #013A2D; color: #fff; }
+
+        .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+        .newsletter-input { 
+            flex-grow: 1; padding: 12px; border: 1px solid #E5DBC7; background: #fff; 
+            color: #013A2D; border-radius: 4px; outline: none; font-size: 14px;
+        }
+        .newsletter-btn { 
+            background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; 
+            font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s;
+        }
+        .newsletter-btn:hover { background: #E5DBC7; color: #013A2D; }
+
+        .bottom-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 20px; font-size: 12px; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -136,10 +167,48 @@
         </div>
     </div>
 
-    <div style="background-color: #85966B; color: #E5DBC7; text-align: center; padding: 40px;">
-        <h3 style="letter-spacing: 2px;">MELT AND MOLD</h3>
-        <p style="font-style: italic; opacity: 0.9;">Handcrafted in Bengal | Delivered across India</p>
-        <p style="font-size: 12px; margin-top: 20px; opacity: 0.7;">© 2026 Melt and Mold. All rights reserved.</p>
+    <footer class="mega-footer">
+        <div>
+            <h3>About Melt and Mold</h3>
+            <p>Melt and Mold is your destination for authentic, handcrafted Dokra jewelry. From everyday basics to statement pieces, we bring you traditional, timeless styles that celebrate 4000 years of ancient artistry.</p>
+            <a href="#" class="social-icon" title="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Returns / Exchange</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Store Policy</h3>
+            <ul>
+                <li><a href="#">Terms Of Service</a></li>
+                <li><a href="#">Shipping Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Sign Up to Newsletter</h3>
+            <p>Enter your email address to get the latest updates on sales, new designs, and exclusive offers.</p>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email...">
+                <button class="newsletter-btn" onclick="alert('Thank you for subscribing!')">SUBSCRIBE</button>
+            </div>
+        </div>
+    </footer>
+
+    <div class="bottom-bar">
+        © 2026 Melt and Mold. All rights reserved. | Handcrafted in Bengal, Delivered across India
     </div>
 
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
