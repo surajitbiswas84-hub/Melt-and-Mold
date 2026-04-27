@@ -8,49 +8,68 @@
 
     <style>
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
-        body { margin: 0; padding: 0; background-color: #FAFAFA; color: #333; overflow-x: hidden; }
+        
+        /* NEW COLOR PALETTE */
+        body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
+        
+        a { text-decoration: none; color: inherit; }
         
         /* DISCOUNT POPUP STYLING */
         #discountPopup {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 2000; display: flex;
+            background: rgba(1, 58, 45, 0.8); z-index: 2000; display: flex;
             align-items: center; justify-content: center;
         }
         .popup-content {
-            background: #fff; padding: 40px; border-radius: 12px; text-align: center;
-            max-width: 400px; width: 90%; position: relative; border: 2px solid #2C362B;
+            background: #E5DBC7; padding: 40px; border-radius: 12px; text-align: center;
+            max-width: 400px; width: 90%; position: relative; border: 2px solid #013A2D;
+            color: #85966B;
         }
-        .popup-content h2 { color: #2C362B; margin-bottom: 10px; }
-        .popup-content p { font-size: 14px; color: #666; margin-bottom: 20px; }
-        .popup-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
-        .btn-claim { background: #2C362B; color: white; border: none; padding: 12px 20px; width: 100%; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
-        .close-popup { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #999; }
+        .popup-content h2 { color: #013A2D; margin-bottom: 10px; }
+        .popup-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #85966B; border-radius: 5px; font-size: 16px; background: #fff; color: #013A2D; }
+        .btn-claim { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; width: 100%; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
+        .close-popup { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #013A2D; }
 
         /* HEADER & LAYOUT */
-        .announcement-bar { background-color: #2C362B; color: #fff; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #fff; border-bottom: 1px solid #eaeaea; position: sticky; top: 0; z-index: 100; }
+        .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #E5DBC7; border-bottom: 1px solid #85966B; position: sticky; top: 0; z-index: 100; color: #013A2D; }
         .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
         .header-icons { display: flex; gap: 15px; font-size: 14px; font-weight: bold; cursor: pointer; }
         
-        .collection-header { text-align: center; padding: 40px 20px; background-color: #F3EFEA; }
+        .collection-header { text-align: center; padding: 40px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
+        .collection-header p { color: #85966B; }
+        
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
         @media(max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } .header { flex-direction: column; padding: 15px; } }
 
-        .product-card { background: #fff; border: 1px solid #eaeaea; display: flex; flex-direction: column; transition: 0.3s; }
-        .product-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #eee; }
+        .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
+        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; }
-        .sale-price { color: #b22222; font-weight: bold; }
-        .btn-add { background-color: #FAFAFA; border: 1px solid #eaeaea; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; }
-        .btn-add:hover { background-color: #2C362B; color: white; }
+        
+        /* PRODUCT INFO COLORS */
+        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; color: #85966B; }
+        .product-info h4 { margin: 0 0 8px 0; color: #013A2D; }
+        .sale-price { font-weight: bold; font-size: 1.1em; color: #85966B; }
+        
+        /* ADD TO CART BUTTON */
+        .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
+        .btn-add:hover { background-color: #85966B; color: #E5DBC7; }
 
-        /* CART SIDEBAR */
+        /* CART SIDEBAR (CHECKOUT WINDOW) */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: #fff; z-index: 1000; transition: 0.3s; display: flex; flex-direction: column; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 1000; transition: 0.3s; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
-        .cart-footer { padding: 20px; border-top: 1px solid #eaeaea; }
-        .btn-checkout { background: #2C362B; color: white; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
+        .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
+        
+        /* CHECKOUT BUTTON inside Cart */
+        .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        .btn-checkout:hover { background: #85966B; color: #E5DBC7; }
+
+        .policy-box { background-color: #E5DBC7; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #85966B; border-radius: 8px; color: #85966B; }
+        .policy-box h2 { color: #013A2D; }
+        .policy-box strong { color: #013A2D; }
     </style>
 </head>
 <body>
@@ -59,9 +78,9 @@
         <div class="popup-content">
             <span class="close-popup" onclick="closePopup()">&times;</span>
             <h2 id="popupTitle">Unlock 10% OFF</h2>
-            <p id="popupText">Enter your WhatsApp number to receive your exclusive discount code and join the Melt and Mold family!</p>
-            <input type="number" id="userPhone" class="popup-input" placeholder="Enter WhatsApp Number">
-            <button class="btn-claim" id="claimBtn" onclick="applyDiscount()">CLAIM MY DISCOUNT</button>
+            <p id="popupText">Join the Melt and Mold family! Enter your WhatsApp number to receive your exclusive discount code.</p>
+            <input type="number" id="userPhone" class="popup-input" placeholder="WhatsApp Number">
+            <button class="btn-claim" id="claimBtn" onclick="applyDiscount()">CLAIM DISCOUNT</button>
         </div>
     </div>
 
@@ -80,37 +99,36 @@
         <p>Ancient art, modern elegance.</p>
     </div>
 
-    <div class="grid-container" id="productGrid">
-        </div>
+    <div class="grid-container" id="productGrid"></div>
 
-    <div style="background-color: #fff; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #eaeaea; border-radius: 8px;">
+    <div class="policy-box">
         <h2 style="letter-spacing: 1px; font-weight: normal; text-align: center; margin-top: 0;">Our Promise to You</h2>
-        <div style="font-size: 14px; color: #555; line-height: 1.8;">
-            <p><strong style="color: #2C362B;">Shipping:</strong> We proudly deliver across India. Because our pieces are carefully checked and packed, please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days depending on your city.</p>
-            <p><strong style="color: #2C362B;">Returns & Exchanges:</strong> Dokra and Jaali jewelry are handcrafted, meaning slight rustic variations are a beautiful part of the art, not defects. However, if your piece arrives damaged during transit, please send us a continuous unboxing video on WhatsApp within 24 hours of delivery, and we will happily arrange a replacement.</p>
+        <div style="font-size: 14px; line-height: 1.8;">
+            <p><strong>Shipping:</strong> We proudly deliver across India. Please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days.</p>
+            <p><strong>Returns & Exchanges:</strong> Rustic variations are a beautiful part of Dokra art. If damage occurs during transit, send an unboxing video on WhatsApp within 24 hours for a replacement.</p>
         </div>
     </div>
 
-    <div style="background-color: #2C362B; color: white; text-align: center; padding: 40px; margin-top: 50px;">
+    <div style="background-color: #85966B; color: #E5DBC7; text-align: center; padding: 40px;">
         <h3 style="letter-spacing: 2px;">MELT AND MOLD</h3>
-        <p style="color: #ccc; font-style: italic;">Handcrafted in Bengal | Delivered across India</p>
-        <p style="font-size: 12px; color: #888; margin-top: 20px;">© 2026 Melt and Mold. All rights reserved.</p>
+        <p style="font-style: italic; opacity: 0.9;">Handcrafted in Bengal | Delivered across India</p>
+        <p style="font-size: 12px; margin-top: 20px; opacity: 0.7;">© 2026 Melt and Mold. All rights reserved.</p>
     </div>
 
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-sidebar" id="cartSidebar">
-        <div style="padding:20px; background:#F3EFEA; display:flex; justify-content:space-between">
-            <b>YOUR CART</b> <span style="cursor:pointer" onclick="closeCart()">&times;</span>
+        <div class="cart-header">
+            <b>YOUR CART</b> <span style="cursor:pointer; font-size: 20px;" onclick="closeCart()">&times;</span>
         </div>
         <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto"></div>
         <div class="cart-footer">
             <div style="display:flex; justify-content:space-between; margin-bottom:10px">
                 <span>Subtotal:</span> <span>Rs. <span id="subtotal">0</span></span>
             </div>
-            <div id="discountRow" style="display:none; justify-content:space-between; margin-bottom:10px; color:#b22222">
-                <span>10% Discount Applied:</span> <span>- Rs. <span id="discountAmount">0</span></span>
+            <div id="discountRow" style="display:none; justify-content:space-between; margin-bottom:10px; color: #E5DBC7; font-weight: bold;">
+                <span>10% Discount:</span> <span>- Rs. <span id="discountAmount">0</span></span>
             </div>
-            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:20px">
+            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:20px; border-top: 1px solid #85966B; padding-top: 10px;">
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
             <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
@@ -157,16 +175,13 @@
         function applyDiscount() {
             let phone = document.getElementById('userPhone').value;
             if(phone.length < 10) { alert("Please enter a valid WhatsApp number"); return; }
-            
             discountActive = true;
             document.getElementById('popupTitle').innerText = "CODE: WELCOME10";
-            document.getElementById('popupText').innerText = "10% Discount applied! We've sent a welcome message to your WhatsApp.";
+            document.getElementById('popupText').innerText = "10% Discount applied! Check your WhatsApp for our welcome message.";
             document.getElementById('userPhone').style.display = 'none';
-            document.getElementById('claimBtn').innerText = "START SHOPPING";
+            document.getElementById('claimBtn').innerText = "EXPLORE COLLECTION";
             document.getElementById('claimBtn').onclick = closePopup;
-
-            let msg = encodeURIComponent(`Namaste! Welcome to the Melt and Mold family. 🌿 Your 10% discount code is WELCOME10. We will notify you here when our new Dokra designs arrive!`);
-            window.open(`https://wa.me/91${phone}?text=${msg}`, '_blank');
+            window.open(`https://wa.me/91${phone}?text=Namaste!%20Welcome%20to%20the%20Melt%20and%20Mold%20family.%20🌿%20Your%2010%25%20discount%20code%20is%20WELCOME10.`, '_blank');
             updateCartUI();
         }
 
@@ -182,13 +197,13 @@
             let subtotal = 0;
             cart.forEach((item, index) => {
                 subtotal += item.price;
-                cartHTML += `<div style="display:flex; gap:10px; margin-bottom:15px; align-items:center">
-                    <img src="${item.img}" width="50">
-                    <div style="flex-grow:1; font-size:14px">${item.name}<br><b>Rs. ${item.price}</b></div>
-                    <span style="color:red; cursor:pointer" onclick="removeFromCart(${index})">×</span>
+                cartHTML += `<div style="display:flex; gap:10px; margin-bottom:15px; align-items:center; border-bottom: 1px solid #85966B; padding-bottom: 10px;">
+                    <img src="${item.img}" width="50" style="border: 1px solid #85966B;">
+                    <div style="flex-grow:1; font-size:14px; color: #E5DBC7;">${item.name}<br><b>Rs. ${item.price}</b></div>
+                    <span style="color:#E5DBC7; cursor:pointer; font-weight: bold; font-size: 18px;" onclick="removeFromCart(${index})">×</span>
                 </div>`;
             });
-            document.getElementById('cartItems').innerHTML = cartHTML || 'Cart is empty';
+            document.getElementById('cartItems').innerHTML = cartHTML || '<span style="color:#E5DBC7;">Your cart is empty.</span>';
             document.getElementById('subtotal').innerText = subtotal;
             let final = subtotal;
             if(discountActive) {
@@ -212,6 +227,7 @@
                 "amount": amount * 100,
                 "currency": "INR",
                 "name": "Melt and Mold",
+                "theme": { "color": "#013A2D" },
                 "handler": function (response) { alert("Order Placed! ID: " + response.razorpay_payment_id); cart=[]; updateCartUI(); closeCart(); }
             };
             var rzp = new Razorpay(options);
