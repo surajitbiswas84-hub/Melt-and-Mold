@@ -26,7 +26,7 @@
         .btn-claim { background: #2C362B; color: white; border: none; padding: 12px 20px; width: 100%; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
         .close-popup { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #999; }
 
-        /* THE REST OF THE SHOP STYLING */
+        /* HEADER & LAYOUT */
         .announcement-bar { background-color: #2C362B; color: #fff; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #fff; border-bottom: 1px solid #eaeaea; position: sticky; top: 0; z-index: 100; }
         .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
@@ -82,6 +82,20 @@
 
     <div class="grid-container" id="productGrid">
         </div>
+
+    <div style="background-color: #fff; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #eaeaea; border-radius: 8px;">
+        <h2 style="letter-spacing: 1px; font-weight: normal; text-align: center; margin-top: 0;">Our Promise to You</h2>
+        <div style="font-size: 14px; color: #555; line-height: 1.8;">
+            <p><strong style="color: #2C362B;">Shipping:</strong> We proudly deliver across India. Because our pieces are carefully checked and packed, please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days depending on your city.</p>
+            <p><strong style="color: #2C362B;">Returns & Exchanges:</strong> Dokra and Jaali jewelry are handcrafted, meaning slight rustic variations are a beautiful part of the art, not defects. However, if your piece arrives damaged during transit, please send us a continuous unboxing video on WhatsApp within 24 hours of delivery, and we will happily arrange a replacement.</p>
+        </div>
+    </div>
+
+    <div style="background-color: #2C362B; color: white; text-align: center; padding: 40px; margin-top: 50px;">
+        <h3 style="letter-spacing: 2px;">MELT AND MOLD</h3>
+        <p style="color: #ccc; font-style: italic;">Handcrafted in Bengal | Delivered across India</p>
+        <p style="font-size: 12px; color: #888; margin-top: 20px;">© 2026 Melt and Mold. All rights reserved.</p>
+    </div>
 
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-sidebar" id="cartSidebar">
@@ -146,15 +160,13 @@
             
             discountActive = true;
             document.getElementById('popupTitle').innerText = "CODE: WELCOME10";
-            document.getElementById('popupText').innerText = "10% Discount has been applied to your cart! We've also sent you a welcome message on WhatsApp.";
+            document.getElementById('popupText').innerText = "10% Discount applied! We've sent a welcome message to your WhatsApp.";
             document.getElementById('userPhone').style.display = 'none';
             document.getElementById('claimBtn').innerText = "START SHOPPING";
             document.getElementById('claimBtn').onclick = closePopup;
 
-            // THE WELCOME MESSAGE
             let msg = encodeURIComponent(`Namaste! Welcome to the Melt and Mold family. 🌿 Your 10% discount code is WELCOME10. We will notify you here when our new Dokra designs arrive!`);
             window.open(`https://wa.me/91${phone}?text=${msg}`, '_blank');
-            
             updateCartUI();
         }
 
@@ -178,7 +190,6 @@
             });
             document.getElementById('cartItems').innerHTML = cartHTML || 'Cart is empty';
             document.getElementById('subtotal').innerText = subtotal;
-            
             let final = subtotal;
             if(discountActive) {
                 let discount = Math.round(subtotal * 0.10);
@@ -197,7 +208,7 @@
             let amount = document.getElementById('finalTotal').innerText;
             if(amount == 0) return;
             var options = {
-                "key": "rzp_test_SidknDev2zE2tp", // Your Key
+                "key": "rzp_test_SidknDev2zE2tp",
                 "amount": amount * 100,
                 "currency": "INR",
                 "name": "Melt and Mold",
