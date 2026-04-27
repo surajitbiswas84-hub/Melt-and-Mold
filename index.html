@@ -15,20 +15,19 @@
         /* DISCOUNT POPUP */
         #discountPopup {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 58, 45, 0.8); z-index: 4000; display: flex;
+            background: rgba(1, 58, 45, 0.8); z-index: 5000; display: flex;
             align-items: center; justify-content: center;
         }
         .popup-content {
             background: #E5DBC7; padding: 40px; border-radius: 12px; text-align: center;
-            max-width: 400px; width: 90%; position: relative; border: 2px solid #013A2D;
-            color: #85966B;
+            max-width: 400px; width: 90%; position: relative; border: 2px solid #013A2D; color: #85966B;
         }
         .popup-content h2 { color: #013A2D; margin-bottom: 10px; }
         .popup-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #85966B; border-radius: 5px; font-size: 16px; background: #fff; color: #013A2D; }
         .btn-claim { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; width: 100%; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
         .close-popup { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #013A2D; }
 
-        /* FULL WIDTH SEARCH OVERLAY */
+        /* SEARCH OVERLAY */
         .search-overlay {
             position: fixed; top: -100%; left: 0; width: 100%; background: #ffffff; 
             z-index: 3000; transition: top 0.4s ease-in-out; padding: 60px 20px 80px 20px; 
@@ -49,44 +48,48 @@
         .search-quick span { color: #000; cursor: pointer; font-weight: 500; margin-left: 5px; }
         .search-quick span:hover { text-decoration: underline; }
 
+        /* PRODUCT QUICK VIEW MODAL */
+        .product-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(1, 58, 45, 0.8); z-index: 4000; display: none;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .product-modal {
+            background: #E5DBC7; width: 900px; max-width: 100%; max-height: 90vh;
+            border-radius: 8px; display: flex; overflow: hidden; position: relative;
+            border: 1px solid #85966B; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .close-product { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; z-index: 10; font-weight: bold; }
+        .modal-left { width: 50%; padding: 30px; background: #fff; display: flex; flex-direction: column; gap: 15px; border-right: 1px solid #85966B; overflow-y: auto;}
+        .modal-right { width: 50%; padding: 40px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto;}
+        
+        #mainModalImage { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; border: 1px solid #eaeaea; transition: 0.3s;}
+        .thumbnail-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;}
+        .thumbnail-container img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid transparent; border-radius: 4px; opacity: 0.7; transition: 0.3s;}
+        .thumbnail-container img:hover { border-color: #013A2D; opacity: 1; }
+        
+        #modalTitle { color: #013A2D; margin-top: 0; font-size: 28px; font-weight: bold; letter-spacing: 1px; }
+        .modal-price { font-size: 24px; font-weight: bold; color: #85966B; margin-bottom: 20px; }
+        .modal-desc { line-height: 1.8; margin-bottom: 30px; color: #013A2D; font-size: 15px; }
+        #modalAddBtn { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; transition: 0.3s; border-radius: 4px;}
+        #modalAddBtn:hover { background-color: #85966B; }
+
         /* HEADER & LAYOUT */
         .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
-        
-        .header { 
-            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; 
-            padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; 
-            border-bottom: 1px solid #85966B;
-        }
+        .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #85966B; }
         .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; color: #013A2D; }
         
-        /* BLACK LEFT ICONS */
         .header-icons-left { display: flex; gap: 20px; align-items: center; justify-content: flex-start; }
         .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
         .icon-btn:hover { opacity: 0.6; }
-        .cart-badge { 
-            position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; 
-            font-size: 10px; font-weight: bold; width: 16px; height: 16px; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        }
+        .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         
-        /* NAVIGATION BAR */
-        .main-nav {
-            display: flex; justify-content: center; align-items: center; gap: 35px;
-            padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B;
-            border-top: 1px solid rgba(133, 150, 107, 0.3);
-            font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap;
-        }
+        .main-nav { display: flex; justify-content: center; align-items: center; gap: 35px; padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
         .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
         .main-nav a:hover { color: #85966B; }
         
-        .sale-badge {
-            position: absolute; top: -18px; right: -12px; background-color: #D33F1F;
-            color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px;
-        }
-        .sale-badge::after {
-            content: ''; position: absolute; bottom: -4px; left: 8px;
-            border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent;
-        }
+        .sale-badge { position: absolute; top: -18px; right: -12px; background-color: #D33F1F; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px; }
+        .sale-badge::after { content: ''; position: absolute; bottom: -4px; left: 8px; border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
 
         .collection-header { text-align: center; padding: 40px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header p { color: #85966B; }
@@ -97,15 +100,18 @@
             .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
             .header-icons-left { justify-content: center; gap: 25px; }
             .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } 
-            .main-nav { gap: 15px; font-size: 11px; padding: 10px; } 
+            .main-nav { gap: 15px; font-size: 11px; padding: 10px; }
+            .product-modal { flex-direction: column; overflow-y: auto; }
+            .modal-left, .modal-right { width: 100%; padding: 20px; }
+            .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
         }
 
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
-        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; }
+        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; cursor: pointer;}
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
-        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; color: #85966B; }
+        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; color: #85966B; cursor: pointer;}
         .product-info h4 { margin: 0 0 8px 0; color: #013A2D; }
         .sale-price { font-weight: bold; font-size: 1.1em; color: #85966B; }
         
@@ -113,8 +119,8 @@
         .btn-add:hover { background-color: #85966B; color: #E5DBC7; }
 
         /* CART SIDEBAR */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 2000; transition: 0.3s; display: flex; flex-direction: column; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
         .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
@@ -126,12 +132,8 @@
         .policy-box strong { color: #013A2D; }
 
         /* MEGA FOOTER */
-        .mega-footer {
-            background-color: #85966B; color: #E5DBC7; padding: 60px 40px;
-            display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px;
-        }
+        .mega-footer { background-color: #85966B; color: #E5DBC7; padding: 60px 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; }
         @media(max-width: 900px) { .mega-footer { grid-template-columns: 1fr; gap: 30px; padding: 40px 20px; } }
-        
         .mega-footer h3 { color: #013A2D; font-size: 18px; margin-top: 0; margin-bottom: 20px; }
         .mega-footer p { font-size: 14px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
         .mega-footer ul { list-style: none; padding: 0; margin: 0; }
@@ -139,28 +141,33 @@
         .mega-footer ul li a { font-size: 14px; opacity: 0.9; transition: 0.3s; }
         .mega-footer ul li a:hover { opacity: 1; text-decoration: underline; color: #013A2D; }
         
-        .social-icon { 
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px; border: 1px solid #E5DBC7; border-radius: 50%;
-            cursor: pointer; transition: 0.3s; color: #E5DBC7;
-        }
+        .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid #E5DBC7; border-radius: 50%; cursor: pointer; transition: 0.3s; color: #E5DBC7; }
         .social-icon:hover { background-color: #013A2D; border-color: #013A2D; color: #fff; }
-
         .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
-        .newsletter-input { 
-            flex-grow: 1; padding: 12px; border: 1px solid #E5DBC7; background: #fff; 
-            color: #013A2D; border-radius: 4px; outline: none; font-size: 14px;
-        }
-        .newsletter-btn { 
-            background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; 
-            font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s;
-        }
+        .newsletter-input { flex-grow: 1; padding: 12px; border: 1px solid #E5DBC7; background: #fff; color: #013A2D; border-radius: 4px; outline: none; font-size: 14px; }
+        .newsletter-btn { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
         .newsletter-btn:hover { background: #E5DBC7; color: #013A2D; }
-
         .bottom-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 20px; font-size: 12px; opacity: 0.8; }
     </style>
 </head>
 <body>
+
+    <div class="product-overlay" id="productOverlay" onclick="closeProductModal(event)">
+        <div class="product-modal" onclick="event.stopPropagation()">
+            <span class="close-product" onclick="closeProductModal()">✕</span>
+            <div class="modal-left">
+                <img id="mainModalImage" src="" alt="Product Image">
+                <div class="thumbnail-container" id="modalThumbnails">
+                    </div>
+            </div>
+            <div class="modal-right">
+                <h2 id="modalTitle">Product Name</h2>
+                <div class="modal-price" id="modalPrice">Rs. 0</div>
+                <div class="modal-desc" id="modalDesc">Product description goes here.</div>
+                <button id="modalAddBtn">ADD TO CART</button>
+            </div>
+        </div>
+    </div>
 
     <div class="search-overlay" id="searchOverlay">
         <span class="search-close" onclick="closeSearch()">✕</span>
@@ -210,7 +217,8 @@
         </div>
         
         <div class="header-logo">MELT AND MOLD</div>
-        <div style="flex:1"></div> </header>
+        <div style="flex:1"></div> 
+    </header>
 
     <nav class="main-nav">
         <a href="#">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
@@ -241,11 +249,7 @@
             <h3>About Melt and Mold</h3>
             <p>Melt and Mold is your destination for authentic, handcrafted Dokra jewelry. From everyday basics to statement pieces, we bring you traditional, timeless styles that celebrate 4000 years of ancient artistry.</p>
             <a href="#" class="social-icon" title="Instagram">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
         </div>
         <div>
@@ -304,18 +308,19 @@
         let cart = [];
         let discountActive = false;
 
+        // NEW DATA STRUCTURE: Added "images" array and "desc" for the gallery.
         const products = [
-            { id: 1, name: "Prakriti Lattice Earrings", price: 1499, img: "item1.jpg.jpg" },
-            { id: 2, name: "The Golden Whorl", price: 1899, img: "item2.jpg.jpg" },
-            { id: 3, name: "Hellenic Dhara Drops", price: 1299, img: "item3.jpg.jpg" },
-            { id: 4, name: "Swarnarekha Filigree", price: 999, img: "item4.jpg.jpg" },
-            { id: 5, name: "Mayura Statement Ring", price: 799, img: "item5.jpg.jpg" },
-            { id: 6, name: "Tribal Bell Choker", price: 2199, img: "item6.jpg.jpg" },
-            { id: 7, name: "Rustic Jaali Bangles", price: 1599, img: "item7.jpg.jpg" },
-            { id: 8, name: "Surya Motif Pendant", price: 1099, img: "item8.jpg.jpg" },
-            { id: 9, name: "Lotus Bloom Earrings", price: 899, img: "item9.jpg.jpg" },
-            { id: 10, name: "Earthy Cuff Bracelet", price: 1499, img: "item10.jpg.jpg" },
-            { id: 11, name: "Vintage Motif Anklet", price: 999, img: "item11.jpg.jpg" }
+            { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"] },
+            { id: 2, name: "The Golden Whorl", price: 1899, desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"] },
+            { id: 3, name: "Hellenic Dhara Drops", price: 1299, desc: "Elegant drop earrings that blend traditional Dokra motifs with modern, minimalist lines.", images: ["item3.jpg.jpg", "item3.jpg.jpg", "item3.jpg.jpg"] },
+            { id: 4, name: "Swarnarekha Filigree", price: 999, desc: "Lightweight hoop earrings featuring intricate filigree work. Perfect for daily wear.", images: ["item4.jpg.jpg", "item4.jpg.jpg", "item4.jpg.jpg"] },
+            { id: 5, name: "Mayura Statement Ring", price: 799, desc: "An eye-catching ring inspired by the grace of the peacock. Adjustable fit.", images: ["item5.jpg.jpg", "item5.jpg.jpg", "item5.jpg.jpg"] },
+            { id: 6, name: "Tribal Bell Choker", price: 2199, desc: "A stunning choker necklace featuring traditional bell motifs. A true masterpiece of tribal art.", images: ["item6.jpg.jpg", "item6.jpg.jpg", "item6.jpg.jpg"] },
+            { id: 7, name: "Rustic Jaali Bangles", price: 1599, desc: "A set of rustic bangles featuring traditional Jaali lattice work. Each piece carries unique handmade variations.", images: ["item7.jpg.jpg", "item7.jpg.jpg", "item7.jpg.jpg"] },
+            { id: 8, name: "Surya Motif Pendant", price: 1099, desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"] },
+            { id: 9, name: "Lotus Bloom Earrings", price: 899, desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"] },
+            { id: 10, name: "Earthy Cuff Bracelet", price: 1499, desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"] },
+            { id: 11, name: "Vintage Motif Anklet", price: 999, desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"] }
         ];
 
         function renderProducts() {
@@ -323,22 +328,56 @@
             products.forEach(p => {
                 html += `
                     <div class="product-card">
-                        <div class="product-image-wrapper"><img src="${p.img}"></div>
-                        <div class="product-info">
+                        <div class="product-image-wrapper" onclick="openProductModal(${p.id})">
+                            <img src="${p.images[0]}">
+                        </div>
+                        <div class="product-info" onclick="openProductModal(${p.id})">
                             <h4>${p.name}</h4>
                             <div class="sale-price">Rs. ${p.price}</div>
                         </div>
-                        <button class="btn-add" onclick="addToCart('${p.name}', ${p.price}, '${p.img}')">Add to Cart</button>
+                        <button class="btn-add" onclick="addToCart('${p.name}', ${p.price}, '${p.images[0]}')">QUICK ADD</button>
                     </div>`;
             });
             document.getElementById('productGrid').innerHTML = html;
         }
         renderProducts();
 
-        /* Search Overlay Controls */
+        /* PRODUCT GALLERY MODAL LOGIC */
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            
+            // Set details
+            document.getElementById('mainModalImage').src = product.images[0];
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalPrice').innerText = 'Rs. ' + product.price;
+            document.getElementById('modalDesc').innerText = product.desc;
+            
+            // Set thumbnails
+            let thumbHTML = '';
+            product.images.forEach(img => {
+                thumbHTML += `<img src="${img}" onclick="document.getElementById('mainModalImage').src='${img}'">`;
+            });
+            document.getElementById('modalThumbnails').innerHTML = thumbHTML;
+            
+            // Setup the Add button inside the modal
+            document.getElementById('modalAddBtn').onclick = function() {
+                addToCart(product.name, product.price, product.images[0]);
+                closeProductModal();
+            };
+            
+            document.getElementById('productOverlay').style.display = 'flex';
+        }
+
+        function closeProductModal(event) {
+            // Close if clicking the background overlay or the X button
+            if(!event || event.target.id === 'productOverlay') {
+                document.getElementById('productOverlay').style.display = 'none';
+            }
+        }
+
+        /* UI CONTROLS */
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
-
         function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
 
         function applyDiscount() {
@@ -354,6 +393,7 @@
             updateCartUI();
         }
 
+        /* CART LOGIC */
         function addToCart(name, price, img) {
             cart.push({name, price, img});
             updateCartUI();
