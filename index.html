@@ -9,9 +9,7 @@
     <style>
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
         
-        /* NEW COLOR PALETTE */
         body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
-        
         a { text-decoration: none; color: inherit; }
         
         /* DISCOUNT POPUP STYLING */
@@ -32,15 +30,35 @@
 
         /* HEADER & LAYOUT */
         .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #E5DBC7; border-bottom: 1px solid #85966B; position: sticky; top: 0; z-index: 100; color: #013A2D; }
-        .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; color: #013A2D; }
+        .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; }
         .header-icons { display: flex; gap: 15px; font-size: 14px; font-weight: bold; cursor: pointer; }
         
+        /* NEW SUB-NAVIGATION BAR */
+        .main-nav {
+            display: flex; justify-content: center; align-items: center; gap: 35px;
+            padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B;
+            border-top: 1px solid rgba(133, 150, 107, 0.3);
+            font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap;
+        }
+        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
+        .main-nav a:hover { color: #85966B; }
+        
+        /* SALE BADGE */
+        .sale-badge {
+            position: absolute; top: -18px; right: -12px; background-color: #D33F1F;
+            color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px;
+        }
+        .sale-badge::after {
+            content: ''; position: absolute; bottom: -4px; left: 8px;
+            border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent;
+        }
+
         .collection-header { text-align: center; padding: 40px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header p { color: #85966B; }
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
-        @media(max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } .header { flex-direction: column; padding: 15px; } }
+        @media(max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } .header { flex-direction: column; padding: 15px; gap: 10px; } .main-nav { gap: 15px; font-size: 11px; padding: 10px; } }
 
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
@@ -56,7 +74,7 @@
         .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
         .btn-add:hover { background-color: #85966B; color: #E5DBC7; }
 
-        /* CART SIDEBAR (CHECKOUT WINDOW) */
+        /* CART SIDEBAR */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 1000; transition: 0.3s; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
@@ -93,6 +111,15 @@
             <span onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</span>
         </div>
     </header>
+
+    <nav class="main-nav">
+        <a href="#">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
+        <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
+        <a href="#">STORE</a>
+        <a href="#">TRACK ORDER</a>
+        <a href="#">RETURNS / EXCHANGE</a>
+        <a href="#">CONTACT US</a>
+    </nav>
 
     <div class="collection-header">
         <h1>Handcrafted Dokra jewellery Collection</h1>
