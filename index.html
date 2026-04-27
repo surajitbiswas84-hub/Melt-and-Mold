@@ -9,14 +9,13 @@
     <style>
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
         
-        /* COLOR PALETTE */
         body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
         
-        /* DISCOUNT POPUP STYLING */
+        /* DISCOUNT POPUP */
         #discountPopup {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 58, 45, 0.8); z-index: 2000; display: flex;
+            background: rgba(1, 58, 45, 0.8); z-index: 4000; display: flex;
             align-items: center; justify-content: center;
         }
         .popup-content {
@@ -29,11 +28,46 @@
         .btn-claim { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; width: 100%; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
         .close-popup { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #013A2D; }
 
+        /* FULL WIDTH SEARCH OVERLAY */
+        .search-overlay {
+            position: fixed; top: -100%; left: 0; width: 100%; background: #ffffff; 
+            z-index: 3000; transition: top 0.4s ease-in-out; padding: 60px 20px 80px 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; color: #000;
+        }
+        .search-overlay.open { top: 0; }
+        .search-close { position: absolute; top: 20px; right: 40px; font-size: 28px; cursor: pointer; color: #999; transition: 0.3s; }
+        .search-close:hover { color: #000; }
+        .search-title { font-size: 32px; margin-bottom: 30px; font-weight: normal; color: #000; }
+        .search-input-container { max-width: 700px; margin: 0 auto; position: relative; }
+        .search-input-container input {
+            width: 100%; padding: 18px 50px 18px 20px; font-size: 16px; border: 1px solid #ccc; 
+            border-radius: 8px; outline: none; color: #000;
+        }
+        .search-input-container input:focus { border-color: #000; }
+        .search-input-container svg { position: absolute; right: 20px; top: 18px; cursor: pointer; }
+        .search-quick { margin-top: 20px; font-size: 14px; color: #555; }
+        .search-quick span { color: #000; cursor: pointer; font-weight: 500; margin-left: 5px; }
+        .search-quick span:hover { text-decoration: underline; }
+
         /* HEADER & LAYOUT */
         .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; color: #013A2D; }
-        .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; }
-        .header-icons { display: flex; gap: 15px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        
+        .header { 
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; 
+            padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; 
+            border-bottom: 1px solid #85966B;
+        }
+        .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; color: #013A2D; }
+        
+        /* BLACK LEFT ICONS */
+        .header-icons-left { display: flex; gap: 20px; align-items: center; justify-content: flex-start; }
+        .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
+        .icon-btn:hover { opacity: 0.6; }
+        .cart-badge { 
+            position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; 
+            font-size: 10px; font-weight: bold; width: 16px; height: 16px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
         
         /* NAVIGATION BAR */
         .main-nav {
@@ -45,7 +79,6 @@
         .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
         .main-nav a:hover { color: #85966B; }
         
-        /* SALE BADGE */
         .sale-badge {
             position: absolute; top: -18px; right: -12px; background-color: #D33F1F;
             color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px;
@@ -59,7 +92,13 @@
         .collection-header p { color: #85966B; }
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
-        @media(max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } .header { flex-direction: column; padding: 15px; gap: 10px; } .main-nav { gap: 15px; font-size: 11px; padding: 10px; } }
+        
+        @media(max-width: 900px) { 
+            .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
+            .header-icons-left { justify-content: center; gap: 25px; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } 
+            .main-nav { gap: 15px; font-size: 11px; padding: 10px; } 
+        }
 
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
@@ -74,8 +113,8 @@
         .btn-add:hover { background-color: #85966B; color: #E5DBC7; }
 
         /* CART SIDEBAR */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 1000; transition: 0.3s; display: flex; flex-direction: column; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 2000; transition: 0.3s; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
         .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
@@ -86,7 +125,7 @@
         .policy-box h2 { color: #013A2D; }
         .policy-box strong { color: #013A2D; }
 
-        /* NEW 4-COLUMN FOOTER */
+        /* MEGA FOOTER */
         .mega-footer {
             background-color: #85966B; color: #E5DBC7; padding: 60px 40px;
             display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px;
@@ -123,6 +162,21 @@
 </head>
 <body>
 
+    <div class="search-overlay" id="searchOverlay">
+        <span class="search-close" onclick="closeSearch()">✕</span>
+        <h2 class="search-title">Search Our Site</h2>
+        <div class="search-input-container">
+            <input type="text" placeholder="I'm looking for...">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+        <div class="search-quick">
+            Quick Search: <span>Earrings</span>, <span>Necklace</span>
+        </div>
+    </div>
+
     <div id="discountPopup">
         <div class="popup-content">
             <span class="close-popup" onclick="closePopup()">&times;</span>
@@ -136,12 +190,27 @@
     <div class="announcement-bar">FREE SHIPPING ABOVE INR 599 | USE CODE: WELCOME10</div>
 
     <header class="header">
-        <div style="flex:1"></div>
-        <div class="header-logo">MELT AND MOLD</div>
-        <div class="header-icons" style="flex: 1; justify-content: flex-end;">
-            <span onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</span>
+        <div class="header-icons-left">
+            <div class="icon-btn" onclick="openSearch()" title="Search">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <div class="icon-btn" title="Order History">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="icon-btn" title="Recently Viewed">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="icon-btn" title="Favorites">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </div>
+            <div class="icon-btn" onclick="openCart()" title="Cart">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
         </div>
-    </header>
+        
+        <div class="header-logo">MELT AND MOLD</div>
+        <div style="flex:1"></div> </header>
 
     <nav class="main-nav">
         <a href="#">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
@@ -265,6 +334,10 @@
             document.getElementById('productGrid').innerHTML = html;
         }
         renderProducts();
+
+        /* Search Overlay Controls */
+        function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
+        function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
 
         function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
 
