@@ -91,6 +91,39 @@
         .sale-badge { position: absolute; top: -18px; right: -12px; background-color: #D33F1F; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px; }
         .sale-badge::after { content: ''; position: absolute; bottom: -4px; left: 8px; border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
 
+        /* SCROLLING MARQUEE / TICKER */
+        .scrolling-ticker {
+            background-color: #85966B;
+            color: #E5DBC7;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            border-bottom: 1px solid #013A2D;
+        }
+        .ticker-wrapper {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollTicker 30s linear infinite;
+        }
+        .ticker-text {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .ticker-separator {
+            margin: 0 30px;
+            color: #013A2D;
+            font-size: 10px;
+            vertical-align: middle;
+        }
+        @keyframes scrollTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .collection-header { text-align: center; padding: 40px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header p { color: #85966B; }
         
@@ -157,8 +190,7 @@
             <span class="close-product" onclick="closeProductModal()">✕</span>
             <div class="modal-left">
                 <img id="mainModalImage" src="" alt="Product Image">
-                <div class="thumbnail-container" id="modalThumbnails">
-                    </div>
+                <div class="thumbnail-container" id="modalThumbnails"></div>
             </div>
             <div class="modal-right">
                 <h2 id="modalTitle">Product Name</h2>
@@ -194,8 +226,6 @@
         </div>
     </div>
 
-    <div class="announcement-bar">FREE SHIPPING ABOVE INR 599 | USE CODE: WELCOME10</div>
-
     <header class="header">
         <div class="header-icons-left">
             <div class="icon-btn" onclick="openSearch()" title="Search">
@@ -228,6 +258,21 @@
         <a href="#">RETURNS / EXCHANGE</a>
         <a href="#">CONTACT US</a>
     </nav>
+
+    <div class="scrolling-ticker">
+        <div class="ticker-wrapper">
+            <span class="ticker-text">COD AVAILABLE<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE GIFT ON ORDER ABOVE INR 999<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">CLEARANCE SALE IS LIVE NOW<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE SHIPPING ABOVE INR 699<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">EASY RETURN<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">COD AVAILABLE<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE GIFT ON ORDER ABOVE INR 999<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">CLEARANCE SALE IS LIVE NOW<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE SHIPPING ABOVE INR 699<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">EASY RETURN<span class="ticker-separator">✦</span></span>
+        </div>
+    </div>
 
     <div class="collection-header">
         <h1>Handcrafted Dokra jewellery Collection</h1>
@@ -308,7 +353,6 @@
         let cart = [];
         let discountActive = false;
 
-        // NEW DATA STRUCTURE: Added "images" array and "desc" for the gallery.
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"] },
             { id: 2, name: "The Golden Whorl", price: 1899, desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"] },
@@ -345,35 +389,18 @@
         /* PRODUCT GALLERY MODAL LOGIC */
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
-            
-            // Set details
             document.getElementById('mainModalImage').src = product.images[0];
             document.getElementById('modalTitle').innerText = product.name;
             document.getElementById('modalPrice').innerText = 'Rs. ' + product.price;
             document.getElementById('modalDesc').innerText = product.desc;
-            
-            // Set thumbnails
             let thumbHTML = '';
-            product.images.forEach(img => {
-                thumbHTML += `<img src="${img}" onclick="document.getElementById('mainModalImage').src='${img}'">`;
-            });
+            product.images.forEach(img => { thumbHTML += `<img src="${img}" onclick="document.getElementById('mainModalImage').src='${img}'">`; });
             document.getElementById('modalThumbnails').innerHTML = thumbHTML;
-            
-            // Setup the Add button inside the modal
-            document.getElementById('modalAddBtn').onclick = function() {
-                addToCart(product.name, product.price, product.images[0]);
-                closeProductModal();
-            };
-            
+            document.getElementById('modalAddBtn').onclick = function() { addToCart(product.name, product.price, product.images[0]); closeProductModal(); };
             document.getElementById('productOverlay').style.display = 'flex';
         }
 
-        function closeProductModal(event) {
-            // Close if clicking the background overlay or the X button
-            if(!event || event.target.id === 'productOverlay') {
-                document.getElementById('productOverlay').style.display = 'none';
-            }
-        }
+        function closeProductModal(event) { if(!event || event.target.id === 'productOverlay') { document.getElementById('productOverlay').style.display = 'none'; } }
 
         /* UI CONTROLS */
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
