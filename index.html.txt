@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heritage Crafted | Dokra Jewelry</title>
+    <title>Melt and Mold | Dokra Jewelry</title>
     
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -30,6 +30,8 @@
 
         .product-card { background: #fff; position: relative; display: flex; flex-direction: column; border: 1px solid #eaeaea; }
         .product-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* LOCKED SQUARE IMAGES */
         .product-image-wrapper { position: relative; overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: #eee; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .product-card:hover .product-image-wrapper img { transform: scale(1.05); }
@@ -69,7 +71,7 @@
 
     <header class="header">
         <div class="header-nav" style="flex: 1;"><a href="#">Earrings</a> <a href="#">Necklaces</a></div>
-        <div class="header-logo">HERITAGE CRAFTED</div>
+        <div class="header-logo">MELT AND MOLD</div>
         <div class="header-icons" style="flex: 1; justify-content: flex-end;">
             <span class="cart-icon" onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</span>
         </div>
@@ -119,7 +121,7 @@
         </div>
 
         <div class="product-card">
-            <div class="product-image-wrapper"><img src="item5.jpg.jpg"></div>
+            <div class="product-image-wrapper"><span class="badge-hot">Hot Selling</span><img src="item5.jpg.jpg"></div>
             <div class="product-info">
                 <h2 class="product-title">Mayura Statement Ring</h2>
                 <div class="product-price"><span class="regular-price">Rs. 1299</span> <span class="sale-price">Rs. 799</span></div>
@@ -164,7 +166,7 @@
         </div>
 
         <div class="product-card">
-            <div class="product-image-wrapper"><img src="item10.jpg.jpg"></div>
+            <div class="product-image-wrapper"><span class="badge-hot">Hot Selling</span><img src="item10.jpg.jpg"></div>
             <div class="product-info">
                 <h2 class="product-title">Earthy Cuff Bracelet</h2>
                 <div class="product-price"><span class="regular-price">Rs. 2299</span> <span class="sale-price">Rs. 1499</span></div>
@@ -183,9 +185,18 @@
 
     </div>
 
+    <div style="background-color: #fff; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #eaeaea; border-radius: 8px;">
+        <h2 style="letter-spacing: 1px; font-weight: normal; text-align: center; margin-top: 0;">Our Promise to You</h2>
+        <div style="font-size: 14px; color: #555; line-height: 1.8;">
+            <p><strong style="color: #2C362B;">Shipping:</strong> We proudly deliver across India. Because our pieces are carefully checked and packed, please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days depending on your city.</p>
+            <p><strong style="color: #2C362B;">Returns & Exchanges:</strong> Dokra and Jaali jewelry are handcrafted, meaning slight rustic variations are a beautiful part of the art, not defects. However, if your piece arrives damaged during transit, please send us a continuous unboxing video on WhatsApp within 24 hours of delivery, and we will happily arrange a replacement.</p>
+        </div>
+    </div>
+
     <div style="background-color: #2C362B; color: white; text-align: center; padding: 40px; margin-top: 50px;">
-        <h3 style="letter-spacing: 2px;">HERITAGE CRAFTED</h3>
-        <p style="font-size: 12px; color: #888; margin-top: 20px;">© 2026 Heritage Crafted.</p>
+        <h3 style="letter-spacing: 2px;">MELT AND MOLD</h3>
+        <p style="color: #ccc; font-style: italic;">Handcrafted in Bengal | Delivered across India</p>
+        <p style="font-size: 12px; color: #888; margin-top: 20px;">© 2026 Melt and Mold. All rights reserved.</p>
     </div>
 
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
@@ -194,8 +205,7 @@
             <h2>YOUR CART</h2>
             <span class="close-cart" onclick="closeCart()">&times;</span>
         </div>
-        <div class="cart-items-container" id="cartItems">
-            </div>
+        <div class="cart-items-container" id="cartItems"></div>
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
@@ -206,21 +216,16 @@
     </div>
 
     <script>
-        let cart = []; // This empty box holds the customer's items
+        let cart = []; 
 
-        // 1. Function to add items to cart
         function addToCart(productName, productPrice, productImage) {
             cart.push({ name: productName, price: productPrice, image: productImage });
             updateCartUI();
             openCart();
         }
 
-        // 2. Function to update the math and visuals
         function updateCartUI() {
-            // Update cart counter at the top
             document.getElementById('cart-count').innerText = cart.length;
-
-            // Generate HTML for cart items
             let cartHTML = '';
             let total = 0;
             
@@ -242,13 +247,11 @@
             document.getElementById('cartTotalValue').innerText = total;
         }
 
-        // 3. Function to remove an item
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartUI();
         }
 
-        // 4. Open and Close Cart Menu
         function openCart() {
             document.getElementById('cartSidebar').classList.add('open');
             document.getElementById('cartOverlay').style.display = 'block';
@@ -258,7 +261,6 @@
             document.getElementById('cartOverlay').style.display = 'none';
         }
 
-        // 5. THE RAZORPAY CHECKOUT TRIGGER
         function payWithRazorpay() {
             if(cart.length === 0) {
                 alert("Please add an item to your cart first!");
@@ -268,16 +270,15 @@
             let totalAmount = document.getElementById('cartTotalValue').innerText;
 
             var options = {
-                // IMPORTANT: Replace the 'key' below with your actual Razorpay Key ID
+                // IMPORTANT: Replace this 'key' with your actual live Razorpay Key
                 "key": "rzp_test_YOUR_KEY_HERE", 
-                "amount": totalAmount * 100, // Razorpay calculates in paise (so we multiply by 100)
+                "amount": totalAmount * 100, 
                 "currency": "INR",
-                "name": "Heritage Crafted",
+                "name": "Melt and Mold",
                 "description": "Dokra Jewelry Purchase",
-                "theme": { "color": "#2C362B" }, // Matches your green brand color
+                "theme": { "color": "#2C362B" }, 
                 "handler": function (response) {
                     alert("Payment Successful! Your Reference ID is: " + response.razorpay_payment_id);
-                    // Empty the cart after successful payment
                     cart = [];
                     updateCartUI();
                     closeCart();
