@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melt and Mold | Dokra Jewelry</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
@@ -12,7 +17,7 @@
         body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
         
-        /* MODALS & OVERLAYS (Discount, Search, Product) */
+        /* MODALS & OVERLAYS */
         #discountPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5000; display: flex; align-items: center; justify-content: center; }
         .popup-content { background: #E5DBC7; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; position: relative; border: 2px solid #013A2D; color: #85966B; }
         .popup-content h2 { color: #013A2D; margin-bottom: 10px; }
@@ -45,7 +50,7 @@
         .modal-desc { line-height: 1.8; margin-bottom: 30px; color: #013A2D; font-size: 15px; }
         #modalAddBtn { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px;}
 
-        /* NEW CONTACT US MODAL */
+        /* CONTACT US MODAL */
         .contact-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5500; display: none; align-items: center; justify-content: center; padding: 20px; }
         .contact-modal { background: #E5DBC7; width: 800px; max-width: 100%; max-height: 90vh; border-radius: 8px; overflow-y: auto; position: relative; border: 1px solid #85966B; box-shadow: 0 20px 40px rgba(0,0,0,0.3); padding: 50px 40px; color: #013A2D; }
         .close-contact { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; font-weight: bold; }
@@ -82,8 +87,17 @@
         .ticker-separator { margin: 0 30px; color: #013A2D; font-size: 10px; vertical-align: middle; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .collection-header { text-align: center; padding: 40px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
-        .collection-header p { color: #85966B; }
+        /* MONTSERRAT FONT APPLIED HERE */
+        .collection-header { text-align: center; padding: 50px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
+        .collection-header h1 { 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 700; 
+            font-size: 36px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase; /* Ensures bold impact */
+        }
+        .collection-header p { color: #85966B; margin: 0; font-size: 16px;}
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
         @media(max-width: 900px) { 
@@ -95,6 +109,7 @@
             .modal-left, .modal-right { width: 100%; padding: 20px; }
             .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
             .contact-form-row { flex-direction: column; gap: 15px; }
+            .collection-header h1 { font-size: 26px; }
         }
 
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
@@ -138,15 +153,12 @@
     <div class="contact-overlay" id="contactOverlay" onclick="closeContact(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
             <span class="close-contact" onclick="closeContact()">✕</span>
-            
             <h2>Need Any Help?</h2>
             <p>We're a young company and always try our best to provide a superior customer care service.</p>
             <p>We're all ears to your queries, so feel free to reach out for anything.</p>
-            <p style="font-weight: bold; color: #013A2D; margin-top: 15px;">Customer Support: wecare@meltandmold.com | +91 9123980569</p>
-            
+            <p style="font-weight: bold; color: #013A2D; margin-top: 15px;">Customer Support: wecare@meltandmold.com | +91 98765 43210</p>
             <h3>Get In Touch</h3>
             <p>We'd love to hear from you about our entire service. Your comments and suggestions will be highly appreciated. Please complete the form below.</p>
-            
             <form class="contact-form" onsubmit="submitContact(event)">
                 <div class="contact-form-row">
                     <input type="text" placeholder="Name" required>
