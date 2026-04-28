@@ -113,11 +113,20 @@
         .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
         .icon-btn:hover { opacity: 0.6; }
         .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .cart-badge.bump { transform: scale(1.3); background-color: #013A2D; } /* Tiny animation class for when item is added */
+        .cart-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
         
         .main-nav { display: flex; justify-content: center; align-items: center; gap: 35px; padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
         .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
         .main-nav a:hover { color: #85966B; }
+        
+        /* CATEGORY DROPDOWN CSS */
+        .dropdown { position: relative; display: inline-block; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; background-color: #E5DBC7; min-width: 180px; box-shadow: 0px 8px 16px rgba(1, 58, 45, 0.2); z-index: 2000; border: 1px solid #85966B; border-radius: 4px; top: 100%; left: 0; overflow: hidden; }
+        .dropdown-content a { color: #013A2D; padding: 12px 16px; text-decoration: none; display: block; font-weight: bold; font-size: 12px; border-bottom: 1px solid rgba(133, 150, 107, 0.3); transition: 0.3s; text-transform: uppercase; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: #85966B; color: #E5DBC7; }
+        .dropdown:hover .dropdown-content { display: block; }
+
         .sale-badge { position: absolute; top: -18px; right: -12px; background-color: #D33F1F; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px; }
         .sale-badge::after { content: ''; position: absolute; bottom: -4px; left: 8px; border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
 
@@ -128,7 +137,7 @@
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .collection-header { text-align: center; padding: 30px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
-        .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; }
+        .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; transition: 0.3s; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
@@ -461,7 +470,17 @@
     </header>
 
     <nav class="main-nav">
-        <a href="#" onclick="resetSearch()">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
+        <div class="dropdown">
+            <a href="#" style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
+            <div class="dropdown-content">
+                <a href="#" onclick="filterCategory('All')">ALL JEWELRY</a>
+                <a href="#" onclick="filterCategory('Earrings')">EARRINGS</a>
+                <a href="#" onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
+                <a href="#" onclick="filterCategory('Rings')">RINGS</a>
+                <a href="#" onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
+                <a href="#" onclick="filterCategory('Anklets')">ANKLETS</a>
+            </div>
+        </div>
         <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
         <a href="#" onclick="resetSearch()">STORE</a>
         <a href="#">TRACK ORDER</a>
@@ -485,7 +504,7 @@
     </div>
 
     <div class="collection-header">
-        <h1>Handcrafted Dokra jewellery Collection</h1>
+        <h1 id="mainGridTitle">Handcrafted Dokra jewellery Collection</h1>
         <p>Where 4000 years of ancient artistry meet timeless elegance</p>
     </div>
 
@@ -593,22 +612,21 @@
         let cart = [];
         let discountActive = false;
         let donationAmount = 0; 
-        
-        // Variable to hold the current modal product for the Add to Cart button inside the modal
         let currentModalProduct = null;
 
+        // UPDATED PRODUCT ARRAY WITH CATEGORIES
         const products = [
-            { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
-            { id: 2, name: "The Golden Whorl", price: 1899, desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
-            { id: 3, name: "Hellenic Dhara Drops", price: 1299, desc: "Elegant drop earrings that blend traditional Dokra motifs with modern, minimalist lines.", images: ["item3.jpg.jpg", "item3.jpg.jpg", "item3.jpg.jpg"], video: "item3_video.mp4" },
-            { id: 4, name: "Swarnarekha Filigree", price: 999, desc: "Lightweight hoop earrings featuring intricate filigree work. Perfect for daily wear.", images: ["item4.jpg.jpg", "item4.jpg.jpg", "item4.jpg.jpg"], video: "item4_video.mp4" },
-            { id: 5, name: "Mayura Statement Ring", price: 799, desc: "An eye-catching ring inspired by the grace of the peacock. Adjustable fit.", images: ["item5.jpg.jpg", "item5.jpg.jpg", "item5.jpg.jpg"], video: "item5_video.mp4" },
-            { id: 6, name: "Tribal Bell Choker", price: 2199, desc: "A stunning choker necklace featuring traditional bell motifs. A true masterpiece of tribal art.", images: ["item6.jpg.jpg", "item6.jpg.jpg", "item6.jpg.jpg"], video: "item6_video.mp4" },
-            { id: 7, name: "Rustic Jaali Bangles", price: 1599, desc: "A set of rustic bangles featuring traditional Jaali lattice work. Each piece carries unique handmade variations.", images: ["item7.jpg.jpg", "item7.jpg.jpg", "item7.jpg.jpg"], video: "item7_video.mp4" },
-            { id: 8, name: "Surya Motif Pendant", price: 1099, desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"], video: "item8_video.mp4" },
-            { id: 9, name: "Lotus Bloom Earrings", price: 899, desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
-            { id: 10, name: "Earthy Cuff Bracelet", price: 1499, desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
-            { id: 11, name: "Vintage Motif Anklet", price: 999, desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
+            { id: 1, name: "Prakriti Lattice Earrings", price: 1499, category: "Earrings", desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
+            { id: 2, name: "The Golden Whorl", price: 1899, category: "Necklaces", desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
+            { id: 3, name: "Hellenic Dhara Drops", price: 1299, category: "Earrings", desc: "Elegant drop earrings that blend traditional Dokra motifs with modern, minimalist lines.", images: ["item3.jpg.jpg", "item3.jpg.jpg", "item3.jpg.jpg"], video: "item3_video.mp4" },
+            { id: 4, name: "Swarnarekha Filigree", price: 999, category: "Earrings", desc: "Lightweight hoop earrings featuring intricate filigree work. Perfect for daily wear.", images: ["item4.jpg.jpg", "item4.jpg.jpg", "item4.jpg.jpg"], video: "item4_video.mp4" },
+            { id: 5, name: "Mayura Statement Ring", price: 799, category: "Rings", desc: "An eye-catching ring inspired by the grace of the peacock. Adjustable fit.", images: ["item5.jpg.jpg", "item5.jpg.jpg", "item5.jpg.jpg"], video: "item5_video.mp4" },
+            { id: 6, name: "Tribal Bell Choker", price: 2199, category: "Necklaces", desc: "A stunning choker necklace featuring traditional bell motifs. A true masterpiece of tribal art.", images: ["item6.jpg.jpg", "item6.jpg.jpg", "item6.jpg.jpg"], video: "item6_video.mp4" },
+            { id: 7, name: "Rustic Jaali Bangles", price: 1599, category: "Bracelets", desc: "A set of rustic bangles featuring traditional Jaali lattice work. Each piece carries unique handmade variations.", images: ["item7.jpg.jpg", "item7.jpg.jpg", "item7.jpg.jpg"], video: "item7_video.mp4" },
+            { id: 8, name: "Surya Motif Pendant", price: 1099, category: "Necklaces", desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"], video: "item8_video.mp4" },
+            { id: 9, name: "Lotus Bloom Earrings", price: 899, category: "Earrings", desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
+            { id: 10, name: "Earthy Cuff Bracelet", price: 1499, category: "Bracelets", desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
+            { id: 11, name: "Vintage Motif Anklet", price: 999, category: "Anklets", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
         ];
 
         function renderProducts(productArray = products) {
@@ -634,16 +652,34 @@
         }
         renderProducts();
 
+        /* NEW CATEGORY FILTER LOGIC */
+        function filterCategory(cat) {
+            if(cat === 'All') {
+                renderProducts(products);
+                document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra jewellery Collection";
+            } else {
+                let filtered = products.filter(p => p.category === cat);
+                renderProducts(filtered);
+                document.getElementById('mainGridTitle').innerText = "Dokra " + cat;
+            }
+            document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function executeSearch() {
             let query = document.getElementById('searchInput').value.toLowerCase();
             let filteredProducts = products.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
             renderProducts(filteredProducts);
+            document.getElementById('mainGridTitle').innerText = "Search Results";
             closeSearch();
             document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
         }
         function handleSearchKey(event) { if (event.key === 'Enter') { executeSearch(); } }
         function quickSearch(term) { document.getElementById('searchInput').value = term; executeSearch(); }
-        function resetSearch() { document.getElementById('searchInput').value = ''; renderProducts(products); }
+        function resetSearch() { 
+            document.getElementById('searchInput').value = ''; 
+            document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra jewellery Collection";
+            renderProducts(products); 
+        }
 
         function openContact(event) { if(event) event.preventDefault(); document.getElementById('contactOverlay').style.display = 'flex'; }
         function closeContact(event) { if(!event || event.target.id === 'contactOverlay' || !event.target) { document.getElementById('contactOverlay').style.display = 'none'; } }
@@ -663,7 +699,7 @@
 
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
-            currentModalProduct = product; // Store the product being viewed
+            currentModalProduct = product; 
             
             document.getElementById('mainModalImage').style.display = 'block';
             document.getElementById('mainModalVideo').style.display = 'none';
@@ -731,7 +767,6 @@
         function addToCart(name, price, img) { 
             cart.push({name, price, img}); 
             
-            // Add a little visual bump animation to the cart badge when an item is added silently
             const badge = document.getElementById('cart-count');
             badge.classList.add('bump');
             setTimeout(() => { badge.classList.remove('bump'); }, 300);
