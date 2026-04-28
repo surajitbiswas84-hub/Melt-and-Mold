@@ -476,6 +476,9 @@
                 <a href="#" onclick="filterCategory('All')">ALL JEWELRY</a>
                 <a href="#" onclick="filterCategory('Earrings')">EARRINGS</a>
                 <a href="#" onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
+                <a href="#" onclick="filterCategory('Rings')">RINGS</a>
+                <a href="#" onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
+                <a href="#" onclick="filterCategory('Anklets')">ANKLETS</a>
             </div>
         </div>
         <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
@@ -611,7 +614,6 @@
         let donationAmount = 0; 
         let currentModalProduct = null;
 
-        // UPDATED PRODUCT ARRAY WITH YOUR NEW NAMES
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, category: "Earrings", desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
             { id: 2, name: "The Golden Whorl Earrings", price: 1899, category: "Earrings", desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
@@ -623,7 +625,34 @@
             { id: 8, name: "Surya Motif Pendant necklace", price: 1099, category: "Necklaces", desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"], video: "item8_video.mp4" },
             { id: 9, name: "Lotus Bloom necklace", price: 899, category: "Necklaces", desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
             { id: 10, name: "Earthy Cuff Earrings", price: 1499, category: "Earrings", desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
-            { id: 11, name: "Vintage Motif Earrings", price: 999, category: "Earrings", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
+            { id: 11, name: "Vintage Motif Earrings", price: 999, category: "Earrings", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" },
+            
+            // --- NEW BATCH OF 25 PRODUCTS ---
+            { id: 12, name: "Tribal Sunburst Ring", price: 699, category: "Rings", desc: "A bold, rustic ring featuring a radiating sun pattern. Hand-cast by artisans in West Bengal.", images: ["item12.jpg.jpg", "item12.jpg.jpg", "item12.jpg.jpg"], video: "item12_video.mp4" },
+            { id: 13, name: "Nandi Bull Motif Pendant", price: 1199, category: "Necklaces", desc: "An intricate pendant honoring the sacred Nandi bull, suspended on a traditional thread.", images: ["item13.jpg.jpg", "item13.jpg.jpg", "item13.jpg.jpg"], video: "item13_video.mp4" },
+            { id: 14, name: "Ghungroo Melody Anklet", price: 1099, category: "Anklets", desc: "A beautiful, jiggling anklet adorned with tiny brass ghungroo bells.", images: ["item14.jpg.jpg", "item14.jpg.jpg", "item14.jpg.jpg"], video: "item14_video.mp4" },
+            { id: 15, name: "Earthy Spiral Hoop Earrings", price: 899, category: "Earrings", desc: "Classic hoop earrings with a signature tribal spiral design for everyday wear.", images: ["item15.jpg.jpg", "item15.jpg.jpg", "item15.jpg.jpg"], video: "item15_video.mp4" },
+            { id: 16, name: "Mohenjo-Daro Heritage Choker", price: 2499, category: "Necklaces", desc: "A heavy, statement choker piece that echoes the 4000-year-old origins of the Dokra art form.", images: ["item16.jpg.jpg", "item16.jpg.jpg", "item16.jpg.jpg"], video: "item16_video.mp4" },
+            { id: 17, name: "Forest Vine Bangle", price: 1299, category: "Bracelets", desc: "A singular, solid brass bangle featuring an entwined vine motif inspired by nature.", images: ["item17.jpg.jpg", "item17.jpg.jpg", "item17.jpg.jpg"], video: "item17_video.mp4" },
+            { id: 18, name: "Rustic Owl Statement Ring", price: 849, category: "Rings", desc: "A symbol of wisdom, this detailed owl ring is an excellent conversation starter.", images: ["item18.jpg.jpg", "item18.jpg.jpg", "item18.jpg.jpg"], video: "item18_video.mp4" },
+            { id: 19, name: "Dhokra Elephant Pendant", price: 1399, category: "Necklaces", desc: "A majestic royal elephant pendant, heavily detailed using the lost-wax method.", images: ["item19.jpg.jpg", "item19.jpg.jpg", "item19.jpg.jpg"], video: "item19_video.mp4" },
+            { id: 20, name: "Ancient Coin Drop Earrings", price: 949, category: "Earrings", desc: "Lightweight earrings modeled after ancient tribal currency.", images: ["item20.jpg.jpg", "item20.jpg.jpg", "item20.jpg.jpg"], video: "item20_video.mp4" },
+            { id: 21, name: "Braided Brass Cuff", price: 1599, category: "Bracelets", desc: "An open-ended cuff bracelet featuring a thick, braided metal texture.", images: ["item21.jpg.jpg", "item21.jpg.jpg", "item21.jpg.jpg"], video: "item21_video.mp4" },
+            { id: 22, name: "Peacock Feather Motif Anklet", price: 1149, category: "Anklets", desc: "A delicate anklet with abstract peacock feather charms.", images: ["item22.jpg.jpg", "item22.jpg.jpg", "item22.jpg.jpg"], video: "item22_video.mp4" },
+            { id: 23, name: "Matsya Fish Earrings", price: 799, category: "Earrings", desc: "A traditional fish motif representing prosperity and life, cast in solid brass.", images: ["item23.jpg.jpg", "item23.jpg.jpg", "item23.jpg.jpg"], video: "item23_video.mp4" },
+            { id: 24, name: "Traditional Mango Mala", price: 2799, category: "Necklaces", desc: "A grand, festive necklace featuring consecutive mango motifs (Paisley).", images: ["item24.jpg.jpg", "item24.jpg.jpg", "item24.jpg.jpg"], video: "item24_video.mp4" },
+            { id: 25, name: "Warli Art Bangle Set", price: 1899, category: "Bracelets", desc: "A set of three bangles etched with minimalist tribal figures.", images: ["item25.jpg.jpg", "item25.jpg.jpg", "item25.jpg.jpg"], video: "item25_video.mp4" },
+            { id: 26, name: "Sacred Tortoise Ring", price: 749, category: "Rings", desc: "A symbol of longevity and stability, beautifully cast to wrap around your finger.", images: ["item26.jpg.jpg", "item26.jpg.jpg", "item26.jpg.jpg"], video: "item26_video.mp4" },
+            { id: 27, name: "Boond Drop Pendant", price: 899, category: "Necklaces", desc: "A minimalist teardrop pendant showing the pure, unpolished shine of Dokra brass.", images: ["item27.jpg.jpg", "item27.jpg.jpg", "item27.jpg.jpg"], video: "item27_video.mp4" },
+            { id: 28, name: "Temple Bell Jhumkas", price: 1499, category: "Earrings", desc: "Classic Indian Jhumkas executed in the rustic Dokra style. Heavy and resonant.", images: ["item28.jpg.jpg", "item28.jpg.jpg", "item28.jpg.jpg"], video: "item28_video.mp4" },
+            { id: 29, name: "Woven Wire Armlet", price: 1699, category: "Bracelets", desc: "A flexible, woven brass band designed to be worn on the upper arm or wrist.", images: ["item29.jpg.jpg", "item29.jpg.jpg", "item29.jpg.jpg"], video: "item29_video.mp4" },
+            { id: 30, name: "Tribal Warrior Necklace", price: 2299, category: "Necklaces", desc: "A fierce, geometric necklace originally inspired by tribal armor adornments.", images: ["item30.jpg.jpg", "item30.jpg.jpg", "item30.jpg.jpg"], video: "item30_video.mp4" },
+            { id: 31, name: "Minimalist Brass Bands", price: 999, category: "Bracelets", desc: "A set of simple, unadorned brass bands that look beautiful when stacked.", images: ["item31.jpg.jpg", "item31.jpg.jpg", "item31.jpg.jpg"], video: "item31_video.mp4" },
+            { id: 32, name: "Surya Rays Studs", price: 599, category: "Earrings", desc: "Small, sun-shaped stud earrings. Perfect for subtle, everyday wear.", images: ["item32.jpg.jpg", "item32.jpg.jpg", "item32.jpg.jpg"], video: "item32_video.mp4" },
+            { id: 33, name: "Vintage Leaf Ring", price: 649, category: "Rings", desc: "An open, adjustable ring featuring two textured leaves.", images: ["item33.jpg.jpg", "item33.jpg.jpg", "item33.jpg.jpg"], video: "item33_video.mp4" },
+            { id: 34, name: "Damar Tribe Torc", price: 1999, category: "Necklaces", desc: "A solid, open-ended neck ring (torc) that rests beautifully on the collarbone.", images: ["item34.jpg.jpg", "item34.jpg.jpg", "item34.jpg.jpg"], video: "item34_video.mp4" },
+            { id: 35, name: "Dancing Girl Figurine Pendant", price: 1299, category: "Necklaces", desc: "A wearable miniature of the famous ancient dancing girl statue.", images: ["item35.jpg.jpg", "item35.jpg.jpg", "item35.jpg.jpg"], video: "item35_video.mp4" },
+            { id: 36, name: "Classic Ghungroo Bangle", price: 1399, category: "Bracelets", desc: "A single, thick bangle adorned with chiming bells. A traditional favorite.", images: ["item36.jpg.jpg", "item36.jpg.jpg", "item36.jpg.jpg"], video: "item36_video.mp4" }
         ];
 
         function renderProducts(productArray = products) {
