@@ -130,6 +130,7 @@
         .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
+        /* RESTORED PRODUCT GRID CSS */
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
         
         /* CART SPECIFIC CSS */
@@ -186,6 +187,16 @@
         .newsletter-input { flex-grow: 1; padding: 12px; border: 1px solid #E5DBC7; background: #fff; color: #013A2D; border-radius: 4px; outline: none; font-size: 14px; }
         .newsletter-btn { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
         .bottom-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 20px; font-size: 12px; opacity: 0.8; }
+
+        /* RESTORED PRODUCT CARD CSS */
+        .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
+        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; cursor: pointer;}
+        .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; color: #85966B; cursor: pointer;}
+        .product-info h4 { margin: 0 0 8px 0; color: #013A2D; }
+        .sale-price { font-weight: bold; font-size: 1.1em; color: #85966B; }
+        .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
     </style>
 </head>
 <body>
@@ -418,8 +429,8 @@
         <p>Where 4000 years of ancient artistry meet timeless elegance</p>
     </div>
 
-    <div class="grid-container" id="productGridContainer">
-        <div class="grid-container" id="productGrid" style="padding: 0; display: contents;"></div>
+    <div id="productGridContainer">
+        <div class="grid-container" id="productGrid"></div>
     </div>
 
     <div class="policy-box">
@@ -612,7 +623,7 @@
         function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
 
         /* CART COUPON & DONATION LOGIC */
-        function applyDiscount() { // Popup logic
+        function applyDiscount() { 
             let phone = document.getElementById('userPhone').value;
             if(phone.length < 10) { alert("Please enter a valid WhatsApp number"); return; }
             discountActive = true;
@@ -625,7 +636,7 @@
             updateCartUI();
         }
 
-        function applyCartCoupon() { // Cart sidebar logic
+        function applyCartCoupon() { 
             let code = document.getElementById('cartCouponInput').value.trim().toUpperCase();
             if(code === 'WELCOME10') {
                 discountActive = true;
@@ -637,7 +648,6 @@
         }
 
         function setDonation(amount) {
-            // Toggle off if clicking the same amount twice
             if(donationAmount === amount) {
                 donationAmount = 0; 
             } else {
@@ -665,7 +675,6 @@
             
             let final = subtotal;
 
-            // Handle Discount
             if(discountActive && subtotal > 0) {
                 let discount = Math.round(subtotal * 0.10);
                 final = final - discount;
@@ -675,7 +684,6 @@
                 document.getElementById('discountRow').style.display = 'none';
             }
 
-            // Handle Donation
             if(donationAmount > 0 && subtotal > 0) {
                 final = final + donationAmount;
                 document.getElementById('donationDisplayRow').style.display = 'flex';
@@ -684,7 +692,6 @@
                 document.getElementById('donationDisplayRow').style.display = 'none';
             }
 
-            // Update Active Class on Donation Buttons
             let donationBtns = document.querySelectorAll('.donation-btn');
             donationBtns.forEach(btn => {
                 if(parseInt(btn.innerText.replace('₹','')) === donationAmount) {
@@ -713,7 +720,7 @@
                 "handler": function (response) { 
                     alert("Order Placed successfully! ID: " + response.razorpay_payment_id + ". Thank you for supporting the Dhokra Damar artisans!"); 
                     cart=[]; 
-                    donationAmount = 0; // Reset donation
+                    donationAmount = 0;
                     updateCartUI(); 
                     closeCart(); 
                 }
