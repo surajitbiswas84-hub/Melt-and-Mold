@@ -130,7 +130,6 @@
         .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
-        /* RESTORED PRODUCT GRID CSS */
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
         
         /* CART SPECIFIC CSS */
@@ -150,7 +149,7 @@
         .donation-btn { flex: 1; padding: 8px 0; border: 1px solid #85966B; background: transparent; color: #E5DBC7; cursor: pointer; border-radius: 4px; transition: 0.3s; font-weight: bold; font-size: 13px;}
         .donation-btn.active, .donation-btn:hover { background: #85966B; color: #013A2D; }
         .cart-disclaimer { font-size: 10px; line-height: 1.4; margin-bottom: 15px; color: #a3b887; text-align: center; }
-        .cart-disclaimer a { color: #E5DBC7; text-decoration: underline; transition: 0.3s; }
+        .cart-disclaimer a { color: #E5DBC7; text-decoration: underline; transition: 0.3s; cursor: pointer; }
         .cart-disclaimer a:hover { color: #fff; }
         
         .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
@@ -188,7 +187,6 @@
         .newsletter-btn { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
         .bottom-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 20px; font-size: 12px; opacity: 0.8; }
 
-        /* RESTORED PRODUCT CARD CSS */
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
         .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; cursor: pointer;}
@@ -260,10 +258,75 @@
         </div>
     </div>
 
+    <div class="contact-overlay" id="privacyOverlay" onclick="closePrivacy(event)">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <span class="close-contact" onclick="closePrivacy()">✕</span>
+            <h2>Privacy Policy</h2>
+            <div class="policy-content">
+                <h3>1. Introduction</h3>
+                <p>At meltandmold.com, we respect your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data.</p>
+                <p>We do not share your personal information with others except as required to fulfill the services requested by you. This may include sharing information with trusted partners for order processing and informing you about promotional offers.</p>
+                <p>You may choose to cancel your registration at any time; however, your information may remain archived on meltandmold.com servers.</p>
+                <p><em>Policy Effective Date: 7th July 2022</em></p>
+
+                <h3>2. Information We Collect</h3>
+                <p>We may collect the following information:</p>
+                <ul>
+                    <li>Name and job title</li>
+                    <li>Contact information including email address</li>
+                    <li>Demographic information such as postcode, preferences, and interests</li>
+                    <li>Other information relevant to customer surveys and/or offers</li>
+                </ul>
+
+                <h3>3. How We Use the Information</h3>
+                <p>We collect this information to better understand your needs and provide improved services. Specifically, we use your information for:</p>
+                <ul>
+                    <li>Internal record keeping</li>
+                    <li>Improving our products and services</li>
+                    <li>Sending promotional emails about new products, special offers, or relevant updates</li>
+                    <li>Conducting market research (via email, phone, or other communication methods)</li>
+                    <li>Customizing the website according to your interests</li>
+                </ul>
+
+                <h3>4. Security</h3>
+                <p>We are committed to ensuring that your information is secure. We have implemented appropriate physical, electronic, and managerial procedures to safeguard and secure the information we collect online and prevent unauthorized access or disclosure.</p>
+
+                <h3>5. Cookies</h3>
+                <p>A cookie is a small file placed on your device to help analyze web traffic or enhance your browsing experience.</p>
+                <p>We use cookies to:</p>
+                <ul>
+                    <li>Identify which pages are being used</li>
+                    <li>Analyze website traffic and improve performance</li>
+                    <li>Customize website content based on user preferences</li>
+                </ul>
+                <p>Cookies do not give us access to your computer or personal data beyond what you choose to share.</p>
+                <p>You may choose to accept or decline cookies through your browser settings. Disabling cookies may affect certain website functionalities.</p>
+
+                <h3>6. Links to Other Websites</h3>
+                <p>Our website may contain links to external websites. Once you leave meltandmold.com, we do not have control over those sites and are not responsible for the protection and privacy of any information you provide there. We recommend reviewing the privacy policies of those websites.</p>
+
+                <h3>7. Controlling Your Personal Information</h3>
+                <p>You can restrict or control the use of your personal information in the following ways:</p>
+                <ul>
+                    <li>Look for options in forms to opt out of direct marketing communications</li>
+                    <li>If you previously consented to marketing, you may withdraw consent anytime by contacting us at: <strong>care.meltandmold@gmail.com</strong></li>
+                </ul>
+                <p>We will not sell, distribute, or lease your personal information to third parties without your permission, unless required by law. We may send promotional information about third parties only if you opt in.</p>
+
+                <h3>8. Access to Your Information</h3>
+                <p>You may request details of the personal information we hold about you under applicable data protection laws. A nominal fee may apply.</p>
+                <p>If you believe any information we hold about you is incorrect or incomplete, please contact us at the email above. We will promptly correct any inaccuracies.</p>
+
+                <h3>9. Policy Updates</h3>
+                <p>meltandmold.com may update this Privacy Policy from time to time. We encourage you to review this page periodically to stay informed about any changes.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="contact-overlay" id="tosOverlay" onclick="closeTos(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
             <span class="close-contact" onclick="closeTos()">✕</span>
-            <h2>Terms of Service & Privacy Policy</h2>
+            <h2>Terms of Service</h2>
             <div class="policy-content">
                 <h3>1. Introduction</h3>
                 <p>Welcome to meltandmold.com. By accessing or using this website, you agree to be bound by the following Terms of Service. If you do not agree with any part of these terms, you should not use this website.</p>
@@ -464,7 +527,7 @@
                 <li><a href="#" onclick="openTos(event)">Terms Of Service</a></li>
                 <li><a href="#" onclick="openShipping(event)">Shipping Policy</a></li>
                 <li><a href="#">Refund Policy</a></li>
-                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#" onclick="openPrivacy(event)">Privacy Policy</a></li>
             </ul>
         </div>
         <div>
@@ -527,7 +590,7 @@
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
             
-            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to the meltandmold's <a href="#" onclick="openTos(event)">terms of use and privacy policy</a>.</p>
+            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to meltandmold's <a href="#" onclick="openTos(event)">terms of use</a> and <a href="#" onclick="openPrivacy(event)">privacy policy</a>.</p>
             
             <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
         </div>
@@ -536,7 +599,7 @@
     <script>
         let cart = [];
         let discountActive = false;
-        let donationAmount = 0; // State for tracking artisan donation
+        let donationAmount = 0; 
 
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
@@ -599,6 +662,10 @@
         function openAbout(event) { if(event) event.preventDefault(); document.getElementById('aboutOverlay').style.display = 'flex'; }
         function closeAbout(event) { if(!event || event.target.id === 'aboutOverlay' || !event.target) { document.getElementById('aboutOverlay').style.display = 'none'; } }
 
+        /* NEW PRIVACY LOGIC */
+        function openPrivacy(event) { if(event) event.preventDefault(); document.getElementById('privacyOverlay').style.display = 'flex'; }
+        function closePrivacy(event) { if(!event || event.target.id === 'privacyOverlay' || !event.target) { document.getElementById('privacyOverlay').style.display = 'none'; } }
+
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
             document.getElementById('mainModalImage').style.display = 'block';
@@ -622,7 +689,6 @@
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
         function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
 
-        /* CART COUPON & DONATION LOGIC */
         function applyDiscount() { 
             let phone = document.getElementById('userPhone').value;
             if(phone.length < 10) { alert("Please enter a valid WhatsApp number"); return; }
