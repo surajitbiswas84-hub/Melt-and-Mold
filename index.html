@@ -42,7 +42,8 @@
         .search-input-container input { width: 100%; padding: 18px 50px 18px 20px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; outline: none; color: #000; }
         .search-input-container svg { position: absolute; right: 20px; top: 18px; cursor: pointer; }
         .search-quick { margin-top: 20px; font-size: 14px; color: #555; }
-        .search-quick span { color: #000; cursor: pointer; font-weight: 500; margin-left: 5px; }
+        .search-quick span { color: #000; cursor: pointer; font-weight: 500; margin-left: 5px; transition: 0.3s; }
+        .search-quick span:hover { color: #85966B; text-decoration: underline; }
 
         .product-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .product-modal { background: #E5DBC7; width: 900px; max-width: 100%; max-height: 90vh; border-radius: 8px; display: flex; overflow: hidden; position: relative; border: 1px solid #85966B; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
@@ -96,6 +97,7 @@
             font-weight: normal; 
             letter-spacing: 1px; 
             text-align: center; color: #013A2D; 
+            cursor: pointer; /* Added cursor pointer to logo so they can click it to reset search */
         }
         
         .rotating-logo { 
@@ -313,14 +315,14 @@
         <span class="search-close" onclick="closeSearch()">✕</span>
         <h2 class="search-title">Search Our Site</h2>
         <div class="search-input-container">
-            <input type="text" placeholder="I'm looking for...">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <input type="text" id="searchInput" placeholder="I'm looking for..." onkeypress="handleSearchKey(event)">
+            <svg onclick="executeSearch()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
         </div>
         <div class="search-quick">
-            Quick Search: <span>Earrings</span>, <span>Necklace</span>
+            Quick Search: <span onclick="quickSearch('Earrings')">Earrings</span>, <span onclick="quickSearch('Necklace')">Necklace</span>
         </div>
     </div>
 
@@ -354,7 +356,7 @@
             </div>
         </div>
         
-        <div class="header-logo">
+        <div class="header-logo" onclick="resetSearch()">
             <img src="logo.png.png" alt="MAM Circular Logo" class="rotating-logo">
             MELT AND MOLD
         </div>
@@ -363,9 +365,9 @@
     </header>
 
     <nav class="main-nav">
-        <a href="#">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
+        <a href="#" onclick="resetSearch()">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
         <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
-        <a href="#">STORE</a>
+        <a href="#" onclick="resetSearch()">STORE</a>
         <a href="#">TRACK ORDER</a>
         <a href="#">RETURNS / EXCHANGE</a>
         <a href="#" onclick="openContact(event)">CONTACT US</a>
@@ -391,7 +393,9 @@
         <p>Where 4000 years of ancient artistry meet timeless elegance</p>
     </div>
 
-    <div class="grid-container" id="productGrid"></div>
+    <div class="grid-container" id="productGridContainer">
+        <div class="grid-container" id="productGrid" style="padding: 0; display: contents;"></div>
+    </div>
 
     <div class="policy-box">
         <h2 style="letter-spacing: 1px; font-weight: normal; text-align: center; margin-top: 0;">Our Promise to You</h2>
@@ -465,7 +469,6 @@
         let cart = [];
         let discountActive = false;
 
-        // FIXED THE VIDEO FILE NAME FOR ITEM 1 HERE!
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
             { id: 2, name: "The Golden Whorl", price: 1899, desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
@@ -480,24 +483,63 @@
             { id: 11, name: "Vintage Motif Anklet", price: 999, desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
         ];
 
-        function renderProducts() {
+        // UPDATED RENDER FUNCTION TO ACCEPT SEARCH RESULTS
+        function renderProducts(productArray = products) {
             let html = '';
-            products.forEach(p => {
-                html += `
-                    <div class="product-card">
-                        <div class="product-image-wrapper" onclick="openProductModal(${p.id})">
-                            <img src="${p.images[0]}">
-                        </div>
-                        <div class="product-info" onclick="openProductModal(${p.id})">
-                            <h4>${p.name}</h4>
-                            <div class="sale-price">Rs. ${p.price}</div>
-                        </div>
-                        <button class="btn-add" onclick="addToCart('${p.name}', ${p.price}, '${p.images[0]}')">QUICK ADD</button>
-                    </div>`;
-            });
+            
+            if (productArray.length === 0) {
+                html = '<div style="grid-column: 1 / -1; text-align: center; font-size: 20px; padding: 40px; color: #013A2D; font-weight: bold;">No products found matching your search.</div>';
+            } else {
+                productArray.forEach(p => {
+                    html += `
+                        <div class="product-card">
+                            <div class="product-image-wrapper" onclick="openProductModal(${p.id})">
+                                <img src="${p.images[0]}">
+                            </div>
+                            <div class="product-info" onclick="openProductModal(${p.id})">
+                                <h4>${p.name}</h4>
+                                <div class="sale-price">Rs. ${p.price}</div>
+                            </div>
+                            <button class="btn-add" onclick="addToCart('${p.name}', ${p.price}, '${p.images[0]}')">QUICK ADD</button>
+                        </div>`;
+                });
+            }
             document.getElementById('productGrid').innerHTML = html;
         }
+        
+        // Initial load
         renderProducts();
+
+        /* NEW SEARCH LOGIC */
+        function executeSearch() {
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            let filteredProducts = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.desc.toLowerCase().includes(query)
+            );
+            
+            renderProducts(filteredProducts);
+            closeSearch();
+            
+            // Smoothly scroll down to show the user the results
+            document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleSearchKey(event) {
+            if (event.key === 'Enter') {
+                executeSearch();
+            }
+        }
+
+        function quickSearch(term) {
+            document.getElementById('searchInput').value = term;
+            executeSearch();
+        }
+
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            renderProducts(products); // Bring all products back
+        }
 
         /* MODAL LOGIC */
         function openContact(event) { if(event) event.preventDefault(); document.getElementById('contactOverlay').style.display = 'flex'; }
@@ -541,7 +583,7 @@
         
         function showModalImage(imgSrc) {
             document.getElementById('mainModalVideo').style.display = 'none';
-            document.getElementById('mainModalVideo').pause(); // Stop video if playing
+            document.getElementById('mainModalVideo').pause(); 
             document.getElementById('mainModalImage').style.display = 'block';
             document.getElementById('mainModalImage').src = imgSrc;
         }
@@ -550,13 +592,13 @@
             document.getElementById('mainModalImage').style.display = 'none';
             document.getElementById('mainModalVideo').style.display = 'block';
             document.getElementById('mainModalVideo').src = vidSrc;
-            document.getElementById('mainModalVideo').play(); // Auto-play the video
+            document.getElementById('mainModalVideo').play(); 
         }
 
         function closeProductModal(event) { 
             if(!event || event.target.id === 'productOverlay') { 
                 document.getElementById('productOverlay').style.display = 'none'; 
-                document.getElementById('mainModalVideo').pause(); // Stop video when modal closes
+                document.getElementById('mainModalVideo').pause(); 
             } 
         }
 
