@@ -70,16 +70,16 @@
         .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
         .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #85966B; }
         
-        /* FULL LOGO DISPLAY & ROTATION SETTINGS - PERFECTED ANTI-SQUISH */
+        /* LOGO FIX APPLIED HERE */
         .header-logo { display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 26px; font-weight: bold; letter-spacing: 2px; text-align: center; color: #013A2D; }
         .rotating-logo { 
-            width: 60px; /* Made bigger */
-            height: 60px; /* Made bigger */
+            width: 60px; 
+            height: 60px; 
             border-radius: 50%; 
             object-fit: cover; 
             background: transparent; 
             animation: spin 15s linear infinite; 
-            flex-shrink: 0; /* THIS PREVENTS THE SQUISHED OVAL LOOK */
+            flex-shrink: 0; 
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -100,7 +100,6 @@
         .ticker-separator { margin: 0 30px; color: #013A2D; font-size: 10px; vertical-align: middle; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* MONTSERRAT FONT & SPACING APPLIED HERE */
         .collection-header { text-align: center; padding: 30px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
@@ -243,7 +242,7 @@
         </div>
         
         <div class="header-logo">
-            <img src="logo.png" alt="MAM Circular Logo" class="rotating-logo">
+            <img src="logo.png.png" alt="MAM Circular Logo" class="rotating-logo">
             MELT AND MOLD
         </div>
         
