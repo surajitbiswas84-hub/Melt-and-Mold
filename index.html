@@ -69,7 +69,12 @@
         /* HEADER & LAYOUT */
         .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
         .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #85966B; }
-        .header-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; color: #013A2D; }
+        
+        /* NEW LOGO ROTATION SETTINGS */
+        .header-logo { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; color: #013A2D; }
+        .rotating-logo { width: 45px; height: 45px; border-radius: 50%; animation: spin 15s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         .header-icons-left { display: flex; gap: 20px; align-items: center; justify-content: flex-start; }
         .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
         .icon-btn:hover { opacity: 0.6; }
@@ -88,16 +93,9 @@
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* MONTSERRAT FONT & SPACING APPLIED HERE */
-        .collection-header { text-align: center; padding: 15px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
-        .collection-header h1 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-weight: 700; 
-            font-size: 36px;
-            margin-top: 0;
-            margin-bottom: 5px;
-            text-transform: uppercase; 
-        }
-        .collection-header p { color: #85966B; margin: 0; font-size: 22px; font-weight: 500;}
+        .collection-header { text-align: center; padding: 30px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
+        .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; }
+        .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
         @media(max-width: 900px) { 
@@ -110,7 +108,7 @@
             .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
             .contact-form-row { flex-direction: column; gap: 15px; }
             .collection-header h1 { font-size: 26px; }
-            .collection-header p { font-size: 18px; }
+            .collection-header p { font-size: 16px; }
         }
 
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
@@ -235,7 +233,12 @@
                 <span class="cart-badge" id="cart-count">0</span>
             </div>
         </div>
-        <div class="header-logo">MELT AND MOLD</div>
+        
+        <div class="header-logo">
+            <img src="logo.png" alt="MAM Circular Logo" class="rotating-logo">
+            MELT AND MOLD
+        </div>
+        
         <div style="flex:1"></div> 
     </header>
 
