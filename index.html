@@ -98,10 +98,6 @@
         
         /* NAVIGATION */
         .main-nav { display: flex; justify-content: center; align-items: center; gap: 45px; padding: 18px 0; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 14px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
-        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; cursor: pointer; text-transform: uppercase; }
-        .main-nav a:hover { color: #85966B; }
-        
-        /* CATEGORY DROPDOWN CSS */
         .dropdown { position: relative; display: inline-block; cursor: pointer; }
         .dropdown-content { display: none; position: absolute; background-color: #E5DBC7; min-width: 180px; box-shadow: 0px 8px 16px rgba(1, 58, 45, 0.2); z-index: 2000; border: 1px solid #85966B; border-radius: 4px; top: 100%; left: 0; overflow: hidden; }
         .dropdown-content a { color: #013A2D; padding: 12px 16px; text-decoration: none; display: block; font-weight: bold; font-size: 12px; border-bottom: 1px solid rgba(133, 150, 107, 0.3); transition: 0.3s; text-transform: uppercase; }
@@ -375,7 +371,7 @@
 
     <nav class="main-nav">
         <div class="dropdown">
-            <a onclick="filterCategory('All')" style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">▼</span></a>
+            <a style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">▼</span></a>
             <div class="dropdown-content">
                 <a onclick="filterCategory('All')">ALL JEWELRY</a>
                 <a onclick="filterCategory('Earrings')">EARRINGS</a>
@@ -527,6 +523,7 @@
         let donationAmount = 0; 
         let currentModalProduct = null;
         let favorites = [];
+        let currentCategory = 'All'; // Memory variable to fix category tracking
 
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, category: "Earrings", desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
@@ -570,13 +567,9 @@
         // THIS INITIALIZATION ENGINE RUNS WHEN THE PAGE IS 100% LOADED
         function initPage() {
             try {
-                // Safely load favorites from browser storage
                 let storedFavs = localStorage.getItem('tbw_favorites');
-                if(storedFavs) {
-                    favorites = JSON.parse(storedFavs);
-                }
+                if(storedFavs) favorites = JSON.parse(storedFavs);
             } catch(e) {
-                console.log("Local storage unavailable", e);
                 favorites = [];
             }
             
@@ -584,7 +577,6 @@
             renderProducts(products);
             updateFavoritesUI();
             
-            // Pop up the discount modal after 3 seconds
             setTimeout(() => {
                 document.getElementById('discountPopup').style.display='flex';
             }, 3000);
@@ -642,13 +634,11 @@
             updateFavoritesUI();
             
             // Re-render current view silently so the heart icons update visually
-            let currentSearch = document.getElementById('searchInput').value.toLowerCase();
+            let currentSearch = document.getElementById('searchInput').value.trim();
             if(currentSearch !== '') {
                  executeSearch(true); 
             } else {
-                 let title = document.getElementById('mainGridTitle').innerText;
-                 if(title === "Handcrafted Dokra Collection") filterCategory('All', true);
-                 else filterCategory(title.replace('THE BRASS WORLD - ', ''), true);
+                 filterCategory(currentCategory, true);
             }
         }
 
@@ -674,6 +664,7 @@
         // -----------------------------
 
         function filterCategory(cat, noScroll = false) {
+            currentCategory = cat; // Memory variable saves the day!
             if(cat === 'All') {
                 renderProducts(products);
                 document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra Collection";
@@ -698,8 +689,8 @@
         function quickSearch(term) { document.getElementById('searchInput').value = term; executeSearch(); }
         function resetSearch() { 
             document.getElementById('searchInput').value = ''; 
-            document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra Collection";
-            renderProducts(products); 
+            currentCategory = 'All'; // Reset Memory Variable
+            filterCategory('All'); 
         }
 
         /* MODAL CONTROLS */
