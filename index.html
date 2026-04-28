@@ -85,64 +85,19 @@
         #modalAddBtn { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px;}
         
         /* HEADER */
-        .header { 
-            display: grid; 
-            grid-template-columns: 1fr auto 1fr; 
-            align-items: center; 
-            padding: 15px 40px; 
-            background: #E5DBC7; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid #85966B; 
-        }
-
-        .header-icons-left { 
-            display: flex; 
-            gap: 22px; 
-            align-items: center; 
-        }
-
-        .main-nav { 
-            display: flex; 
-            justify-content: flex-end; /* Aligns links to the right like your screenshot */
-            align-items: center; 
-            gap: 35px; 
-            padding: 15px 40px; 
-            background-color: #E5DBC7; 
-            border-bottom: 1px solid #85966B; 
-            font-size: 13px; 
-            font-weight: bold; 
-            color: #013A2D; 
-        }
-
-        /* The Red Sale Badge over Hot Deals */
-        .sale-label {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #D33F1F;
-            color: white;
-            font-size: 9px;
-            padding: 2px 6px;
-            border-radius: 2px;
-            font-weight: bold;
-        }
-
-        .sale-label::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            margin-left: -4px;
-            border-width: 4px 4px 0;
-            border-style: solid;
-            border-color: #D33F1F transparent transparent transparent;
-        }
+        .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 15px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #85966B; }
+        .header-logo { display: flex; align-items: center; justify-content: center; gap: 15px; font-family: 'Sceageus', serif; font-size: 38px; font-weight: normal; letter-spacing: 1px; text-align: center; color: #013A2D; cursor: pointer; }
+        .rotating-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; background: transparent; animation: spin 15s linear infinite; flex-shrink: 0; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .header-icons-left { display: flex; gap: 22px; align-items: center; justify-content: flex-start; }
+        .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; color: #013A2D; }
+        .icon-btn:hover { opacity: 0.6; }
+        .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .cart-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
         
         /* NAVIGATION */
-        .main-nav { display: flex; justify-content: center; align-items: center; gap: 35px; padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
+        .main-nav { display: flex; justify-content: flex-end; align-items: center; gap: 35px; padding: 15px 40px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
         .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; cursor: pointer; text-transform: uppercase; }
         .main-nav a:hover { color: #85966B; }
         
@@ -154,8 +109,8 @@
         .dropdown-content a:hover { background-color: #85966B; color: #E5DBC7; }
         .dropdown:hover .dropdown-content { display: block; }
 
-        .sale-badge { position: absolute; top: -18px; right: -12px; background-color: #D33F1F; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px; }
-        .sale-badge::after { content: ''; position: absolute; bottom: -4px; left: 8px; border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
+        .sale-label { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: #D33F1F; color: white; font-size: 9px; padding: 2px 6px; border-radius: 2px; font-weight: bold; }
+        .sale-label::after { content: ''; position: absolute; bottom: -4px; left: 50%; margin-left: -4px; border-width: 4px 4px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
 
         .scrolling-ticker { background-color: #85966B; color: #E5DBC7; padding: 10px 0; overflow: hidden; white-space: nowrap; position: relative; border-bottom: 1px solid #013A2D; }
         .ticker-wrapper { display: inline-block; white-space: nowrap; animation: scrollTicker 30s linear infinite; }
@@ -389,34 +344,33 @@
     <header class="header">
         <div class="header-icons-left">
             <div class="icon-btn" onclick="openSearch()" title="Search">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </div>
             <div class="icon-btn" title="Profile" onclick="alert('Profile Login Feature Coming Soon!')">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </div>
             <div class="icon-btn" title="Recently Viewed & History" onclick="alert('Order History & Recently Viewed Feature Coming Soon!')">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </div>
             <div class="icon-btn" title="Favorites" onclick="alert('Favorites Feature Coming Soon!')">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             </div>
             <div class="icon-btn" onclick="openCart()" title="Cart">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 <span class="cart-badge" id="cart-count">0</span>
             </div>
         </div>
         
         <div class="header-logo" onclick="resetSearch()">
-            <img src="logo.png.png" alt="TBW Circular Logo" class="rotating-logo">
+            <img src="logo.png.png" alt="Logo" class="rotating-logo">
             THE BRASS WORLD
         </div>
         
-        <div style="flex:1"></div> 
-    </header>
+        <div></div> </header>
 
     <nav class="main-nav">
         <div class="dropdown">
-            <a style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
+            <a>CATEGORIES <span style="font-size: 10px;">▼</span></a>
             <div class="dropdown-content">
                 <a onclick="filterCategory('All')">ALL JEWELRY</a>
                 <a onclick="filterCategory('Earrings')">EARRINGS</a>
@@ -426,7 +380,10 @@
                 <a onclick="filterCategory('Anklets')">ANKLETS</a>
             </div>
         </div>
-        <a onclick="alert('Hot Deals filtering coming soon!')">HOT DEALS <span class="sale-badge">SALE</span></a>
+        <a style="position: relative;" onclick="alert('Hot Deals filtering coming soon!')">
+            <span class="sale-label">SALE</span>
+            HOT DEALS
+        </a>
         <a onclick="resetSearch()">STORE</a>
         <a onclick="alert('Track Order portal coming soon!')">TRACK ORDER</a>
         <a onclick="alert('Returns & Exchanges portal coming soon!')">RETURNS / EXCHANGE</a>
