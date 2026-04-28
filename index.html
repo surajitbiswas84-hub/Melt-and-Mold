@@ -87,17 +87,17 @@
         .ticker-separator { margin: 0 30px; color: #013A2D; font-size: 10px; vertical-align: middle; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* MONTSERRAT FONT APPLIED HERE */
-        .collection-header { text-align: center; padding: 50px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
+        /* MONTSERRAT FONT & SPACING APPLIED HERE */
+        .collection-header { text-align: center; padding: 15px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header h1 { 
             font-family: 'Montserrat', sans-serif; 
             font-weight: 700; 
             font-size: 36px;
             margin-top: 0;
-            margin-bottom: 15px;
-            text-transform: uppercase; /* Ensures bold impact */
+            margin-bottom: 5px;
+            text-transform: uppercase; 
         }
-        .collection-header p { color: #85966B; margin: 0; font-size: 16px;}
+        .collection-header p { color: #85966B; margin: 0; font-size: 22px; font-weight: 500;}
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
         @media(max-width: 900px) { 
@@ -110,6 +110,7 @@
             .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
             .contact-form-row { flex-direction: column; gap: 15px; }
             .collection-header h1 { font-size: 26px; }
+            .collection-header p { font-size: 18px; }
         }
 
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
