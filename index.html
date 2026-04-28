@@ -71,10 +71,10 @@
         .close-contact { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; font-weight: bold; }
         .contact-modal h2 { font-size: 32px; margin-top: 0; margin-bottom: 15px; letter-spacing: 0.5px; }
         .contact-modal p { font-size: 15px; line-height: 1.6; margin-bottom: 8px; color: #85966B; }
-        .contact-modal h3 { font-size: 26px; margin-top: 40px; margin-bottom: 15px; }
+        .contact-modal h3 { font-size: 26px; margin-top: 40px; margin-bottom: 15px; color: #013A2D; }
         
-        .policy-content p { color: #013A2D; margin-bottom: 15px; }
-        .policy-content ul { margin-top: 5px; margin-bottom: 20px; padding-left: 20px; color: #013A2D; }
+        .policy-content p { color: #013A2D; margin-bottom: 15px; font-size: 15px; line-height: 1.8; }
+        .policy-content ul { margin-top: 5px; margin-bottom: 20px; padding-left: 20px; color: #013A2D; font-size: 15px; line-height: 1.8; }
         .policy-content ul li { margin-bottom: 8px; }
 
         .contact-form { margin-top: 25px; }
@@ -97,7 +97,7 @@
             font-weight: normal; 
             letter-spacing: 1px; 
             text-align: center; color: #013A2D; 
-            cursor: pointer; /* Added cursor pointer to logo so they can click it to reset search */
+            cursor: pointer;
         }
         
         .rotating-logo { 
@@ -184,6 +184,26 @@
     </style>
 </head>
 <body>
+
+    <div class="contact-overlay" id="aboutOverlay" onclick="closeAbout(event)">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <span class="close-contact" onclick="closeAbout()">✕</span>
+            <h2>Our Journey</h2>
+            <div class="policy-content">
+                <p>Melt and Mold was born in 2024 out of a shared passion and a life-changing journey. We didn't start in a boardroom; our story began in the rural heartlands of West Bengal. My partner and I traveled to the villages of the <strong>Dhokra Damar</strong> tribes, a traditional blacksmith community that has kept the magic of metal casting alive for generations.</p>
+                
+                <h3>Living the Craft</h3>
+                <p>We didn't just visit; we lived alongside the artisans. We shared meals in their homes, listened to their stories, and spent hours closely observing the mesmerizing, meticulous "lost-wax" casting process. We saw firsthand the immense skill, patience, and soul poured into every single piece. We also saw the struggles of keeping this ancient art form alive in a rapidly modernizing world.</p>
+                
+                <h3>The Keepers of the Flame</h3>
+                <p>The Dhokra Damar people have historically embraced a semi-nomadic lifestyle, spreading their unique metallurgical skills across the tribal areas of West Bengal, Jharkhand, Orissa, Chhattisgarh, and Andhra Pradesh. They are the true guardians of India's ancient heritage.</p>
+                
+                <h3>Our Mission</h3>
+                <p>Leaving the village, we knew we had to do something to help preserve this incredible legacy. Melt and Mold was created to bridge the gap between these master artisans and the rest of the world. By bringing these authentic, rustic creations directly to you, we aim to support the tribal communities, provide them with a sustainable livelihood, and ensure that the art of Dokra not only survives but thrives.</p>
+                <p>Every piece you wear is a chapter of their story. Thank you for helping us keep the art alive.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="contact-overlay" id="shippingOverlay" onclick="closeShipping(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
@@ -417,7 +437,7 @@
             <h3>Quick Links</h3>
             <ul>
                 <li><a href="#" onclick="openSearch()">Search</a></li>
-                <li><a href="#">About Us</a></li>
+                <li><a href="#" onclick="openAbout(event)">About Us</a></li>
                 <li><a href="#" onclick="openContact(event)">Contact</a></li>
                 <li><a href="#">Returns / Exchange</a></li>
             </ul>
@@ -483,7 +503,6 @@
             { id: 11, name: "Vintage Motif Anklet", price: 999, desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
         ];
 
-        // UPDATED RENDER FUNCTION TO ACCEPT SEARCH RESULTS
         function renderProducts(productArray = products) {
             let html = '';
             
@@ -507,10 +526,9 @@
             document.getElementById('productGrid').innerHTML = html;
         }
         
-        // Initial load
         renderProducts();
 
-        /* NEW SEARCH LOGIC */
+        /* SEARCH LOGIC */
         function executeSearch() {
             let query = document.getElementById('searchInput').value.toLowerCase();
             let filteredProducts = products.filter(p => 
@@ -520,26 +538,12 @@
             
             renderProducts(filteredProducts);
             closeSearch();
-            
-            // Smoothly scroll down to show the user the results
             document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function handleSearchKey(event) {
-            if (event.key === 'Enter') {
-                executeSearch();
-            }
-        }
-
-        function quickSearch(term) {
-            document.getElementById('searchInput').value = term;
-            executeSearch();
-        }
-
-        function resetSearch() {
-            document.getElementById('searchInput').value = '';
-            renderProducts(products); // Bring all products back
-        }
+        function handleSearchKey(event) { if (event.key === 'Enter') { executeSearch(); } }
+        function quickSearch(term) { document.getElementById('searchInput').value = term; executeSearch(); }
+        function resetSearch() { document.getElementById('searchInput').value = ''; renderProducts(products); }
 
         /* MODAL LOGIC */
         function openContact(event) { if(event) event.preventDefault(); document.getElementById('contactOverlay').style.display = 'flex'; }
@@ -552,11 +556,13 @@
         function openShipping(event) { if(event) event.preventDefault(); document.getElementById('shippingOverlay').style.display = 'flex'; }
         function closeShipping(event) { if(!event || event.target.id === 'shippingOverlay' || !event.target) { document.getElementById('shippingOverlay').style.display = 'none'; } }
 
+        function openAbout(event) { if(event) event.preventDefault(); document.getElementById('aboutOverlay').style.display = 'flex'; }
+        function closeAbout(event) { if(!event || event.target.id === 'aboutOverlay' || !event.target) { document.getElementById('aboutOverlay').style.display = 'none'; } }
+
         /* PRODUCT & VIDEO MODAL LOGIC */
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
             
-            // Default: Show Image, Hide Video
             document.getElementById('mainModalImage').style.display = 'block';
             document.getElementById('mainModalVideo').style.display = 'none';
             document.getElementById('mainModalImage').src = product.images[0];
@@ -567,7 +573,6 @@
             
             let thumbHTML = '';
             
-            // Add Video Button if the product has a video attached
             if(product.video) {
                 thumbHTML += `<div class="video-thumb" onclick="showModalVideo('${product.video}')">▶ VIDEO</div>`;
             }
@@ -602,7 +607,6 @@
             } 
         }
 
-        /* GENERAL UI LOGIC */
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
         function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
