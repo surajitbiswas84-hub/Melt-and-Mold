@@ -476,9 +476,6 @@
                 <a href="#" onclick="filterCategory('All')">ALL JEWELRY</a>
                 <a href="#" onclick="filterCategory('Earrings')">EARRINGS</a>
                 <a href="#" onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
-                <a href="#" onclick="filterCategory('Rings')">RINGS</a>
-                <a href="#" onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
-                <a href="#" onclick="filterCategory('Anklets')">ANKLETS</a>
             </div>
         </div>
         <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
@@ -614,19 +611,19 @@
         let donationAmount = 0; 
         let currentModalProduct = null;
 
-        // UPDATED PRODUCT ARRAY WITH CATEGORIES
+        // UPDATED PRODUCT ARRAY WITH YOUR NEW NAMES
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, category: "Earrings", desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
-            { id: 2, name: "The Golden Whorl", price: 1899, category: "Necklaces", desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
-            { id: 3, name: "Hellenic Dhara Drops", price: 1299, category: "Earrings", desc: "Elegant drop earrings that blend traditional Dokra motifs with modern, minimalist lines.", images: ["item3.jpg.jpg", "item3.jpg.jpg", "item3.jpg.jpg"], video: "item3_video.mp4" },
-            { id: 4, name: "Swarnarekha Filigree", price: 999, category: "Earrings", desc: "Lightweight hoop earrings featuring intricate filigree work. Perfect for daily wear.", images: ["item4.jpg.jpg", "item4.jpg.jpg", "item4.jpg.jpg"], video: "item4_video.mp4" },
-            { id: 5, name: "Mayura Statement Ring", price: 799, category: "Rings", desc: "An eye-catching ring inspired by the grace of the peacock. Adjustable fit.", images: ["item5.jpg.jpg", "item5.jpg.jpg", "item5.jpg.jpg"], video: "item5_video.mp4" },
-            { id: 6, name: "Tribal Bell Choker", price: 2199, category: "Necklaces", desc: "A stunning choker necklace featuring traditional bell motifs. A true masterpiece of tribal art.", images: ["item6.jpg.jpg", "item6.jpg.jpg", "item6.jpg.jpg"], video: "item6_video.mp4" },
-            { id: 7, name: "Rustic Jaali Bangles", price: 1599, category: "Bracelets", desc: "A set of rustic bangles featuring traditional Jaali lattice work. Each piece carries unique handmade variations.", images: ["item7.jpg.jpg", "item7.jpg.jpg", "item7.jpg.jpg"], video: "item7_video.mp4" },
-            { id: 8, name: "Surya Motif Pendant", price: 1099, category: "Necklaces", desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"], video: "item8_video.mp4" },
-            { id: 9, name: "Lotus Bloom Earrings", price: 899, category: "Earrings", desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
-            { id: 10, name: "Earthy Cuff Bracelet", price: 1499, category: "Bracelets", desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
-            { id: 11, name: "Vintage Motif Anklet", price: 999, category: "Anklets", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
+            { id: 2, name: "The Golden Whorl Earrings", price: 1899, category: "Earrings", desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
+            { id: 3, name: "Hellenic Dhara Drops Earrings", price: 1299, category: "Earrings", desc: "Elegant drop earrings that blend traditional Dokra motifs with modern, minimalist lines.", images: ["item3.jpg.jpg", "item3.jpg.jpg", "item3.jpg.jpg"], video: "item3_video.mp4" },
+            { id: 4, name: "Swarnarekha Filigree necklace", price: 999, category: "Necklaces", desc: "Lightweight hoop earrings featuring intricate filigree work. Perfect for daily wear.", images: ["item4.jpg.jpg", "item4.jpg.jpg", "item4.jpg.jpg"], video: "item4_video.mp4" },
+            { id: 5, name: "Mayura Statement necklace", price: 799, category: "Necklaces", desc: "An eye-catching ring inspired by the grace of the peacock. Adjustable fit.", images: ["item5.jpg.jpg", "item5.jpg.jpg", "item5.jpg.jpg"], video: "item5_video.mp4" },
+            { id: 6, name: "Tribal Bell Choker Earrings", price: 2199, category: "Earrings", desc: "A stunning choker necklace featuring traditional bell motifs. A true masterpiece of tribal art.", images: ["item6.jpg.jpg", "item6.jpg.jpg", "item6.jpg.jpg"], video: "item6_video.mp4" },
+            { id: 7, name: "Rustic Jaali Bangles Earrings", price: 1599, category: "Earrings", desc: "A set of rustic bangles featuring traditional Jaali lattice work. Each piece carries unique handmade variations.", images: ["item7.jpg.jpg", "item7.jpg.jpg", "item7.jpg.jpg"], video: "item7_video.mp4" },
+            { id: 8, name: "Surya Motif Pendant necklace", price: 1099, category: "Necklaces", desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"], video: "item8_video.mp4" },
+            { id: 9, name: "Lotus Bloom necklace", price: 899, category: "Necklaces", desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
+            { id: 10, name: "Earthy Cuff Earrings", price: 1499, category: "Earrings", desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
+            { id: 11, name: "Vintage Motif Earrings", price: 999, category: "Earrings", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" }
         ];
 
         function renderProducts(productArray = products) {
@@ -650,9 +647,7 @@
             }
             document.getElementById('productGrid').innerHTML = html;
         }
-        renderProducts();
 
-        /* NEW CATEGORY FILTER LOGIC */
         function filterCategory(cat) {
             if(cat === 'All') {
                 renderProducts(products);
@@ -673,6 +668,7 @@
             closeSearch();
             document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
         }
+        
         function handleSearchKey(event) { if (event.key === 'Enter') { executeSearch(); } }
         function quickSearch(term) { document.getElementById('searchInput').value = term; executeSearch(); }
         function resetSearch() { 
@@ -680,6 +676,8 @@
             document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra jewellery Collection";
             renderProducts(products); 
         }
+
+        renderProducts();
 
         function openContact(event) { if(event) event.preventDefault(); document.getElementById('contactOverlay').style.display = 'flex'; }
         function closeContact(event) { if(!event || event.target.id === 'contactOverlay' || !event.target) { document.getElementById('contactOverlay').style.display = 'none'; } }
