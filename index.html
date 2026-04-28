@@ -155,10 +155,6 @@
         .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
         .btn-checkout:hover { background: #fff; }
 
-        .policy-box { background-color: #E5DBC7; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #85966B; border-radius: 8px; color: #85966B; }
-        .policy-box h2 { color: #013A2D; }
-        .policy-box strong { color: #013A2D; }
-
         .mega-footer { background-color: #85966B; color: #E5DBC7; padding: 60px 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; }
         @media(max-width: 900px) { 
             .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
@@ -496,14 +492,6 @@
         <div class="grid-container" id="productGrid"></div>
     </div>
 
-    <div class="policy-box">
-        <h2 style="letter-spacing: 1px; font-weight: normal; text-align: center; margin-top: 0;">Our Promise to You</h2>
-        <div style="font-size: 14px; line-height: 1.8;">
-            <p><strong>Shipping:</strong> We proudly deliver across India. Please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days.</p>
-            <p><strong>Returns & Exchanges:</strong> Rustic variations are a beautiful part of Dokra art. If damage occurs during transit, send an unboxing video on WhatsApp within 24 hours for a replacement.</p>
-        </div>
-    </div>
-
     <footer class="mega-footer">
         <div>
             <h3>About Melt and Mold</h3>
@@ -531,6 +519,10 @@
             </ul>
         </div>
         <div>
+            <h3 style="margin-bottom: 10px;">Our Promise to You</h3>
+            <p style="margin-bottom: 10px;"><strong>Shipping:</strong> We proudly deliver across India. Please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days.</p>
+            <p style="margin-bottom: 30px;"><strong>Returns & Exchanges:</strong> Rustic variations are a beautiful part of Dokra art. If damage occurs during transit, send an unboxing video on WhatsApp within 24 hours for a replacement.</p>
+
             <h3>Sign Up to Newsletter</h3>
             <p>Enter your email address to get the latest updates on sales, new designs, and exclusive offers.</p>
             <div class="newsletter-form">
@@ -662,7 +654,6 @@
         function openAbout(event) { if(event) event.preventDefault(); document.getElementById('aboutOverlay').style.display = 'flex'; }
         function closeAbout(event) { if(!event || event.target.id === 'aboutOverlay' || !event.target) { document.getElementById('aboutOverlay').style.display = 'none'; } }
 
-        /* NEW PRIVACY LOGIC */
         function openPrivacy(event) { if(event) event.preventDefault(); document.getElementById('privacyOverlay').style.display = 'flex'; }
         function closePrivacy(event) { if(!event || event.target.id === 'privacyOverlay' || !event.target) { document.getElementById('privacyOverlay').style.display = 'none'; } }
 
