@@ -12,11 +12,10 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
-        /* IMPORT YOUR CUSTOM SCEAGEUS FONT */
+        /* IMPORT YOUR CUSTOM SCEAGEUS FONT WITH THE DOUBLE EXTENSION */
         @font-face {
             font-family: 'Sceageus';
-            src: url('sceageus.ttf') format('truetype'); 
-            /* Change 'sceageus.ttf' to 'sceageus.otf' or 'sceageus.woff2' above if your file is different */
+            src: url('sceageus.otf.otf') format('opentype'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -83,11 +82,13 @@
         .header-logo { 
             display: flex; align-items: center; justify-content: center; gap: 15px; 
             font-family: 'Sceageus', serif; 
-            font-size: 38px; /* Slightly larger to let the elegant font shine */
+            font-size: 38px; 
             font-weight: normal; 
             letter-spacing: 1px; 
             text-align: center; color: #013A2D; 
         }
+        
+        /* ANTI-SQUISH ROTATING LOGO */
         .rotating-logo { 
             width: 60px; 
             height: 60px; 
@@ -116,6 +117,7 @@
         .ticker-separator { margin: 0 30px; color: #013A2D; font-size: 10px; vertical-align: middle; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+        /* MONTSERRAT FONT & SPACING */
         .collection-header { text-align: center; padding: 30px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
