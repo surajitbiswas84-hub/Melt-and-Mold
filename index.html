@@ -46,7 +46,7 @@
         .btn-send { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px 30px; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px; transition: 0.3s; }
         .btn-send:hover { background-color: #85966B; }
 
-        #discountPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5000; display: flex; align-items: center; justify-content: center; }
+        #discountPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5000; display: flex; align-items: center; justify-content: center; display: none; }
         .popup-content { background: #E5DBC7; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; position: relative; border: 2px solid #013A2D; color: #85966B; }
         .popup-content h2 { color: #013A2D; margin-bottom: 10px; }
         .popup-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #85966B; border-radius: 5px; font-size: 16px; background: #fff; color: #013A2D; }
@@ -91,13 +91,14 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         
         .header-icons-left { display: flex; gap: 20px; align-items: center; justify-content: flex-start; }
-        .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
+        .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; color: #013A2D; }
         .icon-btn:hover { opacity: 0.6; }
         .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .cart-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
         
+        /* NAVIGATION */
         .main-nav { display: flex; justify-content: center; align-items: center; gap: 35px; padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
-        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
+        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; cursor: pointer; text-transform: uppercase; }
         .main-nav a:hover { color: #85966B; }
         
         /* CATEGORY DROPDOWN CSS */
@@ -189,29 +190,9 @@
 </head>
 <body onload="setTimeout(() => document.getElementById('discountPopup').style.display='flex', 3000)">
 
-    <div class="contact-overlay" id="aboutOverlay" onclick="closeAbout(event)">
+    <div class="contact-overlay" id="shippingOverlay" onclick="closeModal('shippingOverlay')">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-contact" onclick="closeAbout()">✕</span>
-            <h2>Our Journey</h2>
-            <div class="policy-content">
-                <p>THE BRASS WORLD was born in 2024 out of a shared passion and a life-changing journey. We didn't start in a boardroom; our story began in the rural heartlands of West Bengal. My partner and I traveled to the villages of the <strong>Dhokra Damar</strong> tribes, a traditional blacksmith community that has kept the magic of metal casting alive for generations.</p>
-                
-                <h3>Living the Craft</h3>
-                <p>We didn't just visit; we lived alongside the artisans. We shared meals in their homes, listened to their stories, and spent hours closely observing the mesmerizing, meticulous "lost-wax" casting process. We saw firsthand the immense skill, patience, and soul poured into every single piece. We also saw the struggles of keeping this ancient art form alive in a rapidly modernizing world.</p>
-                
-                <h3>The Keepers of the Flame</h3>
-                <p>The Dhokra Damar people have historically embraced a semi-nomadic lifestyle, spreading their unique metallurgical skills across the tribal areas of West Bengal, Jharkhand, Orissa, Chhattisgarh, and Andhra Pradesh. They are the true guardians of India's ancient heritage.</p>
-                
-                <h3>Our Mission</h3>
-                <p>Leaving the village, we knew we had to do something to help preserve this incredible legacy. THE BRASS WORLD was created to bridge the gap between these master artisans and the rest of the world. By bringing these authentic, rustic creations directly to you, we aim to support the tribal communities, provide them with a sustainable livelihood, and ensure that the art of Dokra not only survives but thrives.</p>
-                <p>Every piece you wear is a chapter of their story. Thank you for helping us keep the art alive.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="contact-overlay" id="shippingOverlay" onclick="closeShipping(event)">
-        <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-contact" onclick="closeShipping()">✕</span>
+            <span class="close-contact" onclick="closeModal('shippingOverlay')">✕</span>
             <h2>Shipping Policy</h2>
             <div class="policy-content">
                 <h3>1. Delivery Coverage</h3>
@@ -220,7 +201,6 @@
                 <h3>2. Address Accuracy</h3>
                 <p>To avoid delays, please ensure that your shipping details are complete and accurate at the time of placing the order. We are not responsible for delays caused due to incomplete or incorrect address information.</p>
                 <p>Shipments addressed to colleges, schools, hostels, or similar institutions are delivered at the customer’s risk. If the package is refused or not accepted by the receiving authority, thebrassworld.com will not be liable for refunds or credits.</p>
-                <p>For special or preferred delivery dates, please mention the requested date in the order notes or gift message section. If no date is specified, the order will be delivered at the earliest possible time.</p>
                 
                 <h3>3. Incorrect or Incomplete Address</h3>
                 <p>Some courier partners may impose penalties if the shipping address and PIN code do not match. Any such additional charges will be borne solely by the customer.</p>
@@ -237,26 +217,18 @@
                     <li><strong>Dispatch Time:</strong> Typically 1 to 4 business days</li>
                     <li><strong>Shipping Time:</strong> Usually 7 to 10 days after dispatch</li>
                 </ul>
-                <p>Please note that delays due to external factors (such as courier issues or regional constraints) do not qualify for refunds, returns, replacements, or exchanges.</p>
-                
-                <h3>5. Delivery Timeline Disclaimer</h3>
-                <p>Delivery timelines may vary depending on the destination PIN code. Some locations may require additional time beyond the standard delivery window.</p>
-                
-                <h3>6. Contact</h3>
-                <p>For any shipping-related queries, please reach out to us through our website.</p>
             </div>
         </div>
     </div>
 
-    <div class="contact-overlay" id="privacyOverlay" onclick="closePrivacy(event)">
+    <div class="contact-overlay" id="privacyOverlay" onclick="closeModal('privacyOverlay')">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-contact" onclick="closePrivacy()">✕</span>
+            <span class="close-contact" onclick="closeModal('privacyOverlay')">✕</span>
             <h2>Privacy Policy</h2>
             <div class="policy-content">
                 <h3>1. Introduction</h3>
                 <p>At thebrassworld.com, we respect your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data.</p>
                 <p>We do not share your personal information with others except as required to fulfill the services requested by you. This may include sharing information with trusted partners for order processing and informing you about promotional offers.</p>
-                <p>You may choose to cancel your registration at any time; however, your information may remain archived on thebrassworld.com servers.</p>
                 <p><em>Policy Effective Date: 7th July 2022</em></p>
 
                 <h3>2. Information We Collect</h3>
@@ -265,57 +237,20 @@
                     <li>Name and job title</li>
                     <li>Contact information including email address</li>
                     <li>Demographic information such as postcode, preferences, and interests</li>
-                    <li>Other information relevant to customer surveys and/or offers</li>
                 </ul>
 
-                <h3>3. How We Use the Information</h3>
-                <p>We collect this information to better understand your needs and provide improved services. Specifically, we use your information for:</p>
-                <ul>
-                    <li>Internal record keeping</li>
-                    <li>Improving our products and services</li>
-                    <li>Sending promotional emails about new products, special offers, or relevant updates</li>
-                    <li>Conducting market research (via email, phone, or other communication methods)</li>
-                    <li>Customizing the website according to your interests</li>
-                </ul>
-
-                <h3>4. Security</h3>
+                <h3>3. Security</h3>
                 <p>We are committed to ensuring that your information is secure. We have implemented appropriate physical, electronic, and managerial procedures to safeguard and secure the information we collect online and prevent unauthorized access or disclosure.</p>
 
-                <h3>5. Cookies</h3>
-                <p>A cookie is a small file placed on your device to help analyze web traffic or enhance your browsing experience.</p>
-                <p>We use cookies to:</p>
-                <ul>
-                    <li>Identify which pages are being used</li>
-                    <li>Analyze website traffic and improve performance</li>
-                    <li>Customize website content based on user preferences</li>
-                </ul>
-                <p>Cookies do not give us access to your computer or personal data beyond what you choose to share.</p>
-                <p>You may choose to accept or decline cookies through your browser settings. Disabling cookies may affect certain website functionalities.</p>
-
-                <h3>6. Links to Other Websites</h3>
-                <p>Our website may contain links to external websites. Once you leave thebrassworld.com, we do not have control over those sites and are not responsible for the protection and privacy of any information you provide there. We recommend reviewing the privacy policies of those websites.</p>
-
-                <h3>7. Controlling Your Personal Information</h3>
-                <p>You can restrict or control the use of your personal information in the following ways:</p>
-                <ul>
-                    <li>Look for options in forms to opt out of direct marketing communications</li>
-                    <li>If you previously consented to marketing, you may withdraw consent anytime by contacting us at: <strong>care.thebrassworld@gmail.com</strong></li>
-                </ul>
-                <p>We will not sell, distribute, or lease your personal information to third parties without your permission, unless required by law. We may send promotional information about third parties only if you opt in.</p>
-
-                <h3>8. Access to Your Information</h3>
-                <p>You may request details of the personal information we hold about you under applicable data protection laws. A nominal fee may apply.</p>
-                <p>If you believe any information we hold about you is incorrect or incomplete, please contact us at the email above. We will promptly correct any inaccuracies.</p>
-
-                <h3>9. Policy Updates</h3>
-                <p>thebrassworld.com may update this Privacy Policy from time to time. We encourage you to review this page periodically to stay informed about any changes.</p>
+                <h3>4. Cookies</h3>
+                <p>A cookie is a small file placed on your device to help analyze web traffic or enhance your browsing experience. Cookies do not give us access to your computer or personal data beyond what you choose to share.</p>
             </div>
         </div>
     </div>
 
-    <div class="contact-overlay" id="tosOverlay" onclick="closeTos(event)">
+    <div class="contact-overlay" id="tosOverlay" onclick="closeModal('tosOverlay')">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-contact" onclick="closeTos()">✕</span>
+            <span class="close-contact" onclick="closeModal('tosOverlay')">✕</span>
             <h2>Terms of Service</h2>
             <div class="policy-content">
                 <h3>1. Introduction</h3>
@@ -335,32 +270,13 @@
                 
                 <h3>4. Disclaimer of Warranties</h3>
                 <p>thebrassworld.com provides the website and its content on an “as is” and “as available” basis. We do not guarantee that the website will be uninterrupted, secure, or error-free.</p>
-                <p>All warranties or conditions, whether express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and accuracy of information, are hereby disclaimed.</p>
-                
-                <h3>5. Limitation of Liability</h3>
-                <p>thebrassworld.com shall not be held responsible for any direct, indirect, incidental, or consequential damages arising from the use or inability to use this website, including but not limited to damages caused by viruses, bugs, or technical issues.</p>
-                
-                <h3>6. Service Availability</h3>
-                <p>thebrassworld.com reserves the right to suspend, modify, or discontinue any part of the website or its services at any time without prior notice, especially in cases of technical issues affecting security or proper functioning.</p>
-                
-                <h3>7. Right to Refuse Service</h3>
-                <p>We reserve the right to refuse service to anyone at any time for any reason, at our sole discretion.</p>
-                
-                <h3>8. Jurisdiction and Governing Law</h3>
-                <p>These Terms of Service and any separate agreements shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the jurisdiction of the local courts in India.</p>
-                
-                <h3>9. Changes to Terms</h3>
-                <p>thebrassworld.com reserves the right to update or modify these Terms of Service at any time without prior notice. Continued use of the website after changes constitutes acceptance of those changes.</p>
-                
-                <h3>10. Contact Information</h3>
-                <p>If you have any questions about these Terms of Service, please contact us through the website.</p>
             </div>
         </div>
     </div>
 
-    <div class="contact-overlay" id="contactOverlay" onclick="closeContact(event)">
+    <div class="contact-overlay" id="contactOverlay" onclick="closeModal('contactOverlay')">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-contact" onclick="closeContact()">✕</span>
+            <span class="close-contact" onclick="closeModal('contactOverlay')">✕</span>
             <h2>Need Any Help?</h2>
             <p>We're a young company and always try our best to provide a superior customer care service.</p>
             <p>We're all ears to your queries, so feel free to reach out for anything.</p>
@@ -428,19 +344,19 @@
     <header class="header">
         <div class="header-icons-left">
             <div class="icon-btn" onclick="openSearch()" title="Search">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </div>
-            <div class="icon-btn" title="Recently Viewed" onclick="alert('Recently Viewed Feature Coming Soon!')">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="icon-btn" title="Profile" onclick="alert('Profile Login Feature Coming Soon!')">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="icon-btn" title="Recently Viewed & History" onclick="alert('Order History & Recently Viewed Feature Coming Soon!')">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </div>
             <div class="icon-btn" title="Favorites" onclick="alert('Favorites Feature Coming Soon!')">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </div>
-            <div class="icon-btn" title="Order History" onclick="alert('Order History Feature Coming Soon!')">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             </div>
             <div class="icon-btn" onclick="openCart()" title="Cart">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 <span class="cart-badge" id="cart-count">0</span>
             </div>
         </div>
@@ -455,21 +371,21 @@
 
     <nav class="main-nav">
         <div class="dropdown">
-            <a href="#" style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
+            <a style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
             <div class="dropdown-content">
-                <a href="#" onclick="filterCategory('All')">ALL JEWELRY</a>
-                <a href="#" onclick="filterCategory('Earrings')">EARRINGS</a>
-                <a href="#" onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
-                <a href="#" onclick="filterCategory('Rings')">RINGS</a>
-                <a href="#" onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
-                <a href="#" onclick="filterCategory('Anklets')">ANKLETS</a>
+                <a onclick="filterCategory('All')">ALL JEWELRY</a>
+                <a onclick="filterCategory('Earrings')">EARRINGS</a>
+                <a onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
+                <a onclick="filterCategory('Rings')">RINGS</a>
+                <a onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
+                <a onclick="filterCategory('Anklets')">ANKLETS</a>
             </div>
         </div>
-        <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
-        <a href="#" onclick="resetSearch()">STORE</a>
-        <a href="#">TRACK ORDER</a>
-        <a href="#">RETURNS / EXCHANGE</a>
-        <a href="#" onclick="openContact(event)">CONTACT US</a>
+        <a onclick="alert('Hot Deals filtering coming soon!')">HOT DEALS <span class="sale-badge">SALE</span></a>
+        <a onclick="resetSearch()">STORE</a>
+        <a onclick="alert('Track Order portal coming soon!')">TRACK ORDER</a>
+        <a onclick="alert('Returns & Exchanges portal coming soon!')">RETURNS / EXCHANGE</a>
+        <a onclick="openModal('contactOverlay')">CONTACT US</a>
     </nav>
 
     <div class="scrolling-ticker">
@@ -507,19 +423,17 @@
         <div>
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="#" onclick="openSearch()">Search</a></li>
-                <li><a href="#" onclick="openAbout(event)">About Us</a></li>
-                <li><a href="#" onclick="openContact(event)">Contact</a></li>
-                <li><a href="#">Returns / Exchange</a></li>
+                <li><a onclick="openSearch()">Search</a></li>
+                <li><a onclick="openModal('contactOverlay')">Contact</a></li>
+                <li><a onclick="alert('Returns portal coming soon!')">Returns / Exchange</a></li>
             </ul>
         </div>
         <div>
             <h3>Store Policy</h3>
             <ul>
-                <li><a href="#" onclick="openTos(event)">Terms Of Service</a></li>
-                <li><a href="#" onclick="openShipping(event)">Shipping Policy</a></li>
-                <li><a href="#">Refund Policy</a></li>
-                <li><a href="#" onclick="openPrivacy(event)">Privacy Policy</a></li>
+                <li><a onclick="openModal('tosOverlay')">Terms Of Service</a></li>
+                <li><a onclick="openModal('shippingOverlay')">Shipping Policy</a></li>
+                <li><a onclick="openModal('privacyOverlay')">Privacy Policy</a></li>
             </ul>
         </div>
         <div>
@@ -586,7 +500,7 @@
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
             
-            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to thebrassworld's <a href="#" onclick="openTos(event)">terms of use</a> and <a href="#" onclick="openPrivacy(event)">privacy policy</a>.</p>
+            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to thebrassworld's <a onclick="openModal('tosOverlay')">terms of use</a> and <a onclick="openModal('privacyOverlay')">privacy policy</a>.</p>
             
             <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
         </div>
@@ -695,16 +609,9 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
-        function openAbout(e) { if(e) e.preventDefault(); openModal('aboutOverlay'); }
-        function closeAbout(e) { closeModal('aboutOverlay'); }
-        function openShipping(e) { if(e) e.preventDefault(); openModal('shippingOverlay'); }
-        function closeShipping(e) { closeModal('shippingOverlay'); }
-        function openPrivacy(e) { if(e) e.preventDefault(); openModal('privacyOverlay'); }
-        function closePrivacy(e) { closeModal('privacyOverlay'); }
-        function openTos(e) { if(e) e.preventDefault(); openModal('tosOverlay'); }
-        function closeTos(e) { closeModal('tosOverlay'); }
+        function openContact(event) { if(event) event.preventDefault(); openModal('contactOverlay'); }
         
-        function submitContact(event) { event.preventDefault(); alert("Thank you! Your message has been sent to THE BRASS WORLD team."); }
+        function submitContact(event) { event.preventDefault(); alert("Thank you! Your message has been sent to THE BRASS WORLD team."); closeModal('contactOverlay'); }
 
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
@@ -738,6 +645,7 @@
 
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
+        function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
 
         function applyDiscount() { 
             let phone = document.getElementById('userPhone').value;
@@ -747,7 +655,7 @@
             document.getElementById('popupText').innerText = "10% Discount applied! Check your WhatsApp for our welcome message.";
             document.getElementById('userPhone').style.display = 'none';
             document.getElementById('claimBtn').innerText = "EXPLORE COLLECTION";
-            document.getElementById('claimBtn').onclick = () => document.getElementById('discountPopup').style.display='none';
+            document.getElementById('claimBtn').onclick = closePopup;
             window.open(`https://wa.me/91${phone}?text=Namaste!%20Welcome%20to%20THE%20BRASS%20WORLD%20family.%20🌿%20Your%2010%25%20discount%20code%20is%20WELCOME10.`, '_blank');
             updateCartUI();
         }
@@ -789,12 +697,12 @@
             cart.forEach((item, index) => {
                 subtotal += item.price;
                 cartHTML += `<div style="display:flex; gap:10px; margin-bottom:15px; align-items:center; border-bottom: 1px solid #85966B; padding-bottom: 10px;">
-                    <img src="${item.img}" width="50" style="border: 1px solid #85966B; object-fit: cover; border-radius:4px;">
-                    <div style="flex-grow:1; font-size:14px; color: #E5DBC7; line-height:1.4;">${item.name}<br><b>Rs. ${item.price}</b></div>
+                    <img src="${item.img}" width="50" style="border: 1px solid #85966B; object-fit: cover; border-radius: 4px;">
+                    <div style="flex-grow:1; font-size:14px; color: #E5DBC7; line-height: 1.4;">${item.name}<br><b>Rs. ${item.price}</b></div>
                     <span style="color:#E5DBC7; cursor:pointer; font-weight: bold; font-size: 20px;" onclick="removeFromCart(${index})">×</span>
                 </div>`;
             });
-            document.getElementById('cartItems').innerHTML = cartHTML || '<span style="color:#E5DBC7;">Your bag is empty.</span>';
+            document.getElementById('cartItems').innerHTML = cartHTML || '<span style="color:#E5DBC7;">Your cart is empty.</span>';
             document.getElementById('subtotal').innerText = subtotal;
             
             let final = subtotal;
