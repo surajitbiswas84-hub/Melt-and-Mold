@@ -12,7 +12,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
-        /* IMPORT YOUR CUSTOM SCEAGEUS FONT WITH THE DOUBLE EXTENSION */
+        /* CUSTOM SCEAGEUS FONT */
         @font-face {
             font-family: 'Sceageus';
             src: url('sceageus.otf.otf') format('opentype'); 
@@ -51,7 +51,6 @@
         .modal-left { width: 50%; padding: 30px; background: #fff; display: flex; flex-direction: column; gap: 15px; border-right: 1px solid #85966B; overflow-y: auto;}
         .modal-right { width: 50%; padding: 40px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto;}
         
-        /* MEDIA DISPLAY CLASSES */
         #mainModalImage, #mainModalVideo { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; border: 1px solid #eaeaea; transition: 0.3s; }
         
         .thumbnail-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;}
@@ -65,7 +64,6 @@
         .modal-desc { line-height: 1.8; margin-bottom: 30px; color: #013A2D; font-size: 15px; }
         #modalAddBtn { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px;}
 
-        /* CONTACT & POLICY MODALS */
         .contact-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5500; display: none; align-items: center; justify-content: center; padding: 20px; }
         .contact-modal { background: #E5DBC7; width: 800px; max-width: 100%; max-height: 90vh; border-radius: 8px; overflow-y: auto; position: relative; border: 1px solid #85966B; box-shadow: 0 20px 40px rgba(0,0,0,0.3); padding: 50px 40px; color: #013A2D; }
         .close-contact { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; font-weight: bold; }
@@ -133,6 +131,35 @@
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
         .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
+        
+        /* CART SPECIFIC CSS */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
+        .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
+        
+        .cart-divider { height: 1px; background: #85966B; margin: 15px 0; opacity: 0.5; }
+        .cart-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
+        .cart-input-group input { flex-grow: 1; padding: 10px; border: 1px solid #85966B; border-radius: 4px; outline: none; background: #fff; color: #013A2D; font-size: 13px;}
+        .cart-input-group button { background: #85966B; color: #E5DBC7; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 12px; transition: 0.3s; }
+        .cart-input-group button:hover { background: #E5DBC7; color: #013A2D; }
+        .donation-title { font-size: 12px; font-weight: bold; margin-bottom: 10px; color: #a3b887; text-transform: uppercase; }
+        .donation-row { display: flex; gap: 10px; margin-bottom: 5px; }
+        .donation-btn { flex: 1; padding: 8px 0; border: 1px solid #85966B; background: transparent; color: #E5DBC7; cursor: pointer; border-radius: 4px; transition: 0.3s; font-weight: bold; font-size: 13px;}
+        .donation-btn.active, .donation-btn:hover { background: #85966B; color: #013A2D; }
+        .cart-disclaimer { font-size: 10px; line-height: 1.4; margin-bottom: 15px; color: #a3b887; text-align: center; }
+        .cart-disclaimer a { color: #E5DBC7; text-decoration: underline; transition: 0.3s; }
+        .cart-disclaimer a:hover { color: #fff; }
+        
+        .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        .btn-checkout:hover { background: #fff; }
+
+        .policy-box { background-color: #E5DBC7; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #85966B; border-radius: 8px; color: #85966B; }
+        .policy-box h2 { color: #013A2D; }
+        .policy-box strong { color: #013A2D; }
+
+        .mega-footer { background-color: #85966B; color: #E5DBC7; padding: 60px 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; }
         @media(max-width: 900px) { 
             .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
             .header-icons-left { justify-content: center; gap: 25px; }
@@ -145,30 +172,8 @@
             .collection-header h1 { font-size: 26px; }
             .collection-header p { font-size: 16px; }
             .header-logo { font-size: 28px; }
+            .mega-footer { grid-template-columns: 1fr; gap: 30px; padding: 40px 20px; } 
         }
-
-        .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
-        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; cursor: pointer;}
-        .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; color: #85966B; cursor: pointer;}
-        .product-info h4 { margin: 0 0 8px 0; color: #013A2D; }
-        .sale-price { font-weight: bold; font-size: 1.1em; color: #85966B; }
-        .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
-
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
-        .cart-sidebar.open { right: 0; }
-        .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
-        .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
-        .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
-
-        .policy-box { background-color: #E5DBC7; padding: 40px; margin: 40px auto; max-width: 800px; border: 1px solid #85966B; border-radius: 8px; color: #85966B; }
-        .policy-box h2 { color: #013A2D; }
-        .policy-box strong { color: #013A2D; }
-
-        .mega-footer { background-color: #85966B; color: #E5DBC7; padding: 60px 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; }
-        @media(max-width: 900px) { .mega-footer { grid-template-columns: 1fr; gap: 30px; padding: 40px 20px; } }
         .mega-footer h3 { color: #013A2D; font-size: 18px; margin-top: 0; margin-bottom: 20px; }
         .mega-footer p { font-size: 14px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
         .mega-footer ul { list-style: none; padding: 0; margin: 0; }
@@ -247,7 +252,7 @@
     <div class="contact-overlay" id="tosOverlay" onclick="closeTos(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
             <span class="close-contact" onclick="closeTos()">✕</span>
-            <h2>Terms of Service</h2>
+            <h2>Terms of Service & Privacy Policy</h2>
             <div class="policy-content">
                 <h3>1. Introduction</h3>
                 <p>Welcome to meltandmold.com. By accessing or using this website, you agree to be bound by the following Terms of Service. If you do not agree with any part of these terms, you should not use this website.</p>
@@ -472,15 +477,47 @@
         </div>
         <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto"></div>
         <div class="cart-footer">
+            
+            <div class="donation-title">Deliver To:</div>
+            <div class="cart-input-group">
+                <input type="text" id="pincodeInput" placeholder="Enter Delivery Pincode">
+                <button onclick="alert('Delivery Pincode Saved!')">SET</button>
+            </div>
+            
+            <div class="cart-divider"></div>
+
+            <div class="donation-title">Donate to the Artisans Family:</div>
+            <div class="donation-row">
+                <button class="donation-btn" onclick="setDonation(10)">₹10</button>
+                <button class="donation-btn" onclick="setDonation(20)">₹20</button>
+                <button class="donation-btn" onclick="setDonation(50)">₹50</button>
+                <button class="donation-btn" onclick="setDonation(100)">₹100</button>
+            </div>
+            
+            <div class="cart-divider"></div>
+
+            <div class="cart-input-group">
+                <input type="text" id="cartCouponInput" placeholder="Apply Coupon Code">
+                <button onclick="applyCartCoupon()">APPLY</button>
+            </div>
+
+            <div class="cart-divider"></div>
+
             <div style="display:flex; justify-content:space-between; margin-bottom:10px">
                 <span>Subtotal:</span> <span>Rs. <span id="subtotal">0</span></span>
+            </div>
+            <div id="donationDisplayRow" style="display:none; justify-content:space-between; margin-bottom:10px; color: #E5DBC7;">
+                <span>Artisan Donation:</span> <span>+ Rs. <span id="donationAmountDisplay">0</span></span>
             </div>
             <div id="discountRow" style="display:none; justify-content:space-between; margin-bottom:10px; color: #E5DBC7; font-weight: bold;">
                 <span>10% Discount:</span> <span>- Rs. <span id="discountAmount">0</span></span>
             </div>
-            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:20px; border-top: 1px solid #85966B; padding-top: 10px;">
+            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:15px; border-top: 1px solid #85966B; padding-top: 10px;">
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
+            
+            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to the meltandmold's <a href="#" onclick="openTos(event)">terms of use and privacy policy</a>.</p>
+            
             <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
         </div>
     </div>
@@ -488,6 +525,7 @@
     <script>
         let cart = [];
         let discountActive = false;
+        let donationAmount = 0; // State for tracking artisan donation
 
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
@@ -505,7 +543,6 @@
 
         function renderProducts(productArray = products) {
             let html = '';
-            
             if (productArray.length === 0) {
                 html = '<div style="grid-column: 1 / -1; text-align: center; font-size: 20px; padding: 40px; color: #013A2D; font-weight: bold;">No products found matching your search.</div>';
             } else {
@@ -525,27 +562,19 @@
             }
             document.getElementById('productGrid').innerHTML = html;
         }
-        
         renderProducts();
 
-        /* SEARCH LOGIC */
         function executeSearch() {
             let query = document.getElementById('searchInput').value.toLowerCase();
-            let filteredProducts = products.filter(p => 
-                p.name.toLowerCase().includes(query) || 
-                p.desc.toLowerCase().includes(query)
-            );
-            
+            let filteredProducts = products.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
             renderProducts(filteredProducts);
             closeSearch();
             document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
         }
-
         function handleSearchKey(event) { if (event.key === 'Enter') { executeSearch(); } }
         function quickSearch(term) { document.getElementById('searchInput').value = term; executeSearch(); }
         function resetSearch() { document.getElementById('searchInput').value = ''; renderProducts(products); }
 
-        /* MODAL LOGIC */
         function openContact(event) { if(event) event.preventDefault(); document.getElementById('contactOverlay').style.display = 'flex'; }
         function closeContact(event) { if(!event || event.target.id === 'contactOverlay' || !event.target) { document.getElementById('contactOverlay').style.display = 'none'; } }
         function submitContact(event) { event.preventDefault(); alert("Thank you! Your message has been sent to the Melt and Mold team."); closeContact(); }
@@ -559,59 +588,31 @@
         function openAbout(event) { if(event) event.preventDefault(); document.getElementById('aboutOverlay').style.display = 'flex'; }
         function closeAbout(event) { if(!event || event.target.id === 'aboutOverlay' || !event.target) { document.getElementById('aboutOverlay').style.display = 'none'; } }
 
-        /* PRODUCT & VIDEO MODAL LOGIC */
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
-            
             document.getElementById('mainModalImage').style.display = 'block';
             document.getElementById('mainModalVideo').style.display = 'none';
             document.getElementById('mainModalImage').src = product.images[0];
-            
             document.getElementById('modalTitle').innerText = product.name;
             document.getElementById('modalPrice').innerText = 'Rs. ' + product.price;
             document.getElementById('modalDesc').innerText = product.desc;
-            
             let thumbHTML = '';
-            
-            if(product.video) {
-                thumbHTML += `<div class="video-thumb" onclick="showModalVideo('${product.video}')">▶ VIDEO</div>`;
-            }
-
-            product.images.forEach(img => { 
-                thumbHTML += `<img src="${img}" onclick="showModalImage('${img}')">`; 
-            });
-            
+            if(product.video) { thumbHTML += `<div class="video-thumb" onclick="showModalVideo('${product.video}')">▶ VIDEO</div>`; }
+            product.images.forEach(img => { thumbHTML += `<img src="${img}" onclick="showModalImage('${img}')">`; });
             document.getElementById('modalThumbnails').innerHTML = thumbHTML;
             document.getElementById('modalAddBtn').onclick = function() { addToCart(product.name, product.price, product.images[0]); closeProductModal(); };
             document.getElementById('productOverlay').style.display = 'flex';
         }
-        
-        function showModalImage(imgSrc) {
-            document.getElementById('mainModalVideo').style.display = 'none';
-            document.getElementById('mainModalVideo').pause(); 
-            document.getElementById('mainModalImage').style.display = 'block';
-            document.getElementById('mainModalImage').src = imgSrc;
-        }
-
-        function showModalVideo(vidSrc) {
-            document.getElementById('mainModalImage').style.display = 'none';
-            document.getElementById('mainModalVideo').style.display = 'block';
-            document.getElementById('mainModalVideo').src = vidSrc;
-            document.getElementById('mainModalVideo').play(); 
-        }
-
-        function closeProductModal(event) { 
-            if(!event || event.target.id === 'productOverlay') { 
-                document.getElementById('productOverlay').style.display = 'none'; 
-                document.getElementById('mainModalVideo').pause(); 
-            } 
-        }
+        function showModalImage(imgSrc) { document.getElementById('mainModalVideo').style.display = 'none'; document.getElementById('mainModalVideo').pause(); document.getElementById('mainModalImage').style.display = 'block'; document.getElementById('mainModalImage').src = imgSrc; }
+        function showModalVideo(vidSrc) { document.getElementById('mainModalImage').style.display = 'none'; document.getElementById('mainModalVideo').style.display = 'block'; document.getElementById('mainModalVideo').src = vidSrc; document.getElementById('mainModalVideo').play(); }
+        function closeProductModal(event) { if(!event || event.target.id === 'productOverlay') { document.getElementById('productOverlay').style.display = 'none'; document.getElementById('mainModalVideo').pause(); } }
 
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
         function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
 
-        function applyDiscount() {
+        /* CART COUPON & DONATION LOGIC */
+        function applyDiscount() { // Popup logic
             let phone = document.getElementById('userPhone').value;
             if(phone.length < 10) { alert("Please enter a valid WhatsApp number"); return; }
             discountActive = true;
@@ -621,6 +622,27 @@
             document.getElementById('claimBtn').innerText = "EXPLORE COLLECTION";
             document.getElementById('claimBtn').onclick = closePopup;
             window.open(`https://wa.me/91${phone}?text=Namaste!%20Welcome%20to%20the%20Melt%20and%20Mold%20family.%20🌿%20Your%2010%25%20discount%20code%20is%20WELCOME10.`, '_blank');
+            updateCartUI();
+        }
+
+        function applyCartCoupon() { // Cart sidebar logic
+            let code = document.getElementById('cartCouponInput').value.trim().toUpperCase();
+            if(code === 'WELCOME10') {
+                discountActive = true;
+                alert("10% Discount Applied Successfully!");
+            } else if (code !== '') {
+                alert("Invalid or Expired Coupon Code.");
+            }
+            updateCartUI();
+        }
+
+        function setDonation(amount) {
+            // Toggle off if clicking the same amount twice
+            if(donationAmount === amount) {
+                donationAmount = 0; 
+            } else {
+                donationAmount = amount;
+            }
             updateCartUI();
         }
 
@@ -640,13 +662,38 @@
             });
             document.getElementById('cartItems').innerHTML = cartHTML || '<span style="color:#E5DBC7;">Your cart is empty.</span>';
             document.getElementById('subtotal').innerText = subtotal;
+            
             let final = subtotal;
-            if(discountActive) {
+
+            // Handle Discount
+            if(discountActive && subtotal > 0) {
                 let discount = Math.round(subtotal * 0.10);
-                final = subtotal - discount;
+                final = final - discount;
                 document.getElementById('discountRow').style.display = 'flex';
                 document.getElementById('discountAmount').innerText = discount;
+            } else {
+                document.getElementById('discountRow').style.display = 'none';
             }
+
+            // Handle Donation
+            if(donationAmount > 0 && subtotal > 0) {
+                final = final + donationAmount;
+                document.getElementById('donationDisplayRow').style.display = 'flex';
+                document.getElementById('donationAmountDisplay').innerText = donationAmount;
+            } else {
+                document.getElementById('donationDisplayRow').style.display = 'none';
+            }
+
+            // Update Active Class on Donation Buttons
+            let donationBtns = document.querySelectorAll('.donation-btn');
+            donationBtns.forEach(btn => {
+                if(parseInt(btn.innerText.replace('₹','')) === donationAmount) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
             document.getElementById('finalTotal').innerText = final;
         }
 
@@ -663,7 +710,13 @@
                 "currency": "INR",
                 "name": "Melt and Mold",
                 "theme": { "color": "#013A2D" },
-                "handler": function (response) { alert("Order Placed! ID: " + response.razorpay_payment_id); cart=[]; updateCartUI(); closeCart(); }
+                "handler": function (response) { 
+                    alert("Order Placed successfully! ID: " + response.razorpay_payment_id + ". Thank you for supporting the Dhokra Damar artisans!"); 
+                    cart=[]; 
+                    donationAmount = 0; // Reset donation
+                    updateCartUI(); 
+                    closeCart(); 
+                }
             };
             var rzp = new Razorpay(options);
             rzp.open();
