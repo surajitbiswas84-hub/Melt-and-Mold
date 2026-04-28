@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE BRASS WORLD | Handcrafted Dokra Jewelry</title>
+    <title>THE BRASS WORLD | Dokra Jewelry</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
+        /* CUSTOM SCEAGEUS FONT */
         @font-face {
             font-family: 'Sceageus';
             src: url('sceageus.otf.otf') format('opentype'); 
@@ -22,124 +23,491 @@
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
         
         body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; cursor: pointer; }
+        a { text-decoration: none; color: inherit; }
         
         /* MODALS & OVERLAYS */
+        #discountPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5000; display: flex; align-items: center; justify-content: center; }
+        .popup-content { background: #E5DBC7; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; position: relative; border: 2px solid #013A2D; color: #85966B; }
+        .popup-content h2 { color: #013A2D; margin-bottom: 10px; }
+        .popup-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #85966B; border-radius: 5px; font-size: 16px; background: #fff; color: #013A2D; }
+        .btn-claim { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; width: 100%; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
+        .close-popup { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #013A2D; }
+
+        .search-overlay { position: fixed; top: -100%; left: 0; width: 100%; background: #ffffff; z-index: 3000; transition: top 0.4s ease-in-out; padding: 60px 20px 80px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; color: #000; }
+        .search-overlay.open { top: 0; }
+        .search-close { position: absolute; top: 20px; right: 40px; font-size: 28px; cursor: pointer; color: #999; transition: 0.3s; }
+        .search-close:hover { color: #000; }
+        .search-title { font-size: 32px; margin-bottom: 30px; font-weight: normal; color: #000; }
+        .search-input-container { max-width: 700px; margin: 0 auto; position: relative; }
+        .search-input-container input { width: 100%; padding: 18px 50px 18px 20px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; outline: none; color: #000; }
+        .search-input-container svg { position: absolute; right: 20px; top: 18px; cursor: pointer; }
+        .search-quick { margin-top: 20px; font-size: 14px; color: #555; }
+        .search-quick span { color: #000; cursor: pointer; font-weight: 500; margin-left: 5px; transition: 0.3s; }
+        .search-quick span:hover { color: #85966B; text-decoration: underline; }
+
+        .product-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .product-modal { background: #E5DBC7; width: 900px; max-width: 100%; max-height: 90vh; border-radius: 8px; display: flex; overflow: hidden; position: relative; border: 1px solid #85966B; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .close-product { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; z-index: 10; font-weight: bold; }
+        .modal-left { width: 50%; padding: 30px; background: #fff; display: flex; flex-direction: column; gap: 15px; border-right: 1px solid #85966B; overflow-y: auto;}
+        .modal-right { width: 50%; padding: 40px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto;}
+        
+        #mainModalImage, #mainModalVideo { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; border: 1px solid #eaeaea; transition: 0.3s; }
+        
+        .thumbnail-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;}
+        .thumbnail-container img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid transparent; border-radius: 4px; opacity: 0.7; transition: 0.3s; flex-shrink: 0;}
+        .thumbnail-container img:hover { border-color: #013A2D; opacity: 1; }
+        .video-thumb { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background: #013A2D; color: #E5DBC7; cursor: pointer; border-radius: 4px; font-size: 12px; font-weight: bold; flex-shrink: 0; opacity: 0.9; transition: 0.3s; border: 2px solid transparent; }
+        .video-thumb:hover { opacity: 1; border-color: #85966B; }
+
+        #modalTitle { color: #013A2D; margin-top: 0; font-size: 28px; font-weight: bold; }
+        .modal-price { font-size: 24px; font-weight: bold; color: #85966B; margin-bottom: 20px; }
+        .modal-desc { line-height: 1.8; margin-bottom: 30px; color: #013A2D; font-size: 15px; }
+        #modalAddBtn { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px;}
+
         .contact-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 58, 45, 0.8); z-index: 5500; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .contact-modal { background: #E5DBC7; width: 800px; max-width: 100%; max-height: 90vh; border-radius: 8px; overflow-y: auto; position: relative; border: 1px solid #85966B; padding: 40px; color: #013A2D; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; font-weight: bold; }
+        .contact-modal { background: #E5DBC7; width: 800px; max-width: 100%; max-height: 90vh; border-radius: 8px; overflow-y: auto; position: relative; border: 1px solid #85966B; box-shadow: 0 20px 40px rgba(0,0,0,0.3); padding: 50px 40px; color: #013A2D; }
+        .close-contact { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #013A2D; font-weight: bold; }
+        .contact-modal h2 { font-size: 32px; margin-top: 0; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .contact-modal p { font-size: 15px; line-height: 1.6; margin-bottom: 8px; color: #85966B; }
+        .contact-modal h3 { font-size: 26px; margin-top: 40px; margin-bottom: 15px; color: #013A2D; }
         
-        /* HEADER */
-        .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 15px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #85966B; }
-        .header-logo { display: flex; align-items: center; justify-content: center; gap: 12px; font-family: 'Sceageus', serif; font-size: 32px; color: #013A2D; cursor: pointer; }
-        .rotating-logo { width: 50px; height: 50px; border-radius: 50%; animation: spin 15s linear infinite; }
+        .policy-content p { color: #013A2D; margin-bottom: 15px; font-size: 15px; line-height: 1.8; }
+        .policy-content ul { margin-top: 5px; margin-bottom: 20px; padding-left: 20px; color: #013A2D; font-size: 15px; line-height: 1.8; }
+        .policy-content ul li { margin-bottom: 8px; }
+
+        .contact-form { margin-top: 25px; }
+        .contact-form-row { display: flex; gap: 20px; margin-bottom: 20px; }
+        .contact-form-row input { flex: 1; padding: 15px; border: 1px solid #85966B; border-radius: 4px; background: #fff; font-size: 14px; color: #013A2D; outline: none; }
+        .contact-form textarea { width: 100%; padding: 15px; border: 1px solid #85966B; border-radius: 4px; background: #fff; font-size: 14px; min-height: 150px; color: #013A2D; resize: vertical; margin-bottom: 20px; outline: none; }
+        .contact-checkbox-row { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #85966B; margin-bottom: 25px; }
+        .contact-checkbox-row input { width: 16px; height: 16px; cursor: pointer; }
+        .btn-send { background-color: #013A2D; color: #E5DBC7; border: none; padding: 15px 30px; cursor: pointer; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px; transition: 0.3s; }
+        .btn-send:hover { background-color: #85966B; }
+
+        /* HEADER & LAYOUT */
+        .announcement-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 8px 10px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+        .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 40px; background: #E5DBC7; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #85966B; }
+        
+        .header-logo { 
+            display: flex; align-items: center; justify-content: center; gap: 15px; 
+            font-family: 'Sceageus', serif; 
+            font-size: 38px; 
+            font-weight: normal; 
+            letter-spacing: 1px; 
+            text-align: center; color: #013A2D; 
+            cursor: pointer;
+        }
+        
+        .rotating-logo { 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            background: transparent; 
+            animation: spin 15s linear infinite; 
+            flex-shrink: 0; 
+        }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .header-icons-left { display: flex; gap: 20px; align-items: center; justify-content: flex-start; }
+        .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
+        .icon-btn:hover { opacity: 0.6; }
+        .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .cart-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
         
-        .header-icons-left { display: flex; gap: 20px; align-items: center; }
-        .icon-btn { cursor: pointer; position: relative; transition: 0.3s; }
-        .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .cart-badge.bump { transform: scale(1.4); }
-
-        /* NAVIGATION */
-        .main-nav { display: flex; justify-content: center; gap: 30px; padding: 12px; background: #E5DBC7; border-bottom: 1px solid #85966B; font-weight: bold; font-size: 12px; color: #013A2D; text-transform: uppercase; }
-        .dropdown { position: relative; }
-        .dropdown-content { display: none; position: absolute; background: #E5DBC7; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border: 1px solid #85966B; border-radius: 4px; top: 100%; left: 0; }
+        .main-nav { display: flex; justify-content: center; align-items: center; gap: 35px; padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
+        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
+        .main-nav a:hover { color: #85966B; }
+        
+        /* CATEGORY DROPDOWN CSS */
+        .dropdown { position: relative; display: inline-block; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; background-color: #E5DBC7; min-width: 180px; box-shadow: 0px 8px 16px rgba(1, 58, 45, 0.2); z-index: 2000; border: 1px solid #85966B; border-radius: 4px; top: 100%; left: 0; overflow: hidden; }
+        .dropdown-content a { color: #013A2D; padding: 12px 16px; text-decoration: none; display: block; font-weight: bold; font-size: 12px; border-bottom: 1px solid rgba(133, 150, 107, 0.3); transition: 0.3s; text-transform: uppercase; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: #85966B; color: #E5DBC7; }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { padding: 12px; display: block; border-bottom: 1px solid rgba(133,150,107,0.2); color: #013A2D; }
-        .dropdown-content a:hover { background: #85966B; color: #E5DBC7; }
 
-        /* PRODUCT GRID: 5 PER ROW */
-        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; padding: 30px 40px; }
-        .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; overflow: hidden; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(1, 58, 45, 0.1); }
-        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; cursor: pointer; background: #fff; border-bottom: 1px solid #85966B; }
-        .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .product-info { padding: 10px; text-align: center; flex-grow: 1; }
-        .product-info h4 { margin: 0 0 5px 0; font-size: 13px; color: #013A2D; height: 32px; overflow: hidden; line-height: 1.2; }
-        .sale-price { font-weight: bold; color: #85966B; font-size: 14px; }
-        .btn-add { background: #013A2D; color: #E5DBC7; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; font-size: 10px; text-transform: uppercase; }
+        .sale-badge { position: absolute; top: -18px; right: -12px; background-color: #D33F1F; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px; }
+        .sale-badge::after { content: ''; position: absolute; bottom: -4px; left: 8px; border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
 
-        /* CART SIDEBAR */
+        .scrolling-ticker { background-color: #85966B; color: #E5DBC7; padding: 10px 0; overflow: hidden; white-space: nowrap; position: relative; border-bottom: 1px solid #013A2D; }
+        .ticker-wrapper { display: inline-block; white-space: nowrap; animation: scrollTicker 30s linear infinite; }
+        .ticker-text { display: inline-block; font-size: 12px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
+        .ticker-separator { margin: 0 30px; color: #013A2D; font-size: 10px; vertical-align: middle; }
+        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .collection-header { text-align: center; padding: 30px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
+        .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; transition: 0.3s; }
+        .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
+        
+        /* 5-COLUMN GRID */
+        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 40px; }
+        
+        /* CART SPECIFIC CSS */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
         .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
-        .cart-footer { padding: 20px; border-top: 1px solid #85966B; }
-        .cart-input-group { display: flex; gap: 8px; margin-bottom: 12px; }
-        .cart-input-group input { flex: 1; padding: 8px; border-radius: 4px; border: none; font-size: 12px; }
-        .cart-input-group button { padding: 8px 12px; background: #85966B; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .donation-row { display: flex; gap: 8px; margin-bottom: 15px; }
-        .donation-btn { flex: 1; padding: 8px; border: 1px solid #85966B; background: transparent; color: #fff; cursor: pointer; border-radius: 4px; font-size: 11px; }
-        .donation-btn.active { background: #85966B; color: #013A2D; font-weight: bold; }
-        .cart-disclaimer { font-size: 10px; color: #a3b887; text-align: center; margin-bottom: 15px; line-height: 1.4; }
-        .cart-disclaimer a { color: #fff; text-decoration: underline; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
+        .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
+        
+        .cart-divider { height: 1px; background: #85966B; margin: 15px 0; opacity: 0.5; }
+        .cart-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
+        .cart-input-group input { flex-grow: 1; padding: 10px; border: 1px solid #85966B; border-radius: 4px; outline: none; background: #fff; color: #013A2D; font-size: 13px;}
+        .cart-input-group button { background: #85966B; color: #E5DBC7; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 12px; transition: 0.3s; }
+        .cart-input-group button:hover { background: #E5DBC7; color: #013A2D; }
+        .donation-title { font-size: 12px; font-weight: bold; margin-bottom: 10px; color: #a3b887; text-transform: uppercase; }
+        .donation-row { display: flex; gap: 10px; margin-bottom: 5px; }
+        .donation-btn { flex: 1; padding: 8px 0; border: 1px solid #85966B; background: transparent; color: #E5DBC7; cursor: pointer; border-radius: 4px; transition: 0.3s; font-weight: bold; font-size: 13px;}
+        .donation-btn.active, .donation-btn:hover { background: #85966B; color: #013A2D; }
+        .cart-disclaimer { font-size: 10px; line-height: 1.4; margin-bottom: 15px; color: #a3b887; text-align: center; }
+        .cart-disclaimer a { color: #E5DBC7; text-decoration: underline; transition: 0.3s; cursor: pointer; }
+        .cart-disclaimer a:hover { color: #fff; }
+        
+        .btn-checkout { background: #E5DBC7; color: #013A2D; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        .btn-checkout:hover { background: #fff; }
 
-        /* FOOTER */
-        .mega-footer { background: #85966B; color: #E5DBC7; padding: 50px 40px; display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr; gap: 30px; }
-        .footer-column h3 { color: #013A2D; font-size: 16px; margin-bottom: 15px; }
-        .footer-column p, .footer-column li { font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
-        .footer-column ul { list-style: none; padding: 0; }
-        .bottom-bar { background: #013A2D; color: #E5DBC7; text-align: center; padding: 15px; font-size: 11px; opacity: 0.8; }
-
-        @media(max-width: 900px) {
-            .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; }
-            .mega-footer { grid-template-columns: 1fr; }
-            .header { padding: 10px 20px; }
+        .mega-footer { background-color: #85966B; color: #E5DBC7; padding: 60px 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; }
+        @media(max-width: 900px) { 
+            .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
+            .header-icons-left { justify-content: center; gap: 25px; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } 
+            .main-nav { gap: 15px; font-size: 11px; padding: 10px; }
+            .product-modal { flex-direction: column; overflow-y: auto; }
+            .modal-left, .modal-right { width: 100%; padding: 20px; }
+            .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
+            .contact-form-row { flex-direction: column; gap: 15px; }
+            .collection-header h1 { font-size: 26px; }
+            .collection-header p { font-size: 16px; }
+            .header-logo { font-size: 28px; }
+            .mega-footer { grid-template-columns: 1fr; gap: 30px; padding: 40px 20px; } 
         }
+        .mega-footer h3 { color: #013A2D; font-size: 18px; margin-top: 0; margin-bottom: 20px; }
+        .mega-footer p { font-size: 14px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
+        .mega-footer ul { list-style: none; padding: 0; margin: 0; }
+        .mega-footer ul li { margin-bottom: 12px; }
+        .mega-footer ul li a { font-size: 14px; opacity: 0.9; transition: 0.3s; }
+        .mega-footer ul li a:hover { opacity: 1; text-decoration: underline; color: #013A2D; }
+        .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid #E5DBC7; border-radius: 50%; cursor: pointer; transition: 0.3s; color: #E5DBC7; }
+        .social-icon:hover { background-color: #013A2D; border-color: #013A2D; color: #fff; }
+        .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+        .newsletter-input { flex-grow: 1; padding: 12px; border: 1px solid #E5DBC7; background: #fff; color: #013A2D; border-radius: 4px; outline: none; font-size: 14px; }
+        .newsletter-btn { background: #013A2D; color: #E5DBC7; border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .bottom-bar { background-color: #013A2D; color: #E5DBC7; text-align: center; padding: 20px; font-size: 12px; opacity: 0.8; }
+
+        /* PRODUCT CARDS */
+        .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
+        .product-image-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; border-bottom: 1px solid #85966B; cursor: pointer;}
+        .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .product-info { padding: 15px 10px; text-align: center; flex-grow: 1; cursor: pointer;}
+        .product-info h4 { margin: 0 0 8px 0; color: #013A2D; font-size: 14px;}
+        .sale-price { font-weight: bold; font-size: 1.1em; color: #85966B; }
+        .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
     </style>
 </head>
 <body>
 
-    <div class="contact-overlay" id="aboutOverlay" onclick="closeModal('aboutOverlay')">
+    <div class="contact-overlay" id="aboutOverlay" onclick="closeAbout(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="closeModal('aboutOverlay')">✕</span>
+            <span class="close-contact" onclick="closeAbout()">✕</span>
             <h2>Our Journey</h2>
-            <p><strong>THE BRASS WORLD</strong> was founded in 2024 by a vision to preserve the soulful heritage of the Dhokra Damar tribes. We didn't just source these products; we lived in their villages, shared their meals, and closely observed the meticulous 4,000-year-old "lost-wax" casting process. Every piece you see is a testament to an ancient blacksmith community spanning West Bengal, Odisha, and beyond. By choosing us, you are keeping this flame alive and supporting sustainable tribal livelihoods.</p>
+            <div class="policy-content">
+                <p>THE BRASS WORLD was born in 2024 out of a shared passion and a life-changing journey. We didn't start in a boardroom; our story began in the rural heartlands of West Bengal. My partner and I traveled to the villages of the <strong>Dhokra Damar</strong> tribes, a traditional blacksmith community that has kept the magic of metal casting alive for generations.</p>
+                
+                <h3>Living the Craft</h3>
+                <p>We didn't just visit; we lived alongside the artisans. We shared meals in their homes, listened to their stories, and spent hours closely observing the mesmerizing, meticulous "lost-wax" casting process. We saw firsthand the immense skill, patience, and soul poured into every single piece. We also saw the struggles of keeping this ancient art form alive in a rapidly modernizing world.</p>
+                
+                <h3>The Keepers of the Flame</h3>
+                <p>The Dhokra Damar people have historically embraced a semi-nomadic lifestyle, spreading their unique metallurgical skills across the tribal areas of West Bengal, Jharkhand, Orissa, Chhattisgarh, and Andhra Pradesh. They are the true guardians of India's ancient heritage.</p>
+                
+                <h3>Our Mission</h3>
+                <p>Leaving the village, we knew we had to do something to help preserve this incredible legacy. THE BRASS WORLD was created to bridge the gap between these master artisans and the rest of the world. By bringing these authentic, rustic creations directly to you, we aim to support the tribal communities, provide them with a sustainable livelihood, and ensure that the art of Dokra not only survives but thrives.</p>
+                <p>Every piece you wear is a chapter of their story. Thank you for helping us keep the art alive.</p>
+            </div>
         </div>
     </div>
 
-    <div class="contact-overlay" id="privacyOverlay" onclick="closeModal('privacyOverlay')">
+    <div class="contact-overlay" id="shippingOverlay" onclick="closeShipping(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="closeModal('privacyOverlay')">✕</span>
+            <span class="close-contact" onclick="closeShipping()">✕</span>
+            <h2>Shipping Policy</h2>
+            <div class="policy-content">
+                <h3>1. Delivery Coverage</h3>
+                <p>We deliver to all postal addresses across India. Customers are requested to provide a complete and accurate shipping address, including street details and the correct PIN code, to ensure smooth delivery.</p>
+                
+                <h3>2. Address Accuracy</h3>
+                <p>To avoid delays, please ensure that your shipping details are complete and accurate at the time of placing the order. We are not responsible for delays caused due to incomplete or incorrect address information.</p>
+                <p>Shipments addressed to colleges, schools, hostels, or similar institutions are delivered at the customer’s risk. If the package is refused or not accepted by the receiving authority, thebrassworld.com will not be liable for refunds or credits.</p>
+                <p>For special or preferred delivery dates, please mention the requested date in the order notes or gift message section. If no date is specified, the order will be delivered at the earliest possible time.</p>
+                
+                <h3>3. Incorrect or Incomplete Address</h3>
+                <p>Some courier partners may impose penalties if the shipping address and PIN code do not match. Any such additional charges will be borne solely by the customer.</p>
+                <p>In case of incorrect or incomplete address details:</p>
+                <ul>
+                    <li>Customers will be responsible for any re-shipping charges</li>
+                    <li>If the shipment is lost or misplaced due to incorrect/incomplete information, thebrassworld.com will not be responsible</li>
+                    <li>No refunds will be initiated under such circumstances</li>
+                </ul>
+                
+                <h3>4. Order Processing & Shipping Time</h3>
+                <p>The dispatch time mentioned for each product on the website is indicative and approximate. While we strive to meet timelines, delays may occur due to unforeseen circumstances.</p>
+                <ul>
+                    <li><strong>Dispatch Time:</strong> Typically 1 to 4 business days</li>
+                    <li><strong>Shipping Time:</strong> Usually 7 to 10 days after dispatch</li>
+                </ul>
+                <p>Please note that delays due to external factors (such as courier issues or regional constraints) do not qualify for refunds, returns, replacements, or exchanges.</p>
+                
+                <h3>5. Delivery Timeline Disclaimer</h3>
+                <p>Delivery timelines may vary depending on the destination PIN code. Some locations may require additional time beyond the standard delivery window.</p>
+                
+                <h3>6. Contact</h3>
+                <p>For any shipping-related queries, please reach out to us through our website.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-overlay" id="privacyOverlay" onclick="closePrivacy(event)">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <span class="close-contact" onclick="closePrivacy()">✕</span>
             <h2>Privacy Policy</h2>
-            <p>At thebrassworld.com, we respect your privacy. We collect your name, contact info, and demographic data only to improve your experience and process orders. We do not sell your data. You may opt out of marketing anytime by emailing care.thebrassworld@gmail.com.</p>
+            <div class="policy-content">
+                <h3>1. Introduction</h3>
+                <p>At thebrassworld.com, we respect your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data.</p>
+                <p>We do not share your personal information with others except as required to fulfill the services requested by you. This may include sharing information with trusted partners for order processing and informing you about promotional offers.</p>
+                <p>You may choose to cancel your registration at any time; however, your information may remain archived on thebrassworld.com servers.</p>
+                <p><em>Policy Effective Date: 7th July 2022</em></p>
+
+                <h3>2. Information We Collect</h3>
+                <p>We may collect the following information:</p>
+                <ul>
+                    <li>Name and job title</li>
+                    <li>Contact information including email address</li>
+                    <li>Demographic information such as postcode, preferences, and interests</li>
+                    <li>Other information relevant to customer surveys and/or offers</li>
+                </ul>
+
+                <h3>3. How We Use the Information</h3>
+                <p>We collect this information to better understand your needs and provide improved services. Specifically, we use your information for:</p>
+                <ul>
+                    <li>Internal record keeping</li>
+                    <li>Improving our products and services</li>
+                    <li>Sending promotional emails about new products, special offers, or relevant updates</li>
+                    <li>Conducting market research (via email, phone, or other communication methods)</li>
+                    <li>Customizing the website according to your interests</li>
+                </ul>
+
+                <h3>4. Security</h3>
+                <p>We are committed to ensuring that your information is secure. We have implemented appropriate physical, electronic, and managerial procedures to safeguard and secure the information we collect online and prevent unauthorized access or disclosure.</p>
+
+                <h3>5. Cookies</h3>
+                <p>A cookie is a small file placed on your device to help analyze web traffic or enhance your browsing experience.</p>
+                <p>We use cookies to:</p>
+                <ul>
+                    <li>Identify which pages are being used</li>
+                    <li>Analyze website traffic and improve performance</li>
+                    <li>Customize website content based on user preferences</li>
+                </ul>
+                <p>Cookies do not give us access to your computer or personal data beyond what you choose to share.</p>
+                <p>You may choose to accept or decline cookies through your browser settings. Disabling cookies may affect certain website functionalities.</p>
+
+                <h3>6. Links to Other Websites</h3>
+                <p>Our website may contain links to external websites. Once you leave thebrassworld.com, we do not have control over those sites and are not responsible for the protection and privacy of any information you provide there. We recommend reviewing the privacy policies of those websites.</p>
+
+                <h3>7. Controlling Your Personal Information</h3>
+                <p>You can restrict or control the use of your personal information in the following ways:</p>
+                <ul>
+                    <li>Look for options in forms to opt out of direct marketing communications</li>
+                    <li>If you previously consented to marketing, you may withdraw consent anytime by contacting us at: <strong>care.thebrassworld@gmail.com</strong></li>
+                </ul>
+                <p>We will not sell, distribute, or lease your personal information to third parties without your permission, unless required by law. We may send promotional information about third parties only if you opt in.</p>
+
+                <h3>8. Access to Your Information</h3>
+                <p>You may request details of the personal information we hold about you under applicable data protection laws. A nominal fee may apply.</p>
+                <p>If you believe any information we hold about you is incorrect or incomplete, please contact us at the email above. We will promptly correct any inaccuracies.</p>
+
+                <h3>9. Policy Updates</h3>
+                <p>thebrassworld.com may update this Privacy Policy from time to time. We encourage you to review this page periodically to stay informed about any changes.</p>
+            </div>
         </div>
     </div>
 
-    <div class="contact-overlay" id="tosOverlay" onclick="closeModal('tosOverlay')">
+    <div class="contact-overlay" id="tosOverlay" onclick="closeTos(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="closeModal('tosOverlay')">✕</span>
+            <span class="close-contact" onclick="closeTos()">✕</span>
             <h2>Terms of Service</h2>
-            <p>By using thebrassworld.com, you agree to our terms. All content is protected by intellectual property laws. We provide our handcrafted products "as is," acknowledging that rustic variations are a natural part of Dokra art.</p>
+            <div class="policy-content">
+                <h3>1. Introduction</h3>
+                <p>Welcome to thebrassworld.com. By accessing or using this website, you agree to be bound by the following Terms of Service. If you do not agree with any part of these terms, you should not use this website.</p>
+                
+                <h3>2. Copyright and Intellectual Property</h3>
+                <p>All content displayed, transmitted, or carried on thebrassworld.com, including but not limited to text, images, graphics, logos, and design, is protected by applicable copyright and intellectual property laws.</p>
+                <p>This website is designed, updated, and maintained independently by thebrassworld.com. You may not modify, publish, transmit, transfer, sell, reproduce, create derivative works from, distribute, perform, display, or in any way commercially exploit any of the content without prior written permission.</p>
+                
+                <h3>3. Use of Website</h3>
+                <p>By using this website, you agree to:</p>
+                <ul>
+                    <li>Use the website only for lawful purposes</li>
+                    <li>Not attempt to gain unauthorized access to any part of the website</li>
+                    <li>Not engage in any activity that may harm or disrupt the website or its services</li>
+                </ul>
+                
+                <h3>4. Disclaimer of Warranties</h3>
+                <p>thebrassworld.com provides the website and its content on an “as is” and “as available” basis. We do not guarantee that the website will be uninterrupted, secure, or error-free.</p>
+                <p>All warranties or conditions, whether express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and accuracy of information, are hereby disclaimed.</p>
+                
+                <h3>5. Limitation of Liability</h3>
+                <p>thebrassworld.com shall not be held responsible for any direct, indirect, incidental, or consequential damages arising from the use or inability to use this website, including but not limited to damages caused by viruses, bugs, or technical issues.</p>
+                
+                <h3>6. Service Availability</h3>
+                <p>thebrassworld.com reserves the right to suspend, modify, or discontinue any part of the website or its services at any time without prior notice, especially in cases of technical issues affecting security or proper functioning.</p>
+                
+                <h3>7. Right to Refuse Service</h3>
+                <p>We reserve the right to refuse service to anyone at any time for any reason, at our sole discretion.</p>
+                
+                <h3>8. Jurisdiction and Governing Law</h3>
+                <p>These Terms of Service and any separate agreements shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the jurisdiction of the local courts in India.</p>
+                
+                <h3>9. Changes to Terms</h3>
+                <p>thebrassworld.com reserves the right to update or modify these Terms of Service at any time without prior notice. Continued use of the website after changes constitutes acceptance of those changes.</p>
+                
+                <h3>10. Contact Information</h3>
+                <p>If you have any questions about these Terms of Service, please contact us through the website.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-overlay" id="contactOverlay" onclick="closeContact(event)">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <span class="close-contact" onclick="closeContact()">✕</span>
+            <h2>Need Any Help?</h2>
+            <p>We're a young company and always try our best to provide a superior customer care service.</p>
+            <p>We're all ears to your queries, so feel free to reach out for anything.</p>
+            <p style="font-weight: bold; color: #013A2D; margin-top: 15px;">Customer Support: wecare@thebrassworld.com | +91 98765 43210</p>
+            <h3>Get In Touch</h3>
+            <p>We'd love to hear from you about our entire service. Your comments and suggestions will be highly appreciated. Please complete the form below.</p>
+            <form class="contact-form" onsubmit="submitContact(event)">
+                <div class="contact-form-row">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <textarea placeholder="Comment" required></textarea>
+                <div class="contact-checkbox-row">
+                    <input type="checkbox" id="saveInfo">
+                    <label for="saveInfo">Save my name, email, and website in this browser for the next time I comment.</label>
+                </div>
+                <button type="submit" class="btn-send">SEND MESSAGE</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="product-overlay" id="productOverlay" onclick="closeProductModal(event)">
+        <div class="product-modal" onclick="event.stopPropagation()">
+            <span class="close-product" onclick="closeProductModal()">✕</span>
+            <div class="modal-left">
+                <img id="mainModalImage" src="" alt="Product Image">
+                <video id="mainModalVideo" controls style="display:none;"></video>
+                
+                <div class="thumbnail-container" id="modalThumbnails"></div>
+            </div>
+            <div class="modal-right">
+                <h2 id="modalTitle">Product Name</h2>
+                <div class="modal-price" id="modalPrice">Rs. 0</div>
+                <div class="modal-desc" id="modalDesc">Product description goes here.</div>
+                <button id="modalAddBtn" onclick="handleAddFromModal()">ADD TO CART</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-overlay" id="searchOverlay">
+        <span class="search-close" onclick="closeSearch()">✕</span>
+        <h2 class="search-title">Search Our Site</h2>
+        <div class="search-input-container">
+            <input type="text" id="searchInput" placeholder="I'm looking for..." onkeypress="handleSearchKey(event)">
+            <svg onclick="executeSearch()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+        <div class="search-quick">
+            Quick Search: <span onclick="quickSearch('Earrings')">Earrings</span>, <span onclick="quickSearch('Necklace')">Necklace</span>
+        </div>
+    </div>
+
+    <div id="discountPopup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2 id="popupTitle">Unlock 10% OFF</h2>
+            <p id="popupText">Join THE BRASS WORLD family! Enter your WhatsApp number to receive your exclusive discount code.</p>
+            <input type="number" id="userPhone" class="popup-input" placeholder="WhatsApp Number">
+            <button class="btn-claim" id="claimBtn" onclick="applyDiscount()">CLAIM DISCOUNT</button>
         </div>
     </div>
 
     <header class="header">
         <div class="header-icons-left">
-            <div class="icon-btn" onclick="alert('Search connected to grid!')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
-            <div class="icon-btn" onclick="openCart()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line></svg><span class="cart-badge" id="cart-count">0</span></div>
+            <div class="icon-btn" onclick="openSearch()" title="Search">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <div class="icon-btn" title="Order History">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="icon-btn" title="Recently Viewed">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="icon-btn" title="Favorites">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </div>
+            <div class="icon-btn" onclick="openCart()" title="Cart">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
         </div>
-        <div class="header-logo" onclick="filterCategory('All')">
-            <img src="logo.png.png" class="rotating-logo" alt="Logo"> THE BRASS WORLD
+        
+        <div class="header-logo" onclick="resetSearch()">
+            <img src="logo.png.png" alt="TBW Circular Logo" class="rotating-logo">
+            THE BRASS WORLD
         </div>
+        
+        <div style="flex:1"></div> 
     </header>
 
     <nav class="main-nav">
         <div class="dropdown">
-            <a>Categories ▼</a>
+            <a href="#" style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">&#9660;</span></a>
             <div class="dropdown-content">
-                <a onclick="filterCategory('All')">All Collection</a>
-                <a onclick="filterCategory('Earrings')">Earrings</a>
-                <a onclick="filterCategory('Necklaces')">Necklaces</a>
-                <a onclick="filterCategory('Bracelets')">Bracelets</a>
-                <a onclick="filterCategory('Anklets')">Anklets</a>
+                <a href="#" onclick="filterCategory('All')">ALL JEWELRY</a>
+                <a href="#" onclick="filterCategory('Earrings')">EARRINGS</a>
+                <a href="#" onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
+                <a href="#" onclick="filterCategory('Rings')">RINGS</a>
+                <a href="#" onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
+                <a href="#" onclick="filterCategory('Anklets')">ANKLETS</a>
             </div>
         </div>
-        <a onclick="openModal('aboutOverlay')">Our Story</a>
-        <a onclick="filterCategory('All')">Store</a>
+        <a href="#">HOT DEALS <span class="sale-badge">SALE</span></a>
+        <a href="#" onclick="resetSearch()">STORE</a>
+        <a href="#">TRACK ORDER</a>
+        <a href="#">RETURNS / EXCHANGE</a>
+        <a href="#" onclick="openContact(event)">CONTACT US</a>
     </nav>
 
+    <div class="scrolling-ticker">
+        <div class="ticker-wrapper">
+            <span class="ticker-text">COD AVAILABLE<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE GIFT ON ORDER ABOVE INR 999<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">CLEARANCE SALE IS LIVE NOW<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE SHIPPING ABOVE INR 699<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">EASY RETURN<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">COD AVAILABLE<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE GIFT ON ORDER ABOVE INR 999<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">CLEARANCE SALE IS LIVE NOW<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">FREE SHIPPING ABOVE INR 699<span class="ticker-separator">✦</span></span>
+            <span class="ticker-text">EASY RETURN<span class="ticker-separator">✦</span></span>
+        </div>
+    </div>
+
     <div class="collection-header">
-        <h1 id="mainGridTitle" style="text-align: center; margin-top: 30px; font-family: 'Montserrat'; color: #013A2D;">Handcrafted Dokra Collection</h1>
+        <h1 id="mainGridTitle">Handcrafted Dokra jewellery Collection</h1>
+        <p>Where 4000 years of ancient artistry meet timeless elegance</p>
     </div>
 
     <div id="productGridContainer">
@@ -147,120 +515,165 @@
     </div>
 
     <footer class="mega-footer">
-        <div class="footer-column">
-            <h3>THE BRASS WORLD</h3>
-            <p>From the heart of Bengal to your home. We bring you wearable history crafted by traditional Dhokra Damar artisans.</p>
+        <div>
+            <h3>About THE BRASS WORLD</h3>
+            <p>THE BRASS WORLD is your destination for authentic, handcrafted Dokra jewelry. From everyday basics to statement pieces, we bring you traditional, timeless styles that celebrate 4000 years of ancient artistry.</p>
+            <a href="#" class="social-icon" title="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
         </div>
-        <div class="footer-column">
+        <div>
             <h3>Quick Links</h3>
             <ul>
-                <li><a onclick="openModal('aboutOverlay')">Our Story</a></li>
-                <li><a onclick="filterCategory('All')">Shop All</a></li>
+                <li><a href="#" onclick="openSearch()">Search</a></li>
+                <li><a href="#" onclick="openAbout(event)">About Us</a></li>
+                <li><a href="#" onclick="openContact(event)">Contact</a></li>
+                <li><a href="#">Returns / Exchange</a></li>
             </ul>
         </div>
-        <div class="footer-column">
-            <h3>Our Promise</h3>
-            <p><strong>Shipping:</strong> 5-7 working days PAN India.</p>
-            <p><strong>Returns:</strong> 24hr replacement for transit damage with unboxing video.</p>
+        <div>
+            <h3>Store Policy</h3>
+            <ul>
+                <li><a href="#" onclick="openTos(event)">Terms Of Service</a></li>
+                <li><a href="#" onclick="openShipping(event)">Shipping Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+                <li><a href="#" onclick="openPrivacy(event)">Privacy Policy</a></li>
+            </ul>
         </div>
-        <div class="footer-column">
-            <h3>Newsletter</h3>
-            <p>Join the tribe for exclusive drops.</p>
-            <div style="display:flex; gap:5px;">
-                <input type="email" placeholder="Email..." style="padding:8px; border:none; border-radius:4px; flex:1;">
-                <button style="background:#013A2D; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">OK</button>
+        <div>
+            <h3 style="margin-bottom: 10px;">Our Promise to You</h3>
+            <p style="margin-bottom: 10px;"><strong>Shipping:</strong> We proudly deliver across India. Please allow 2-3 business days for dispatch. Delivery generally takes 5-7 working days.</p>
+            <p style="margin-bottom: 30px;"><strong>Returns & Exchanges:</strong> Rustic variations are a beautiful part of Dokra art. If damage occurs during transit, send an unboxing video on WhatsApp within 24 hours for a replacement.</p>
+
+            <h3>Sign Up to Newsletter</h3>
+            <p>Enter your email address to get the latest updates on sales, new designs, and exclusive offers.</p>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email...">
+                <button class="newsletter-btn" onclick="alert('Thank you for subscribing!')">SUBSCRIBE</button>
             </div>
         </div>
     </footer>
+
     <div class="bottom-bar">
-        © 2026 THE BRASS WORLD. <a onclick="openModal('privacyOverlay')">Privacy</a> | <a onclick="openModal('tosOverlay')">Terms</a>
+        © 2026 THE BRASS WORLD. All rights reserved. | Handcrafted in Bengal, Delivered across India
     </div>
 
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-sidebar" id="cartSidebar">
-        <div style="padding:20px; border-bottom:1px solid #85966B; font-weight:bold;">YOUR BAG <span style="float:right; cursor:pointer;" onclick="closeCart()">✕</span></div>
-        <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
+        <div class="cart-header">
+            <b>YOUR CART</b> <span style="cursor:pointer; font-size: 20px;" onclick="closeCart()">&times;</span>
+        </div>
+        <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto"></div>
         <div class="cart-footer">
+            
+            <div class="donation-title">Deliver To:</div>
             <div class="cart-input-group">
-                <input type="text" id="pincode" placeholder="Delivery Pincode">
-                <button onclick="alert('Pincode set!')">SET</button>
+                <input type="text" id="pincodeInput" placeholder="Enter Delivery Pincode">
+                <button onclick="alert('Delivery Pincode Saved!')">SET</button>
             </div>
-            <div style="font-size:11px; margin-bottom:8px;">SUPPORT ARTISAN FAMILIES:</div>
+            
+            <div class="cart-divider"></div>
+
+            <div class="donation-title">Donate to the Artisans Family:</div>
             <div class="donation-row">
                 <button class="donation-btn" onclick="setDonation(10)">₹10</button>
                 <button class="donation-btn" onclick="setDonation(20)">₹20</button>
                 <button class="donation-btn" onclick="setDonation(50)">₹50</button>
                 <button class="donation-btn" onclick="setDonation(100)">₹100</button>
             </div>
+            
+            <div class="cart-divider"></div>
+
             <div class="cart-input-group">
-                <input type="text" placeholder="Coupon Code">
-                <button onclick="alert('Coupon Applied!')">APPLY</button>
+                <input type="text" id="cartCouponInput" placeholder="Apply Coupon Code">
+                <button onclick="applyCartCoupon()">APPLY</button>
             </div>
-            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin: 15px 0;">
+
+            <div class="cart-divider"></div>
+
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px">
+                <span>Subtotal:</span> <span>Rs. <span id="subtotal">0</span></span>
+            </div>
+            <div id="donationDisplayRow" style="display:none; justify-content:space-between; margin-bottom:10px; color: #E5DBC7;">
+                <span>Artisan Donation:</span> <span>+ Rs. <span id="donationAmountDisplay">0</span></span>
+            </div>
+            <div id="discountRow" style="display:none; justify-content:space-between; margin-bottom:10px; color: #E5DBC7; font-weight: bold;">
+                <span>10% Discount:</span> <span>- Rs. <span id="discountAmount">0</span></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:15px; border-top: 1px solid #85966B; padding-top: 10px;">
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
-            <p class="cart-disclaimer">By proceeding, you confirm you are 18+ and agree to our <a onclick="openModal('tosOverlay')">terms of use</a> and <a onclick="openModal('privacyOverlay')">privacy policy</a>.</p>
-            <button class="btn-checkout" style="width:100%" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
+            
+            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to thebrassworld's <a href="#" onclick="openTos(event)">terms of use</a> and <a href="#" onclick="openPrivacy(event)">privacy policy</a>.</p>
+            
+            <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
         </div>
     </div>
 
     <script>
         let cart = [];
-        let donationAmount = 0;
+        let discountActive = false;
+        let donationAmount = 0; 
+        let currentModalProduct = null;
 
         const products = [
-            { id: 1, name: "Prakriti Lattice Earrings", price: 1499, category: "Earrings", desc: "Handcrafted using the ancient lost-wax technique.", img: "item1.jpg.jpg" },
-            { id: 2, name: "The Golden Whorl Earrings", price: 1899, category: "Earrings", desc: "Inspired by the golden ratio in nature.", img: "item2.jpg.jpg" },
-            { id: 3, name: "Hellenic Dhara Drops Earrings", price: 1299, category: "Earrings", desc: "Elegant drops with minimalist tribal lines.", img: "item3.jpg.jpg" },
-            { id: 4, name: "Swarnarekha Filigree Necklace", price: 999, category: "Necklaces", desc: "Intricate wire-work on a traditional thread.", img: "item4.jpg.jpg" },
-            { id: 5, name: "Mayura Statement Necklace", price: 799, category: "Necklaces", desc: "Celebrating the grace of the peacock.", img: "item5.jpg.jpg" },
-            { id: 6, name: "Tribal Bell Choker Earrings", price: 2199, category: "Earrings", desc: "A masterpiece of resonant bell motifs.", img: "item6.jpg.jpg" },
-            { id: 7, name: "Rustic Jaali Bangles Earrings", price: 1599, category: "Earrings", desc: "Hand-carved lattice work on heavy brass.", img: "item7.jpg.jpg" },
-            { id: 8, name: "Surya Motif Pendant Necklace", price: 1099, category: "Necklaces", desc: "Bold sun god pendant for spiritual strength.", img: "item8.jpg.jpg" },
-            { id: 9, name: "Lotus Bloom Necklace", price: 899, category: "Necklaces", desc: "Sculpted lotus representing purity.", img: "item9.jpg.jpg" },
-            { id: 10, name: "Earthy Cuff Earrings", price: 1499, category: "Earrings", desc: "A fusion of bohemian and luxury brass.", img: "item10.jpg.jpg" },
-            { id: 11, name: "Vintage Motif Earrings", price: 999, category: "Earrings", desc: "Classic Dokra patterns with a vintage finish.", img: "item11.jpg.jpg" },
-            { id: 12, name: "Ginkgo Whispers Studs", price: 1299, category: "Earrings", desc: "Leaf pleats that catch the golden light.", img: "item12.jpg.jpg" },
-            { id: 13, name: "Molten Horizon Hoops", price: 1149, category: "Earrings", desc: "Irregular hoops for an avant-garde look.", img: "item13.jpg.jpg" },
-            { id: 14, name: "Surya Kiran Ear-Jackets", price: 999, category: "Earrings", desc: "Celestial rays that frame the ear.", img: "item14.jpg.jpg" },
-            { id: 15, name: "Ancient Majesty Bib", price: 2499, category: "Necklaces", desc: "A grand crescent bib for festive elegance.", img: "item15.jpg.jpg" },
-            { id: 16, name: "Earth’s Core Pendant", price: 1899, category: "Necklaces", desc: "Tiered raw brass frames.", img: "item16.jpg.jpg" },
-            { id: 17, name: "Gilded Ginkgo Cuff", price: 1599, category: "Bracelets", desc: "Breathable wide cuff with leaf motifs.", img: "item17.jpg.jpg" },
-            { id: 18, name: "Spiral Odyssey Armlet", price: 1749, category: "Bracelets", desc: "Wraps around the arm like gold.", img: "item18.jpg.jpg" },
-            { id: 19, name: "Filigree Fan Drops", price: 899, category: "Earrings", desc: "Lightweight intricate fan designs.", img: "item19.jpg.jpg" },
-            { id: 20, name: "Liquid Gold Folded Cuff", price: 1449, category: "Bracelets", desc: "Minimalist sheet-fold brass cuff.", img: "item20.jpg.jpg" },
-            { id: 21, name: "Botanical Flare Studs", price: 1199, category: "Earrings", desc: "Ridged floral flare for formal wear.", img: "item21.jpg.jpg" },
-            { id: 22, name: "Geometric Lotus Frame", price: 949, category: "Earrings", desc: "Modern hexagonal frame with lotus core.", img: "item22.jpg.jpg" },
-            { id: 23, name: "Hammered Moon Collar", price: 2199, category: "Necklaces", desc: "Lunar crater textures on brass disks.", img: "item23.jpg.jpg" },
-            { id: 24, name: "Radiant Arch Deco", price: 1049, category: "Earrings", desc: "U-shaped arch with deco ridges.", img: "item24.jpg.jpg" },
-            { id: 25, name: "Orbiting Solar Torque", price: 1949, category: "Necklaces", desc: "Hammered disk on a sleek torque ring.", img: "item25.jpg.jpg" },
-            { id: 26, name: "Chevron Warrior Cuff", price: 1699, category: "Bracelets", desc: "Power piece made of multi-chevron bands.", img: "item26.jpg.jpg" },
-            { id: 27, name: "Pharaoh Torque Collar", price: 2299, category: "Necklaces", desc: "Regal neckpiece with struck indentations.", img: "item27.jpg.jpg" },
-            { id: 28, name: "Solar Midnight Drops", price: 1199, category: "Earrings", desc: "Contrasting play of shadow and brass.", img: "item28.jpg.jpg" },
-            { id: 29, name: "Nomad Gemstone Cuff", price: 1849, category: "Bracelets", desc: "Wire-wrapped layers with deep stones.", img: "item29.jpg.jpg" },
-            { id: 30, name: "Cascading Liquid Gold", price: 2099, category: "Necklaces", desc: "Tiered melted disks on a sleek wire.", img: "item30.jpg.jpg" },
-            { id: 31, name: "Architectural Bib", price: 2699, category: "Necklaces", desc: "Interwoven brass slabs for a bold look.", img: "item31.jpg.jpg" },
-            { id: 32, name: "Verdant Drift Leaf", price: 1649, category: "Bracelets", desc: "Organic leaf cuff with etched veins.", img: "item32.jpg.jpg" },
-            { id: 33, name: "Monstera Majesty", price: 1799, category: "Bracelets", desc: "Tropical leaf silhouette in high-shine.", img: "item33.jpg.jpg" },
-            { id: 34, name: "Pebbles on Shore", price: 2349, category: "Necklaces", desc: "Hammered brass pebbles in a waterfall chain.", img: "item34.jpg.jpg" },
-            { id: 35, name: "Victorian Lattice", price: 1199, category: "Earrings", desc: "Ironwork inspired refined lattice drops.", img: "item35.jpg.jpg" },
-            { id: 36, name: "Molten Petal Studs", price: 1399, category: "Earrings", desc: "Dramatic oversized sculptural petals.", img: "item36.jpg.jpg" }
+            { id: 1, name: "Prakriti Lattice Earrings", price: 1499, category: "Earrings", desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
+            { id: 2, name: "The Golden Whorl Earrings", price: 1899, category: "Earrings", desc: "A breathtaking statement piece inspired by the golden ratio found in nature. Crafted by master artisans in Bengal.", images: ["item2.jpg.jpg", "item2.jpg.jpg", "item2.jpg.jpg"], video: "item2_video.mp4" },
+            { id: 3, name: "Hellenic Dhara Drops Earrings", price: 1299, category: "Earrings", desc: "Elegant drop earrings that blend traditional Dokra motifs with modern, minimalist lines.", images: ["item3.jpg.jpg", "item3.jpg.jpg", "item3.jpg.jpg"], video: "item3_video.mp4" },
+            { id: 4, name: "Swarnarekha Filigree necklace", price: 999, category: "Necklaces", desc: "Lightweight hoop earrings featuring intricate filigree work. Perfect for daily wear.", images: ["item4.jpg.jpg", "item4.jpg.jpg", "item4.jpg.jpg"], video: "item4_video.mp4" },
+            { id: 5, name: "Mayura Statement necklace", price: 799, category: "Necklaces", desc: "An eye-catching ring inspired by the grace of the peacock. Adjustable fit.", images: ["item5.jpg.jpg", "item5.jpg.jpg", "item5.jpg.jpg"], video: "item5_video.mp4" },
+            { id: 6, name: "Tribal Bell Choker Earrings", price: 2199, category: "Earrings", desc: "A stunning choker necklace featuring traditional bell motifs. A true masterpiece of tribal art.", images: ["item6.jpg.jpg", "item6.jpg.jpg", "item6.jpg.jpg"], video: "item6_video.mp4" },
+            { id: 7, name: "Rustic Jaali Bangles Earrings", price: 1599, category: "Earrings", desc: "A set of rustic bangles featuring traditional Jaali lattice work. Each piece carries unique handmade variations.", images: ["item7.jpg.jpg", "item7.jpg.jpg", "item7.jpg.jpg"], video: "item7_video.mp4" },
+            { id: 8, name: "Surya Motif Pendant necklace", price: 1099, category: "Necklaces", desc: "A bold pendant inspired by the Sun god. Comes with a complimentary black threading.", images: ["item8.jpg.jpg", "item8.jpg.jpg", "item8.jpg.jpg"], video: "item8_video.mp4" },
+            { id: 9, name: "Lotus Bloom necklace", price: 899, category: "Necklaces", desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
+            { id: 10, name: "Earthy Cuff Earrings", price: 1499, category: "Earrings", desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
+            { id: 11, name: "Vintage Motif Earrings", price: 999, category: "Earrings", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" },
+            { id: 12, name: "Tribal Sunburst Ring", price: 699, category: "Rings", desc: "A bold, rustic ring featuring a radiating sun pattern. Hand-cast by artisans in West Bengal.", images: ["item12.jpg.jpg", "item12.jpg.jpg", "item12.jpg.jpg"], video: "item12_video.mp4" },
+            { id: 13, name: "Nandi Bull Motif Pendant", price: 1199, category: "Necklaces", desc: "An intricate pendant honoring the sacred Nandi bull, suspended on a traditional thread.", images: ["item13.jpg.jpg", "item13.jpg.jpg", "item13.jpg.jpg"], video: "item13_video.mp4" },
+            { id: 14, name: "Ghungroo Melody Anklet", price: 1099, category: "Anklets", desc: "A beautiful, jiggling anklet adorned with tiny brass ghungroo bells.", images: ["item14.jpg.jpg", "item14.jpg.jpg", "item14.jpg.jpg"], video: "item14_video.mp4" },
+            { id: 15, name: "Earthy Spiral Hoop Earrings", price: 899, category: "Earrings", desc: "Classic hoop earrings with a signature tribal spiral design for everyday wear.", images: ["item15.jpg.jpg", "item15.jpg.jpg", "item15.jpg.jpg"], video: "item15_video.mp4" },
+            { id: 16, name: "Mohenjo-Daro Heritage Choker", price: 2499, category: "Necklaces", desc: "A heavy, statement choker piece that echoes the 4000-year-old origins of the Dokra art form.", images: ["item16.jpg.jpg", "item16.jpg.jpg", "item16.jpg.jpg"], video: "item16_video.mp4" },
+            { id: 17, name: "Forest Vine Bangle", price: 1299, category: "Bracelets", desc: "A singular, solid brass bangle featuring an entwined vine motif inspired by nature.", images: ["item17.jpg.jpg", "item17.jpg.jpg", "item17.jpg.jpg"], video: "item17_video.mp4" },
+            { id: 18, name: "Rustic Owl Statement Ring", price: 849, category: "Rings", desc: "A symbol of wisdom, this detailed owl ring is an excellent conversation starter.", images: ["item18.jpg.jpg", "item18.jpg.jpg", "item18.jpg.jpg"], video: "item18_video.mp4" },
+            { id: 19, name: "Dhokra Elephant Pendant", price: 1399, category: "Necklaces", desc: "A majestic royal elephant pendant, heavily detailed using the lost-wax method.", images: ["item19.jpg.jpg", "item19.jpg.jpg", "item19.jpg.jpg"], video: "item19_video.mp4" },
+            { id: 20, name: "Ancient Coin Drop Earrings", price: 949, category: "Earrings", desc: "Lightweight earrings modeled after ancient tribal currency.", images: ["item20.jpg.jpg", "item20.jpg.jpg", "item20.jpg.jpg"], video: "item20_video.mp4" },
+            { id: 21, name: "Braided Brass Cuff", price: 1599, category: "Bracelets", desc: "An open-ended cuff bracelet featuring a thick, braided metal texture.", images: ["item21.jpg.jpg", "item21.jpg.jpg", "item21.jpg.jpg"], video: "item21_video.mp4" },
+            { id: 22, name: "Peacock Feather Motif Anklet", price: 1149, category: "Anklets", desc: "A delicate anklet with abstract peacock feather charms.", images: ["item22.jpg.jpg", "item22.jpg.jpg", "item22.jpg.jpg"], video: "item22_video.mp4" },
+            { id: 23, name: "Matsya Fish Earrings", price: 799, category: "Earrings", desc: "A traditional fish motif representing prosperity and life, cast in solid brass.", images: ["item23.jpg.jpg", "item23.jpg.jpg", "item23.jpg.jpg"], video: "item23_video.mp4" },
+            { id: 24, name: "Traditional Mango Mala", price: 2799, category: "Necklaces", desc: "A grand, festive necklace featuring consecutive mango motifs (Paisley).", images: ["item24.jpg.jpg", "item24.jpg.jpg", "item24.jpg.jpg"], video: "item24_video.mp4" },
+            { id: 25, name: "Warli Art Bangle Set", price: 1899, category: "Bracelets", desc: "A set of three bangles etched with minimalist tribal figures.", images: ["item25.jpg.jpg", "item25.jpg.jpg", "item25.jpg.jpg"], video: "item25_video.mp4" },
+            { id: 26, name: "Sacred Tortoise Ring", price: 749, category: "Rings", desc: "A symbol of longevity and stability, beautifully cast to wrap around your finger.", images: ["item26.jpg.jpg", "item26.jpg.jpg", "item26.jpg.jpg"], video: "item26_video.mp4" },
+            { id: 27, name: "Boond Drop Pendant", price: 899, category: "Necklaces", desc: "A minimalist teardrop pendant showing the pure, unpolished shine of Dokra brass.", images: ["item27.jpg.jpg", "item27.jpg.jpg", "item27.jpg.jpg"], video: "item27_video.mp4" },
+            { id: 28, name: "Temple Bell Jhumkas", price: 1499, category: "Earrings", desc: "Classic Indian Jhumkas executed in the rustic Dokra style. Heavy and resonant.", images: ["item28.jpg.jpg", "item28.jpg.jpg", "item28.jpg.jpg"], video: "item28_video.mp4" },
+            { id: 29, name: "Woven Wire Armlet", price: 1699, category: "Bracelets", desc: "A flexible, woven brass band designed to be worn on the upper arm or wrist.", images: ["item29.jpg.jpg", "item29.jpg.jpg", "item29.jpg.jpg"], video: "item29_video.mp4" },
+            { id: 30, name: "Tribal Warrior Necklace", price: 2299, category: "Necklaces", desc: "A fierce, geometric necklace originally inspired by tribal armor adornments.", images: ["item30.jpg.jpg", "item30.jpg.jpg", "item30.jpg.jpg"], video: "item30_video.mp4" },
+            { id: 31, name: "Minimalist Brass Bands", price: 999, category: "Bracelets", desc: "A set of simple, unadorned brass bands that look beautiful when stacked.", images: ["item31.jpg.jpg", "item31.jpg.jpg", "item31.jpg.jpg"], video: "item31_video.mp4" },
+            { id: 32, name: "Surya Rays Studs", price: 599, category: "Earrings", desc: "Small, sun-shaped stud earrings. Perfect for subtle, everyday wear.", images: ["item32.jpg.jpg", "item32.jpg.jpg", "item32.jpg.jpg"], video: "item32_video.mp4" },
+            { id: 33, name: "Vintage Leaf Ring", price: 649, category: "Rings", desc: "An open, adjustable ring featuring two textured leaves.", images: ["item33.jpg.jpg", "item33.jpg.jpg", "item33.jpg.jpg"], video: "item33_video.mp4" },
+            { id: 34, name: "Damar Tribe Torc", price: 1999, category: "Necklaces", desc: "A solid, open-ended neck ring (torc) that rests beautifully on the collarbone.", images: ["item34.jpg.jpg", "item34.jpg.jpg", "item34.jpg.jpg"], video: "item34_video.mp4" },
+            { id: 35, name: "Dancing Girl Figurine Pendant", price: 1299, category: "Necklaces", desc: "A wearable miniature of the famous ancient dancing girl statue.", images: ["item35.jpg.jpg", "item35.jpg.jpg", "item35.jpg.jpg"], video: "item35_video.mp4" },
+            { id: 36, name: "Classic Ghungroo Bangle", price: 1399, category: "Bracelets", desc: "A single, thick bangle adorned with chiming bells. A traditional favorite.", images: ["item36.jpg.jpg", "item36.jpg.jpg", "item36.jpg.jpg"], video: "item36_video.mp4" }
         ];
 
-        function renderProducts(arr) {
+        function renderProducts(productArray = products) {
             let html = '';
-            arr.forEach(p => {
-                html += `<div class="product-card">
-                    <div class="product-image-wrapper" onclick="alert('${p.name}: ${p.desc}')">
-                        <img src="${p.img}">
-                    </div>
-                    <div class="product-info">
-                        <h4>${p.name}</h4>
-                        <div class="sale-price">Rs. ${p.price}</div>
-                    </div>
-                    <button class="btn-add" onclick="addToBag('${p.name}', ${p.price}, '${p.img}')">Quick Add</button>
-                </div>`;
-            });
+            if (productArray.length === 0) {
+                html = '<div style="grid-column: 1 / -1; text-align: center; font-size: 20px; padding: 40px; color: #013A2D; font-weight: bold;">No products found matching your search.</div>';
+            } else {
+                productArray.forEach(p => {
+                    html += `
+                        <div class="product-card">
+                            <div class="product-image-wrapper" onclick="openProductModal(${p.id})">
+                                <img src="${p.images[0]}">
+                            </div>
+                            <div class="product-info" onclick="openProductModal(${p.id})">
+                                <h4>${p.name}</h4>
+                                <div class="sale-price">Rs. ${p.price}</div>
+                            </div>
+                            <button class="btn-add" onclick="addToCart('${p.name}', ${p.price}, '${p.images[0]}')">QUICK ADD</button>
+                        </div>`;
+                });
+            }
             document.getElementById('productGrid').innerHTML = html;
         }
 
@@ -269,52 +682,195 @@
                 renderProducts(products);
                 document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra Collection";
             } else {
-                renderProducts(products.filter(p => p.category === cat));
-                document.getElementById('mainGridTitle').innerText = cat;
+                let filtered = products.filter(p => p.category === cat);
+                renderProducts(filtered);
+                document.getElementById('mainGridTitle').innerText = "THE BRASS WORLD " + cat;
+            }
+            document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function executeSearch() {
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            let filteredProducts = products.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+            renderProducts(filteredProducts);
+            document.getElementById('mainGridTitle').innerText = "Search Results";
+            closeSearch();
+            document.getElementById('productGridContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function handleSearchKey(event) { if (event.key === 'Enter') { executeSearch(); } }
+        function quickSearch(term) { document.getElementById('searchInput').value = term; executeSearch(); }
+        function resetSearch() { 
+            document.getElementById('searchInput').value = ''; 
+            document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra Collection";
+            renderProducts(products); 
+        }
+
+        renderProducts();
+
+        function openContact(event) { if(event) event.preventDefault(); document.getElementById('contactOverlay').style.display = 'flex'; }
+        function closeContact(event) { if(!event || event.target.id === 'contactOverlay' || !event.target) { document.getElementById('contactOverlay').style.display = 'none'; } }
+        function submitContact(event) { event.preventDefault(); alert("Thank you! Your message has been sent to THE BRASS WORLD team."); closeContact(); }
+
+        function openTos(event) { if(event) event.preventDefault(); document.getElementById('tosOverlay').style.display = 'flex'; }
+        function closeTos(event) { if(!event || event.target.id === 'tosOverlay' || !event.target) { document.getElementById('tosOverlay').style.display = 'none'; } }
+
+        function openShipping(event) { if(event) event.preventDefault(); document.getElementById('shippingOverlay').style.display = 'flex'; }
+        function closeShipping(event) { if(!event || event.target.id === 'shippingOverlay' || !event.target) { document.getElementById('shippingOverlay').style.display = 'none'; } }
+
+        function openAbout(event) { if(event) event.preventDefault(); document.getElementById('aboutOverlay').style.display = 'flex'; }
+        function closeAbout(event) { if(!event || event.target.id === 'aboutOverlay' || !event.target) { document.getElementById('aboutOverlay').style.display = 'none'; } }
+
+        function openPrivacy(event) { if(event) event.preventDefault(); document.getElementById('privacyOverlay').style.display = 'flex'; }
+        function closePrivacy(event) { if(!event || event.target.id === 'privacyOverlay' || !event.target) { document.getElementById('privacyOverlay').style.display = 'none'; } }
+
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            currentModalProduct = product; 
+            
+            document.getElementById('mainModalImage').style.display = 'block';
+            document.getElementById('mainModalVideo').style.display = 'none';
+            document.getElementById('mainModalImage').src = product.images[0];
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalPrice').innerText = 'Rs. ' + product.price;
+            document.getElementById('modalDesc').innerText = product.desc;
+            
+            let thumbHTML = '';
+            if(product.video) { thumbHTML += `<div class="video-thumb" onclick="showModalVideo('${product.video}')">▶ VIDEO</div>`; }
+            product.images.forEach(img => { thumbHTML += `<img src="${img}" onclick="showModalImage('${img}')">`; });
+            document.getElementById('modalThumbnails').innerHTML = thumbHTML;
+            
+            document.getElementById('productOverlay').style.display = 'flex';
+        }
+        
+        function handleAddFromModal() {
+            if(currentModalProduct) {
+                addToCart(currentModalProduct.name, currentModalProduct.price, currentModalProduct.images[0]);
+                closeProductModal();
             }
         }
+        
+        function showModalImage(imgSrc) { document.getElementById('mainModalVideo').style.display = 'none'; document.getElementById('mainModalVideo').pause(); document.getElementById('mainModalImage').style.display = 'block'; document.getElementById('mainModalImage').src = imgSrc; }
+        function showModalVideo(vidSrc) { document.getElementById('mainModalImage').style.display = 'none'; document.getElementById('mainModalVideo').style.display = 'block'; document.getElementById('mainModalVideo').src = vidSrc; document.getElementById('mainModalVideo').play(); }
+        function closeProductModal(event) { if(!event || event.target.id === 'productOverlay') { document.getElementById('productOverlay').style.display = 'none'; document.getElementById('mainModalVideo').pause(); currentModalProduct = null; } }
 
-        function addToBag(name, price, img) {
-            cart.push({name, price, img});
-            const badge = document.getElementById('cart-count');
-            badge.innerText = cart.length;
-            badge.classList.add('bump');
-            setTimeout(() => badge.classList.remove('bump'), 300);
+        function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
+        function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
+        function closePopup() { document.getElementById('discountPopup').style.display = 'none'; }
+
+        function applyDiscount() { 
+            let phone = document.getElementById('userPhone').value;
+            if(phone.length < 10) { alert("Please enter a valid WhatsApp number"); return; }
+            discountActive = true;
+            document.getElementById('popupTitle').innerText = "CODE: WELCOME10";
+            document.getElementById('popupText').innerText = "10% Discount applied! Check your WhatsApp for our welcome message.";
+            document.getElementById('userPhone').style.display = 'none';
+            document.getElementById('claimBtn').innerText = "EXPLORE COLLECTION";
+            document.getElementById('claimBtn').onclick = closePopup;
+            window.open(`https://wa.me/91${phone}?text=Namaste!%20Welcome%20to%20THE%20BRASS%20WORLD%20family.%20🌿%20Your%2010%25%20discount%20code%20is%20WELCOME10.`, '_blank');
             updateCartUI();
         }
 
-        function setDonation(amt) {
-            donationAmount = (donationAmount === amt) ? 0 : amt;
+        function applyCartCoupon() { 
+            let code = document.getElementById('cartCouponInput').value.trim().toUpperCase();
+            if(code === 'WELCOME10') {
+                discountActive = true;
+                alert("10% Discount Applied Successfully!");
+            } else if (code !== '') {
+                alert("Invalid or Expired Coupon Code.");
+            }
             updateCartUI();
+        }
+
+        function setDonation(amount) {
+            if(donationAmount === amount) {
+                donationAmount = 0; 
+            } else {
+                donationAmount = amount;
+            }
+            updateCartUI();
+        }
+
+        function addToCart(name, price, img) { 
+            cart.push({name, price, img}); 
+            
+            const badge = document.getElementById('cart-count');
+            badge.classList.add('bump');
+            setTimeout(() => { badge.classList.remove('bump'); }, 300);
+            
+            updateCartUI(); 
         }
 
         function updateCartUI() {
-            let sub = 0;
-            let html = '';
-            cart.forEach(item => {
-                sub += item.price;
-                html += `<div style="display:flex; gap:10px; margin-bottom:15px; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
-                    <img src="${item.img}" width="40" height="40" style="object-fit:cover;">
-                    <div style="font-size:12px;">${item.name}<br><b>Rs. ${item.price}</b></div>
+            document.getElementById('cart-count').innerText = cart.length;
+            let cartHTML = '';
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                cartHTML += `<div style="display:flex; gap:10px; margin-bottom:15px; align-items:center; border-bottom: 1px solid #85966B; padding-bottom: 10px;">
+                    <img src="${item.img}" width="50" style="border: 1px solid #85966B;">
+                    <div style="flex-grow:1; font-size:14px; color: #E5DBC7;">${item.name}<br><b>Rs. ${item.price}</b></div>
+                    <span style="color:#E5DBC7; cursor:pointer; font-weight: bold; font-size: 18px;" onclick="removeFromCart(${index})">×</span>
                 </div>`;
             });
-            document.getElementById('cartItems').innerHTML = html || 'Your bag is empty.';
-            document.getElementById('finalTotal').innerText = sub + donationAmount;
-            document.querySelectorAll('.donation-btn').forEach(btn => {
-                btn.classList.toggle('active', parseInt(btn.innerText.replace('₹','')) === donationAmount);
+            document.getElementById('cartItems').innerHTML = cartHTML || '<span style="color:#E5DBC7;">Your cart is empty.</span>';
+            document.getElementById('subtotal').innerText = subtotal;
+            
+            let final = subtotal;
+
+            if(discountActive && subtotal > 0) {
+                let discount = Math.round(subtotal * 0.10);
+                final = final - discount;
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discountAmount').innerText = discount;
+            } else {
+                document.getElementById('discountRow').style.display = 'none';
+            }
+
+            if(donationAmount > 0 && subtotal > 0) {
+                final = final + donationAmount;
+                document.getElementById('donationDisplayRow').style.display = 'flex';
+                document.getElementById('donationAmountDisplay').innerText = donationAmount;
+            } else {
+                document.getElementById('donationDisplayRow').style.display = 'none';
+            }
+
+            let donationBtns = document.querySelectorAll('.donation-btn');
+            donationBtns.forEach(btn => {
+                if(parseInt(btn.innerText.replace('₹','')) === donationAmount) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             });
+
+            document.getElementById('finalTotal').innerText = final;
         }
 
+        function removeFromCart(i) { cart.splice(i,1); updateCartUI(); }
         function openCart() { document.getElementById('cartSidebar').classList.add('open'); document.getElementById('cartOverlay').style.display='block'; }
         function closeCart() { document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').style.display='none'; }
-        function openModal(id) { document.getElementById(id).style.display='flex'; }
-        function closeModal(id) { document.getElementById(id).style.display='none'; }
 
         function payWithRazorpay() {
-            alert("Razorpay Portal Opening for amount: Rs. " + document.getElementById('finalTotal').innerText);
+            let amount = document.getElementById('finalTotal').innerText;
+            if(amount == 0) return;
+            var options = {
+                "key": "rzp_test_SidknDev2zE2tp",
+                "amount": amount * 100,
+                "currency": "INR",
+                "name": "THE BRASS WORLD",
+                "theme": { "color": "#013A2D" },
+                "handler": function (response) { 
+                    alert("Order Placed successfully! ID: " + response.razorpay_payment_id + ". Thank you for supporting the Dhokra Damar artisans!"); 
+                    cart=[]; 
+                    donationAmount = 0;
+                    updateCartUI(); 
+                    closeCart(); 
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
         }
-
-        renderProducts(products);
     </script>
 </body>
 </html>
