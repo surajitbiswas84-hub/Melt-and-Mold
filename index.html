@@ -112,7 +112,8 @@
         .header-icons-left { display: flex; gap: 20px; align-items: center; justify-content: flex-start; }
         .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; }
         .icon-btn:hover { opacity: 0.6; }
-        .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .cart-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .cart-badge.bump { transform: scale(1.3); background-color: #013A2D; } /* Tiny animation class for when item is added */
         
         .main-nav { display: flex; justify-content: center; align-items: center; gap: 35px; padding: 15px 20px; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 13px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
         .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; }
@@ -401,7 +402,7 @@
                 <h2 id="modalTitle">Product Name</h2>
                 <div class="modal-price" id="modalPrice">Rs. 0</div>
                 <div class="modal-desc" id="modalDesc">Product description goes here.</div>
-                <button id="modalAddBtn">ADD TO CART</button>
+                <button id="modalAddBtn" onclick="handleAddFromModal()">ADD TO CART</button>
             </div>
         </div>
     </div>
@@ -592,6 +593,9 @@
         let cart = [];
         let discountActive = false;
         let donationAmount = 0; 
+        
+        // Variable to hold the current modal product for the Add to Cart button inside the modal
+        let currentModalProduct = null;
 
         const products = [
             { id: 1, name: "Prakriti Lattice Earrings", price: 1499, desc: "Handcrafted using the ancient lost-wax casting technique. These delicate earrings are perfect for adding an earthy, sophisticated touch to any outfit.", images: ["item1.jpg.jpg", "item1.jpg.jpg", "item1.jpg.jpg"], video: "item1_video.mp4.mp4" },
@@ -659,22 +663,33 @@
 
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
+            currentModalProduct = product; // Store the product being viewed
+            
             document.getElementById('mainModalImage').style.display = 'block';
             document.getElementById('mainModalVideo').style.display = 'none';
             document.getElementById('mainModalImage').src = product.images[0];
             document.getElementById('modalTitle').innerText = product.name;
             document.getElementById('modalPrice').innerText = 'Rs. ' + product.price;
             document.getElementById('modalDesc').innerText = product.desc;
+            
             let thumbHTML = '';
             if(product.video) { thumbHTML += `<div class="video-thumb" onclick="showModalVideo('${product.video}')">▶ VIDEO</div>`; }
             product.images.forEach(img => { thumbHTML += `<img src="${img}" onclick="showModalImage('${img}')">`; });
             document.getElementById('modalThumbnails').innerHTML = thumbHTML;
-            document.getElementById('modalAddBtn').onclick = function() { addToCart(product.name, product.price, product.images[0]); closeProductModal(); };
+            
             document.getElementById('productOverlay').style.display = 'flex';
         }
+        
+        function handleAddFromModal() {
+            if(currentModalProduct) {
+                addToCart(currentModalProduct.name, currentModalProduct.price, currentModalProduct.images[0]);
+                closeProductModal();
+            }
+        }
+        
         function showModalImage(imgSrc) { document.getElementById('mainModalVideo').style.display = 'none'; document.getElementById('mainModalVideo').pause(); document.getElementById('mainModalImage').style.display = 'block'; document.getElementById('mainModalImage').src = imgSrc; }
         function showModalVideo(vidSrc) { document.getElementById('mainModalImage').style.display = 'none'; document.getElementById('mainModalVideo').style.display = 'block'; document.getElementById('mainModalVideo').src = vidSrc; document.getElementById('mainModalVideo').play(); }
-        function closeProductModal(event) { if(!event || event.target.id === 'productOverlay') { document.getElementById('productOverlay').style.display = 'none'; document.getElementById('mainModalVideo').pause(); } }
+        function closeProductModal(event) { if(!event || event.target.id === 'productOverlay') { document.getElementById('productOverlay').style.display = 'none'; document.getElementById('mainModalVideo').pause(); currentModalProduct = null; } }
 
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
@@ -713,7 +728,16 @@
             updateCartUI();
         }
 
-        function addToCart(name, price, img) { cart.push({name, price, img}); updateCartUI(); openCart(); }
+        function addToCart(name, price, img) { 
+            cart.push({name, price, img}); 
+            
+            // Add a little visual bump animation to the cart badge when an item is added silently
+            const badge = document.getElementById('cart-count');
+            badge.classList.add('bump');
+            setTimeout(() => { badge.classList.remove('bump'); }, 300);
+            
+            updateCartUI(); 
+        }
 
         function updateCartUI() {
             document.getElementById('cart-count').innerText = cart.length;
