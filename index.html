@@ -140,7 +140,8 @@
         .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; transition: 0.3s; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
-        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 40px; }
+        /* UPDATED PRODUCT GRID: 5 COLUMNS NOW */
+        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 40px; }
         
         /* CART SPECIFIC CSS */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
@@ -602,7 +603,7 @@
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
             
-            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to meltandmold's <a href="#" onclick="openTos(event)">terms of use</a> and <a href="#" onclick="openPrivacy(event)">privacy policy</a>.</p>
+            <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to the meltandmold's <a href="#" onclick="openTos(event)">terms of use</a> and <a href="#" onclick="openPrivacy(event)">privacy policy</a>.</p>
             
             <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
         </div>
@@ -626,8 +627,6 @@
             { id: 9, name: "Lotus Bloom necklace", price: 899, category: "Necklaces", desc: "Delicate earrings sculpted to resemble blooming lotus flowers. A symbol of purity and rebirth.", images: ["item9.jpg.jpg", "item9.jpg.jpg", "item9.jpg.jpg"], video: "item9_video.mp4" },
             { id: 10, name: "Earthy Cuff Earrings", price: 1499, category: "Earrings", desc: "A solid, earthy cuff bracelet that adds an instant touch of bohemian luxury to your wrist.", images: ["item10.jpg.jpg", "item10.jpg.jpg", "item10.jpg.jpg"], video: "item10_video.mp4" },
             { id: 11, name: "Vintage Motif Earrings", price: 999, category: "Earrings", desc: "A traditional anklet featuring vintage Dokra motifs. Sounds beautiful as you walk.", images: ["item11.jpg.jpg", "item11.jpg.jpg", "item11.jpg.jpg"], video: "item11_video.mp4" },
-            
-            // --- NEW BATCH OF 25 PRODUCTS ---
             { id: 12, name: "Tribal Sunburst Ring", price: 699, category: "Rings", desc: "A bold, rustic ring featuring a radiating sun pattern. Hand-cast by artisans in West Bengal.", images: ["item12.jpg.jpg", "item12.jpg.jpg", "item12.jpg.jpg"], video: "item12_video.mp4" },
             { id: 13, name: "Nandi Bull Motif Pendant", price: 1199, category: "Necklaces", desc: "An intricate pendant honoring the sacred Nandi bull, suspended on a traditional thread.", images: ["item13.jpg.jpg", "item13.jpg.jpg", "item13.jpg.jpg"], video: "item13_video.mp4" },
             { id: 14, name: "Ghungroo Melody Anklet", price: 1099, category: "Anklets", desc: "A beautiful, jiggling anklet adorned with tiny brass ghungroo bells.", images: ["item14.jpg.jpg", "item14.jpg.jpg", "item14.jpg.jpg"], video: "item14_video.mp4" },
