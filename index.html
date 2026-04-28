@@ -180,6 +180,45 @@
 </head>
 <body>
 
+    <div class="contact-overlay" id="shippingOverlay" onclick="closeShipping(event)">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <span class="close-contact" onclick="closeShipping()">✕</span>
+            <h2>Shipping Policy</h2>
+            <div class="policy-content">
+                <h3>1. Delivery Coverage</h3>
+                <p>We deliver to all postal addresses across India. Customers are requested to provide a complete and accurate shipping address, including street details and the correct PIN code, to ensure smooth delivery.</p>
+                
+                <h3>2. Address Accuracy</h3>
+                <p>To avoid delays, please ensure that your shipping details are complete and accurate at the time of placing the order. We are not responsible for delays caused due to incomplete or incorrect address information.</p>
+                <p>Shipments addressed to colleges, schools, hostels, or similar institutions are delivered at the customer’s risk. If the package is refused or not accepted by the receiving authority, meltandmold.com will not be liable for refunds or credits.</p>
+                <p>For special or preferred delivery dates, please mention the requested date in the order notes or gift message section. If no date is specified, the order will be delivered at the earliest possible time.</p>
+                
+                <h3>3. Incorrect or Incomplete Address</h3>
+                <p>Some courier partners may impose penalties if the shipping address and PIN code do not match. Any such additional charges will be borne solely by the customer.</p>
+                <p>In case of incorrect or incomplete address details:</p>
+                <ul>
+                    <li>Customers will be responsible for any re-shipping charges</li>
+                    <li>If the shipment is lost or misplaced due to incorrect/incomplete information, meltandmold.com will not be responsible</li>
+                    <li>No refunds will be initiated under such circumstances</li>
+                </ul>
+                
+                <h3>4. Order Processing & Shipping Time</h3>
+                <p>The dispatch time mentioned for each product on the website is indicative and approximate. While we strive to meet timelines, delays may occur due to unforeseen circumstances.</p>
+                <ul>
+                    <li><strong>Dispatch Time:</strong> Typically 1 to 4 business days</li>
+                    <li><strong>Shipping Time:</strong> Usually 7 to 10 days after dispatch</li>
+                </ul>
+                <p>Please note that delays due to external factors (such as courier issues or regional constraints) do not qualify for refunds, returns, replacements, or exchanges.</p>
+                
+                <h3>5. Delivery Timeline Disclaimer</h3>
+                <p>Delivery timelines may vary depending on the destination PIN code. Some locations may require additional time beyond the standard delivery window.</p>
+                
+                <h3>6. Contact</h3>
+                <p>For any shipping-related queries, please reach out to us through our website.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="contact-overlay" id="tosOverlay" onclick="closeTos(event)">
         <div class="contact-modal" onclick="event.stopPropagation()">
             <span class="close-contact" onclick="closeTos()">✕</span>
@@ -378,7 +417,7 @@
             <h3>Store Policy</h3>
             <ul>
                 <li><a href="#" onclick="openTos(event)">Terms Of Service</a></li>
-                <li><a href="#">Shipping Policy</a></li>
+                <li><a href="#" onclick="openShipping(event)">Shipping Policy</a></li>
                 <li><a href="#">Refund Policy</a></li>
                 <li><a href="#">Privacy Policy</a></li>
             </ul>
@@ -459,9 +498,12 @@
         function closeContact(event) { if(!event || event.target.id === 'contactOverlay' || !event.target) { document.getElementById('contactOverlay').style.display = 'none'; } }
         function submitContact(event) { event.preventDefault(); alert("Thank you! Your message has been sent to the Melt and Mold team."); closeContact(); }
 
-        /* TERMS OF SERVICE LOGIC */
         function openTos(event) { if(event) event.preventDefault(); document.getElementById('tosOverlay').style.display = 'flex'; }
         function closeTos(event) { if(!event || event.target.id === 'tosOverlay' || !event.target) { document.getElementById('tosOverlay').style.display = 'none'; } }
+
+        /* NEW SHIPPING POLICY LOGIC */
+        function openShipping(event) { if(event) event.preventDefault(); document.getElementById('shippingOverlay').style.display = 'flex'; }
+        function closeShipping(event) { if(!event || event.target.id === 'shippingOverlay' || !event.target) { document.getElementById('shippingOverlay').style.display = 'none'; } }
 
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
