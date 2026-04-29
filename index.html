@@ -23,7 +23,7 @@
 
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
         
-        body { margin: 0; padding: 0; background-color: #E5DBC7; color: #85966B; overflow-x: hidden; }
+        body { margin: 0; padding: 0; background-color: #ffffff; color: #85966B; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
         
         /* MODALS & OVERLAYS */
@@ -91,55 +91,28 @@
         .rotating-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; background: transparent; animation: spin 15s linear infinite; flex-shrink: 0; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* GLITTER GOLD FOIL EFFECT FOR COMPANY NAME */
+        /* GLITTER GOLD FOIL EFFECT */
         .gold-foil-text {
-            font-family: 'Alfa Slab One', cursive; /* Using your requested font */
+            font-family: 'Alfa Slab One', cursive; 
             font-size: 38px;
             font-weight: normal;
             letter-spacing: 2px;
-            /* Creating the rich gold gradient */
-            background: linear-gradient(
-                -45deg, 
-                #B38728 0%, 
-                #FBF5B7 25%, 
-                #BF953F 50%, 
-                #FCF6BA 75%, 
-                #AA771C 100%
-            );
+            background: linear-gradient(-45deg, #B38728 0%, #FBF5B7 25%, #BF953F 50%, #FCF6BA 75%, #AA771C 100%);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            /* Animating the background to look like shimmering glitter/foil */
             animation: glitterShimmer 3s linear infinite;
         }
-
-        @keyframes glitterShimmer {
-            to { background-position: 200% center; }
-        }
+        @keyframes glitterShimmer { to { background-position: 200% center; } }
         
         .header-icons-left { display: flex; gap: 18px; align-items: center; justify-content: flex-start; }
         .icon-btn { cursor: pointer; display: flex; align-items: center; position: relative; transition: opacity 0.3s; color: #013A2D; }
         .icon-btn:hover { opacity: 0.6; }
-        .cart-badge, .fav-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .cart-badge.bump, .fav-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
+        .cart-badge, .fav-badge, .history-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .cart-badge.bump, .fav-badge.bump, .history-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
         
-        /* NAVIGATION */
-        .main-nav { display: flex; justify-content: center; align-items: center; gap: 45px; padding: 18px 0; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 14px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
-        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; cursor: pointer; text-transform: uppercase; }
-        .main-nav a:hover { color: #85966B; }
-        
-        /* CATEGORY DROPDOWN CSS */
-        .dropdown { position: relative; display: inline-block; cursor: pointer; }
-        .dropdown-content { display: none; position: absolute; background-color: #E5DBC7; min-width: 180px; box-shadow: 0px 8px 16px rgba(1, 58, 45, 0.2); z-index: 2000; border: 1px solid #85966B; border-radius: 4px; top: 100%; left: 0; overflow: hidden; }
-        .dropdown-content a { color: #013A2D; padding: 12px 16px; text-decoration: none; display: block; font-weight: bold; font-size: 12px; border-bottom: 1px solid rgba(133, 150, 107, 0.3); transition: 0.3s; text-transform: uppercase; }
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background-color: #85966B; color: #E5DBC7; }
-        .dropdown:hover .dropdown-content { display: block; }
-
-        .sale-badge { position: absolute; top: -18px; right: -12px; background-color: #D33F1F; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; font-weight: bold; letter-spacing: 1px; }
-        .sale-badge::after { content: ''; position: absolute; bottom: -4px; left: 8px; border-width: 5px 5px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
-
+        /* TICKER & HEADERS */
         .scrolling-ticker { background-color: #85966B; color: #E5DBC7; padding: 10px 0; overflow: hidden; white-space: nowrap; position: relative; border-bottom: 1px solid #013A2D; }
         .ticker-wrapper { display: inline-block; white-space: nowrap; animation: scrollTicker 30s linear infinite; }
         .ticker-text { display: inline-block; font-size: 12px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
@@ -153,10 +126,9 @@
         /* 5-COLUMN GRID */
         .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 40px; }
         
-        /* PRODUCT CARD CSS WITH FAVORITE HEART */
+        /* PRODUCT CARD */
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; overflow: hidden; border-radius: 4px; position: relative; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(1, 58, 45, 0.15); }
-        
         .product-image-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; cursor: pointer; background: #fff; border-bottom: 1px solid #85966B; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -172,29 +144,26 @@
         .btn-add { background-color: #013A2D; color: #E5DBC7; border: none; padding: 12px; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; font-weight: bold; transition: 0.3s; }
         .btn-add:hover { background-color: #85966B; color: #013A2D; }
         
-        /* CART & FAVORITE SIDEBARS */
-        .cart-overlay, .fav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
+        /* SIDEBARS (CART, FAV, HISTORY) */
+        .cart-overlay, .fav-overlay, .history-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 6000; display: none; }
         .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #013A2D; color: #E5DBC7; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
-        .fav-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #E5DBC7; color: #013A2D; border-left: 1px solid #85966B; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
+        .fav-sidebar, .history-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100%; background: #E5DBC7; color: #013A2D; border-left: 1px solid #85966B; z-index: 7000; transition: 0.3s; display: flex; flex-direction: column; }
         
-        .cart-sidebar.open, .fav-sidebar.open { right: 0; }
+        .cart-sidebar.open, .fav-sidebar.open, .history-sidebar.open { right: 0; }
         
         .cart-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; }
         .fav-header { padding: 20px; border-bottom: 1px solid #85966B; display: flex; justify-content: space-between; align-items: center; background: #013A2D; color: #E5DBC7; font-weight: bold; }
         
         .cart-footer { padding: 20px; border-top: 1px solid #85966B; background: #013A2D; }
         .cart-divider { height: 1px; background: #85966B; margin: 15px 0; opacity: 0.5; }
-        
         .cart-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
         .cart-input-group input { flex-grow: 1; padding: 10px; border: 1px solid #85966B; border-radius: 4px; outline: none; background: #fff; color: #013A2D; font-size: 13px;}
         .cart-input-group button { background: #85966B; color: #E5DBC7; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 12px; transition: 0.3s; }
         .cart-input-group button:hover { background: #E5DBC7; color: #013A2D; }
-        
         .donation-title { font-size: 12px; font-weight: bold; margin-bottom: 10px; color: #a3b887; text-transform: uppercase; }
         .donation-row { display: flex; gap: 10px; margin-bottom: 5px; }
         .donation-btn { flex: 1; padding: 8px 0; border: 1px solid #85966B; background: transparent; color: #E5DBC7; cursor: pointer; border-radius: 4px; transition: 0.3s; font-weight: bold; font-size: 13px;}
         .donation-btn.active, .donation-btn:hover { background: #85966B; color: #013A2D; }
-        
         .cart-disclaimer { font-size: 10px; line-height: 1.4; margin-bottom: 15px; color: #a3b887; text-align: center; }
         .cart-disclaimer a { color: #E5DBC7; text-decoration: underline; transition: 0.3s; cursor: pointer; }
         .cart-disclaimer a:hover { color: #fff; }
@@ -206,7 +175,6 @@
             .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
             .header-icons-left { justify-content: center; gap: 25px; }
             .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } 
-            .main-nav { gap: 15px; font-size: 11px; padding: 10px; }
             .product-modal { flex-direction: column; overflow-y: auto; }
             .modal-left, .modal-right { width: 100%; padding: 20px; }
             .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
@@ -238,23 +206,7 @@
             <h2>Shipping Policy</h2>
             <div class="policy-content">
                 <h3>1. Delivery Coverage</h3>
-                <p>We deliver to all postal addresses across India. Customers are requested to provide a complete and accurate shipping address, including street details and the correct PIN code, to ensure smooth delivery.</p>
-                <h3>2. Address Accuracy</h3>
-                <p>To avoid delays, please ensure that your shipping details are complete and accurate at the time of placing the order. We are not responsible for delays caused due to incomplete or incorrect address information.</p>
-                <p>Shipments addressed to colleges, schools, hostels, or similar institutions are delivered at the customer’s risk. If the package is refused or not accepted by the receiving authority, thebrassworld.com will not be liable for refunds or credits.</p>
-                <h3>3. Incorrect or Incomplete Address</h3>
-                <p>Some courier partners may impose penalties if the shipping address and PIN code do not match. Any such additional charges will be borne solely by the customer.</p>
-                <ul>
-                    <li>Customers will be responsible for any re-shipping charges</li>
-                    <li>If the shipment is lost or misplaced due to incorrect/incomplete information, thebrassworld.com will not be responsible</li>
-                    <li>No refunds will be initiated under such circumstances</li>
-                </ul>
-                <h3>4. Order Processing & Shipping Time</h3>
-                <p>The dispatch time mentioned for each product on the website is indicative and approximate. While we strive to meet timelines, delays may occur due to unforeseen circumstances.</p>
-                <ul>
-                    <li><strong>Dispatch Time:</strong> Typically 1 to 4 business days</li>
-                    <li><strong>Shipping Time:</strong> Usually 7 to 10 days after dispatch</li>
-                </ul>
+                <p>We deliver to all postal addresses across India.</p>
             </div>
         </div>
     </div>
@@ -265,20 +217,7 @@
             <h2>Privacy Policy</h2>
             <div class="policy-content">
                 <h3>1. Introduction</h3>
-                <p>At thebrassworld.com, we respect your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data.</p>
-                <p>We do not share your personal information with others except as required to fulfill the services requested by you. This may include sharing information with trusted partners for order processing and informing you about promotional offers.</p>
-                <p><em>Policy Effective Date: 7th July 2022</em></p>
-                <h3>2. Information We Collect</h3>
-                <p>We may collect the following information:</p>
-                <ul>
-                    <li>Name and job title</li>
-                    <li>Contact information including email address</li>
-                    <li>Demographic information such as postcode, preferences, and interests</li>
-                </ul>
-                <h3>3. Security</h3>
-                <p>We are committed to ensuring that your information is secure. We have implemented appropriate physical, electronic, and managerial procedures to safeguard and secure the information we collect online and prevent unauthorized access or disclosure.</p>
-                <h3>4. Cookies</h3>
-                <p>A cookie is a small file placed on your device to help analyze web traffic or enhance your browsing experience. Cookies do not give us access to your computer or personal data beyond what you choose to share.</p>
+                <p>At thebrassworld.com, we respect your privacy.</p>
             </div>
         </div>
     </div>
@@ -289,19 +228,7 @@
             <h2>Terms of Service</h2>
             <div class="policy-content">
                 <h3>1. Introduction</h3>
-                <p>Welcome to thebrassworld.com. By accessing or using this website, you agree to be bound by the following Terms of Service. If you do not agree with any part of these terms, you should not use this website.</p>
-                <h3>2. Copyright and Intellectual Property</h3>
-                <p>All content displayed, transmitted, or carried on thebrassworld.com, including but not limited to text, images, graphics, logos, and design, is protected by applicable copyright and intellectual property laws.</p>
-                <p>This website is designed, updated, and maintained independently by thebrassworld.com. You may not modify, publish, transmit, transfer, sell, reproduce, create derivative works from, distribute, perform, display, or in any way commercially exploit any of the content without prior written permission.</p>
-                <h3>3. Use of Website</h3>
-                <p>By using this website, you agree to:</p>
-                <ul>
-                    <li>Use the website only for lawful purposes</li>
-                    <li>Not attempt to gain unauthorized access to any part of the website</li>
-                    <li>Not engage in any activity that may harm or disrupt the website or its services</li>
-                </ul>
-                <h3>4. Disclaimer of Warranties</h3>
-                <p>thebrassworld.com provides the website and its content on an “as is” and “as available” basis. We do not guarantee that the website will be uninterrupted, secure, or error-free.</p>
+                <p>Welcome to thebrassworld.com.</p>
             </div>
         </div>
     </div>
@@ -310,21 +237,13 @@
         <div class="contact-modal" onclick="event.stopPropagation()">
             <span class="close-contact" onclick="closeModal('contactOverlay')">✕</span>
             <h2>Need Any Help?</h2>
-            <p>We're a young company and always try our best to provide a superior customer care service.</p>
-            <p>We're all ears to your queries, so feel free to reach out for anything.</p>
             <p style="font-weight: bold; color: #013A2D; margin-top: 15px;">Customer Support: wecare@thebrassworld.com | +91 98765 43210</p>
-            <h3>Get In Touch</h3>
-            <p>We'd love to hear from you about our entire service. Your comments and suggestions will be highly appreciated. Please complete the form below.</p>
             <form class="contact-form" onsubmit="submitContact(event)">
                 <div class="contact-form-row">
                     <input type="text" placeholder="Name" required>
                     <input type="email" placeholder="Email" required>
                 </div>
                 <textarea placeholder="Comment" required></textarea>
-                <div class="contact-checkbox-row">
-                    <input type="checkbox" id="saveInfo">
-                    <label for="saveInfo">Save my name, email, and website in this browser for the next time I comment.</label>
-                </div>
                 <button type="submit" class="btn-send">SEND MESSAGE</button>
             </form>
         </div>
@@ -357,9 +276,6 @@
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
         </div>
-        <div class="search-quick">
-            Quick Search: <span onclick="quickSearch('Earrings')">Earrings</span>, <span onclick="quickSearch('Necklace')">Necklace</span>
-        </div>
     </div>
 
     <div id="discountPopup">
@@ -380,8 +296,9 @@
             <div class="icon-btn" title="Profile" onclick="alert('Profile Login Feature Coming Soon!')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </div>
-            <div class="icon-btn" title="Recently Viewed & History" onclick="alert('Order History & Recently Viewed Feature Coming Soon!')">
+            <div class="icon-btn" title="Recently Viewed & History" onclick="openHistory()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span class="history-badge" id="history-count" style="display:none;">0</span>
             </div>
             <div class="icon-btn" title="Favorites" onclick="openFavorites()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#013A2D" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -399,28 +316,6 @@
         </div>
         <div></div> 
     </header>
-
-    <nav class="main-nav">
-        <div class="dropdown">
-            <a style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">▼</span></a>
-            <div class="dropdown-content">
-                <a onclick="filterCategory('All')">ALL JEWELRY</a>
-                <a onclick="filterCategory('Earrings')">EARRINGS</a>
-                <a onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
-                <a onclick="filterCategory('Rings')">RINGS</a>
-                <a onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
-                <a onclick="filterCategory('Anklets')">ANKLETS</a>
-            </div>
-        </div>
-        <a style="position: relative;" onclick="alert('Hot Deals filtering coming soon!')">
-            <span class="sale-label">SALE</span>
-            HOT DEALS
-        </a>
-        <a onclick="resetSearch()">STORE</a>
-        <a onclick="alert('Track Order portal coming soon!')">TRACK ORDER</a>
-        <a onclick="alert('Returns & Exchanges portal coming soon!')">RETURNS / EXCHANGE</a>
-        <a onclick="openModal('contactOverlay')">CONTACT US</a>
-    </nav>
 
     <div class="scrolling-ticker">
         <div class="ticker-wrapper">
@@ -494,15 +389,12 @@
         </div>
         <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto"></div>
         <div class="cart-footer">
-            
             <div class="donation-title">Deliver To:</div>
             <div class="cart-input-group">
                 <input type="text" id="pincodeInput" placeholder="Enter Delivery Pincode">
                 <button onclick="alert('Delivery Pincode Saved!')">SET</button>
             </div>
-            
             <div class="cart-divider"></div>
-
             <div class="donation-title">Donate to the Artisans Family:</div>
             <div class="donation-row">
                 <button class="donation-btn" onclick="setDonation(10)">₹10</button>
@@ -510,16 +402,12 @@
                 <button class="donation-btn" onclick="setDonation(50)">₹50</button>
                 <button class="donation-btn" onclick="setDonation(100)">₹100</button>
             </div>
-            
             <div class="cart-divider"></div>
-
             <div class="cart-input-group">
                 <input type="text" id="cartCouponInput" placeholder="Apply Coupon Code">
                 <button onclick="applyCartCoupon()">APPLY</button>
             </div>
-
             <div class="cart-divider"></div>
-
             <div style="display:flex; justify-content:space-between; margin-bottom:10px">
                 <span>Subtotal:</span> <span>Rs. <span id="subtotal">0</span></span>
             </div>
@@ -532,9 +420,7 @@
             <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:15px; border-top: 1px solid #85966B; padding-top: 10px;">
                 <span>Total:</span> <span>Rs. <span id="finalTotal">0</span></span>
             </div>
-            
             <p class="cart-disclaimer">By continuing with the order, you confirm that you are above 18 years of age, and you agree to thebrassworld's <a onclick="openModal('tosOverlay')">terms of use</a> and <a onclick="openModal('privacyOverlay')">privacy policy</a>.</p>
-            
             <button class="btn-checkout" onclick="payWithRazorpay()">CHECKOUT SECURELY</button>
         </div>
     </div>
@@ -547,12 +433,21 @@
         <div id="favItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
     </div>
 
+    <div class="history-overlay" id="historyOverlay" onclick="closeHistory()"></div>
+    <div class="history-sidebar" id="historySidebar">
+        <div class="fav-header">
+            <span>HISTORY & VIEWS</span> <span style="cursor:pointer; font-size: 20px;" onclick="closeHistory()">✕</span>
+        </div>
+        <div id="historyItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
+    </div>
+
     <script>
         let cart = [];
         let discountActive = false;
         let donationAmount = 0; 
         let currentModalProduct = null;
         let favorites = [];
+        let historyData = []; // NEW: Array to store history
         let currentCategory = 'All';
 
         const products = [
@@ -598,17 +493,76 @@
             try {
                 let storedFavs = localStorage.getItem('tbw_favorites');
                 if(storedFavs) favorites = JSON.parse(storedFavs);
+                
+                // NEW: Load History
+                let storedHistory = localStorage.getItem('tbw_history');
+                if(storedHistory) {
+                    historyData = JSON.parse(storedHistory);
+                    // Filter out records older than 30 days
+                    const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+                    historyData = historyData.filter(item => item.time > thirtyDaysAgo);
+                    localStorage.setItem('tbw_history', JSON.stringify(historyData));
+                }
             } catch(e) {
                 favorites = [];
+                historyData = [];
             }
             
             renderProducts(products);
             updateFavoritesUI();
+            updateHistoryUI(); // NEW: Update history sidebar
             
             setTimeout(() => {
                 document.getElementById('discountPopup').style.display='flex';
             }, 3000);
         }
+
+        // --- NEW HISTORY ENGINE ---
+        function logHistory(productId, actionType) {
+            // Remove existing entry for the same product and action to bring it to the top
+            historyData = historyData.filter(item => !(item.id === productId && item.action === actionType));
+            // Add new log to the top
+            historyData.unshift({ id: productId, action: actionType, time: Date.now() });
+            
+            // Apply 30 day limit
+            const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+            historyData = historyData.filter(item => item.time > thirtyDaysAgo);
+
+            try { localStorage.setItem('tbw_history', JSON.stringify(historyData)); } catch(e) {}
+            updateHistoryUI();
+        }
+
+        function formatTime(ms) {
+            const date = new Date(ms);
+            return date.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function updateHistoryUI() {
+            let html = '';
+            if(historyData.length === 0) {
+                html = '<span style="color:#013A2D; font-size: 14px;">No recent history. Start exploring!</span>';
+            } else {
+                historyData.forEach(log => {
+                    let item = products.find(p => p.id === log.id);
+                    if(item) {
+                        let actionText = log.action === 'purchased' ? '<span style="color: #D33F1F; font-weight:bold;">Purchased</span>' : '<span style="color: #85966B; font-weight:bold;">Viewed</span>';
+                        html += `
+                        <div style="display:flex; gap:10px; margin-bottom:15px; align-items:center; border-bottom: 1px solid rgba(133, 150, 107, 0.3); padding-bottom: 10px;">
+                            <img src="${item.images[0]}" width="50" style="border: 1px solid #85966B; object-fit: cover; border-radius: 4px; cursor: pointer;" onclick="openProductModal(${item.id})">
+                            <div style="flex-grow:1; font-size:12px; color: #013A2D; line-height: 1.4;">
+                                <div style="font-size:14px; font-weight:bold; cursor: pointer;" onclick="openProductModal(${item.id})">${item.name}</div>
+                                <div style="margin-top:4px;">${actionText} on <br><span style="font-size:10px;">${formatTime(log.time)}</span></div>
+                            </div>
+                        </div>`;
+                    }
+                });
+            }
+            document.getElementById('historyItems').innerHTML = html;
+        }
+
+        function openHistory() { document.getElementById('historySidebar').classList.add('open'); document.getElementById('historyOverlay').style.display='block'; }
+        function closeHistory() { document.getElementById('historySidebar').classList.remove('open'); document.getElementById('historyOverlay').style.display='none'; }
+        // --------------------------
 
         function renderProducts(productArray = products) {
             let html = '';
@@ -655,9 +609,7 @@
                 favorites.splice(index, 1);
             }
             
-            try {
-                localStorage.setItem('tbw_favorites', JSON.stringify(favorites));
-            } catch(e) {}
+            try { localStorage.setItem('tbw_favorites', JSON.stringify(favorites)); } catch(e) {}
             
             updateFavoritesUI();
             
@@ -688,13 +640,14 @@
 
         function openFavorites() { document.getElementById('favSidebar').classList.add('open'); document.getElementById('favOverlay').style.display='block'; }
         function closeFavorites() { document.getElementById('favSidebar').classList.remove('open'); document.getElementById('favOverlay').style.display='none'; }
+
         // -----------------------------
 
         function filterCategory(cat, noScroll = false) {
             currentCategory = cat;
             if(cat === 'All') {
                 renderProducts(products);
-                document.getElementById('mainGridTitle').innerText = "Handcrafted Dokra Collection";
+                document.getElementById('mainGridTitle').innerText = "Handcrafted pure brass Collection";
             } else {
                 let filtered = products.filter(p => p.category === cat);
                 renderProducts(filtered);
@@ -720,7 +673,6 @@
             filterCategory('All'); 
         }
 
-        /* MODAL CONTROLS */
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
@@ -730,6 +682,9 @@
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
             currentModalProduct = product; 
+            
+            // NEW: Log to history when viewed
+            logHistory(product.id, 'viewed');
             
             document.getElementById('mainModalImage').style.display = 'block';
             document.getElementById('mainModalVideo').style.display = 'none';
@@ -865,6 +820,15 @@
                 "theme": { "color": "#013A2D" },
                 "handler": function (response) { 
                     alert("Order Placed successfully! ID: " + response.razorpay_payment_id + ". Thank you for supporting the Dhokra Damar artisans!"); 
+                    
+                    // NEW: Log purchased items to history before clearing cart
+                    cart.forEach(cartItem => {
+                        let matchedProduct = products.find(p => p.name === cartItem.name);
+                        if(matchedProduct) {
+                            logHistory(matchedProduct.id, 'purchased');
+                        }
+                    });
+
                     cart=[]; 
                     donationAmount = 0;
                     updateCartUI(); 
