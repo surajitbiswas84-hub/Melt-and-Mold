@@ -23,6 +23,7 @@
 
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
         
+        /* WEBSITE BACKGROUND CHANGED TO WHITE */
         body { margin: 0; padding: 0; background-color: #ffffff; color: #85966B; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
         
@@ -112,20 +113,35 @@
         .cart-badge, .fav-badge, .history-badge { position: absolute; top: -6px; right: -8px; background: #D33F1F; color: #fff; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .cart-badge.bump, .fav-badge.bump, .history-badge.bump { transform: scale(1.3); background-color: #013A2D; } 
         
-        /* TICKER */
+        /* RESTORED FULL NAVIGATION */
+        .main-nav { display: flex; justify-content: center; align-items: center; gap: 45px; padding: 18px 0; background-color: #E5DBC7; border-bottom: 1px solid #85966B; border-top: 1px solid rgba(133, 150, 107, 0.3); font-size: 14px; font-weight: bold; color: #013A2D; flex-wrap: wrap; }
+        .main-nav a { display: flex; align-items: center; gap: 5px; transition: color 0.3s; position: relative; cursor: pointer; text-transform: uppercase; }
+        .main-nav a:hover { color: #85966B; }
+        
+        .dropdown { position: relative; display: inline-block; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; background-color: #E5DBC7; min-width: 180px; box-shadow: 0px 8px 16px rgba(1, 58, 45, 0.2); z-index: 2000; border: 1px solid #85966B; border-radius: 4px; top: 100%; left: 0; overflow: hidden; }
+        .dropdown-content a { color: #013A2D; padding: 12px 16px; text-decoration: none; display: block; font-weight: bold; font-size: 12px; border-bottom: 1px solid rgba(133, 150, 107, 0.3); transition: 0.3s; text-transform: uppercase; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: #85966B; color: #E5DBC7; }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .sale-label { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: #D33F1F; color: white; font-size: 9px; padding: 2px 6px; border-radius: 2px; font-weight: bold; }
+        .sale-label::after { content: ''; position: absolute; bottom: -4px; left: 50%; margin-left: -4px; border-width: 4px 4px 0; border-style: solid; border-color: #D33F1F transparent transparent transparent; }
+
+        /* TICKER & HEADERS */
         .scrolling-ticker { background-color: #85966B; color: #E5DBC7; padding: 10px 0; overflow: hidden; white-space: nowrap; position: relative; border-bottom: 1px solid #013A2D; }
         .ticker-wrapper { display: inline-block; white-space: nowrap; animation: scrollTicker 30s linear infinite; }
         .ticker-text { display: inline-block; font-size: 12px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
         .ticker-separator { margin: 0 30px; color: #013A2D; font-size: 10px; vertical-align: middle; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* REDUCED GAP FOR COLLECTION HEADER */
-        .collection-header { text-align: center; padding: 15px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
+        /* RESTORED COLLECTION HEADER CSS */
+        .collection-header { text-align: center; padding: 30px 20px; background-color: #E5DBC7; color: #013A2D; border-bottom: 1px solid rgba(133, 150, 107, 0.3); }
         .collection-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 36px; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; transition: 0.3s; }
         .collection-header p { color: #85966B; margin: 0; font-size: 20px; font-weight: 500;}
         
-        /* 5-COLUMN GRID - REDUCED TOP PADDING */
-        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px 40px 40px 40px; }
+        /* 5-COLUMN GRID */
+        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 40px; }
         
         /* PRODUCT CARD */
         .product-card { background: #E5DBC7; border: 1px solid #85966B; display: flex; flex-direction: column; transition: 0.3s; overflow: hidden; border-radius: 4px; position: relative; }
@@ -175,7 +191,7 @@
         @media(max-width: 900px) { 
             .header { grid-template-columns: 1fr; gap: 20px; padding: 15px; } 
             .header-icons-left { justify-content: center; gap: 25px; }
-            .grid-container { grid-template-columns: repeat(2, 1fr); padding: 10px 15px 15px; gap: 15px; } 
+            .grid-container { grid-template-columns: repeat(2, 1fr); padding: 15px; gap: 15px; } 
             .product-modal { flex-direction: column; overflow-y: auto; }
             .modal-left, .modal-right { width: 100%; padding: 20px; }
             .modal-left { border-right: none; border-bottom: 1px solid #85966B; }
@@ -369,6 +385,28 @@
         </div>
         <div></div> 
     </header>
+
+    <nav class="main-nav">
+        <div class="dropdown">
+            <a onclick="filterCategory('All')" style="display: flex; align-items: center; gap: 5px;">CATEGORIES <span style="font-size: 10px; margin-top: 2px;">▼</span></a>
+            <div class="dropdown-content">
+                <a onclick="filterCategory('All')">ALL JEWELRY</a>
+                <a onclick="filterCategory('Earrings')">EARRINGS</a>
+                <a onclick="filterCategory('Necklaces')">NECKLACES & PENDANTS</a>
+                <a onclick="filterCategory('Rings')">RINGS</a>
+                <a onclick="filterCategory('Bracelets')">BRACELETS & BANGLES</a>
+                <a onclick="filterCategory('Anklets')">ANKLETS</a>
+            </div>
+        </div>
+        <a style="position: relative;" onclick="alert('Hot Deals filtering coming soon!')">
+            <span class="sale-label">SALE</span>
+            HOT DEALS
+        </a>
+        <a onclick="resetSearch()">STORE</a>
+        <a onclick="alert('Track Order portal coming soon!')">TRACK ORDER</a>
+        <a onclick="alert('Returns & Exchanges portal coming soon!')">RETURNS / EXCHANGE</a>
+        <a onclick="openModal('contactOverlay')">CONTACT US</a>
+    </nav>
 
     <div class="scrolling-ticker">
         <div class="ticker-wrapper">
